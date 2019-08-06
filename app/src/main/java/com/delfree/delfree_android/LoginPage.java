@@ -1,6 +1,7 @@
 package com.delfree.delfree_android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -24,9 +25,14 @@ public class LoginPage extends Activity {
         tVlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "ini Login", Toast.LENGTH_LONG).show();
+                onBtnLogin();
             }
         });
+    }
+
+    private void onBtnLogin () {
+        Intent intent = new Intent(LoginPage.this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
