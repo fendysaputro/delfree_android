@@ -2,13 +2,31 @@ package com.delfree.delfree_android;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginPage extends Activity {
+
+    TextView tVlogin;
+    EditText edPhone, edPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginpage);
+
+        edPhone = (EditText) findViewById(R.id.editTextPhone);
+        edPassword = (EditText) findViewById(R.id.editTextPassword);
+
+        tVlogin = (TextView) findViewById(R.id.textViewLogin);
+        tVlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "ini Login", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
