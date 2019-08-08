@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 
 public class LoginPage extends Activity {
 
-    TextView tVlogin;
+    Button btnLogin;
     EditText edUsername, edPassword;
 
     @Override
@@ -25,8 +26,8 @@ public class LoginPage extends Activity {
         edUsername = (EditText) findViewById(R.id.editTextUsername);
         edPassword = (EditText) findViewById(R.id.editTextPassword);
 
-        tVlogin = (TextView) findViewById(R.id.textViewLogin);
-        tVlogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin = (Button) findViewById(R.id.loginBtn);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBtnLogin();
