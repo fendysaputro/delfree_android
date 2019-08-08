@@ -15,14 +15,14 @@ import android.widget.Toast;
 public class LoginPage extends Activity {
 
     TextView tVlogin;
-    EditText edPhone, edPassword;
+    EditText edUsername, edPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginpage);
 
-        edPhone = (EditText) findViewById(R.id.editTextPhone);
+        edUsername = (EditText) findViewById(R.id.editTextUsername);
         edPassword = (EditText) findViewById(R.id.editTextPassword);
 
         tVlogin = (TextView) findViewById(R.id.textViewLogin);
