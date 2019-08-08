@@ -8,6 +8,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Created by phephen on 6/8/19.
+ */
+
 public class LoginPage extends Activity {
 
     TextView tVlogin;

@@ -2,6 +2,10 @@ package com.delfree.delfree_android;
 
 import android.app.Application;
 
+/**
+ * Created by phephen on 6/8/19.
+ */
+
 public class App extends Application {
 
     private String baseUrl = "";
