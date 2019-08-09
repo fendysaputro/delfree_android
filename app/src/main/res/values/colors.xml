@@ -3,4 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="littleBack">#F8F8F8</color>
+    <color name="chooseNav">#000000</color>
+    <color name="actionbar_background">#F8F8F8</color>
+    <color name="actionbar_text">#000000</color>
 </resources>
