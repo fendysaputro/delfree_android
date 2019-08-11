@@ -32,7 +32,10 @@ public class HistoryFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().onBackPressed();
+//                getActivity().onBackPressed();
+                FinishJobFragment finishJobFragment = new FinishJobFragment();
+                ShowFragment(R.id.fl_container, finishJobFragment, getFragmentManager());
+
             }
         });
 

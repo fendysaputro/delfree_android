@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/homeFragmentBg"
+    android:background="@color/cameraTransparent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FinishJobFragment">
 
@@ -30,12 +30,47 @@
     <TextView
         android:id="@+id/detail_job"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Upload Foto"
-        android:textSize="20dp"
-        android:gravity="left"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:gravity="left|center"
         android:paddingLeft="20dp"
-        android:layout_marginTop="60dp"
-        android:textColor="@color/textColor" />
+        android:background="@color/homeFragmentBg"
+        android:text="@string/upload_photo"
+        android:textColor="@color/textColor"
+        android:textSize="20dp" />
+
+    <LinearLayout
+        android:id="@+id/LlCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center" >
+
+        <Button
+            android:id="@+id/cameraButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/camera" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LlDone"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@color/littleBack"
+        android:layout_marginBottom="50dp" >
+
+        <Button
+            android:id="@+id/doneButton"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="160dp"
+            android:background="@drawable/radio_border"
+            android:text="@string/done_button" />
+
+    </LinearLayout>
+
 
 </FrameLayout>
