@@ -7,4 +7,5 @@
     <color name="chooseNav">#000000</color>
     <color name="actionbar_background">#F8F8F8</color>
     <color name="actionbar_text">#000000</color>
+    <color name="textColor">#7092D0</color>
 </resources>
