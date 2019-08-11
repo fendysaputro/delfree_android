@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/homeFragmentBg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HistoryFragment">
 
@@ -25,5 +26,16 @@
             android:textStyle="bold" />
 
     </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/job_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/job_history"
+        android:textSize="20dp"
+        android:gravity="left"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:textColor="@color/textColor" />
 
 </FrameLayout>

@@ -5,9 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/homeFragmentBg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".DetailJobFragment">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -30,10 +28,10 @@
     </android.support.v7.widget.Toolbar>
 
     <TextView
-        android:id="@+id/profile"
+        android:id="@+id/detail_job"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/profile_user"
+        android:text="WO No. 124/7A/VI/2019"
         android:textSize="20dp"
         android:gravity="left"
         android:paddingLeft="20dp"

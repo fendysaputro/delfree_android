@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         TextView textView = new TextView(this);
         textView.setText("Batavree");
         textView.setTextSize(20);
-        textView.setTypeface(null, Typeface.NORMAL);
+        textView.setTypeface(null, Typeface.BOLD);
         textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(getResources().getColor(R.color.chooseNav));
