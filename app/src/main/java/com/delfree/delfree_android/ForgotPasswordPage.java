@@ -1,6 +1,7 @@
 package com.delfree.delfree_android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -21,7 +22,7 @@ public class ForgotPasswordPage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgotpasswordpage);
-        
+
         edUsername = (EditText) findViewById(R.id.editTextUsername);
         edNewPassword = (EditText) findViewById(R.id.eTNewPassword);
         edConfirmPassword = (EditText) findViewById(R.id.eTConfirmPassword);
@@ -36,6 +37,7 @@ public class ForgotPasswordPage extends Activity {
     }
 
     private void savePassword() {
-        Toast.makeText(getApplicationContext(), "this is save new password", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(ForgotPasswordPage.this, LoginPage.class);
+        startActivity(intent);
     }
 }
