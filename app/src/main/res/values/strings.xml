@@ -13,6 +13,22 @@
     <string name="sim_no">SIM No : 123456789</string>
     <string name="driver_address">Address : Jalan Petojo Sabangan gg 1</string>
 
+    <string-array name="jobs">
+        <item>WO No. 124/7A/VI/2019</item>
+        <item>WO No. 124/7A/VI/2019</item>
+        <item>WO No. 124/7A/VI/2019</item>
+        <item>WO No. 124/7A/VI/2019</item>
+        <item>WO No. 124/7A/VI/2019</item>
+    </string-array>
+
+    <string-array name="dates">
+        <item>18 Aug 2019</item>
+        <item>18 Aug 2019</item>
+        <item>18 Aug 2019</item>
+        <item>18 Aug 2019</item>
+        <item>18 Aug 2019</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -11,4 +11,5 @@
     <color name="homeFragmentBg">#D9D9D9</color>
     <color name="colorButton">#387BB9</color>
     <color name="cameraTransparent">#F2F2F2</color>
+    <color name="basic">#FFFFFF</color>
 </resources>

@@ -6,7 +6,6 @@
     android:background="@color/homeFragmentBg"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,16 +16,22 @@
         android:layout_marginTop="10dp"
         android:textColor="@color/textColor" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/tVforgotPassword"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/loginBtn"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:text="Forgot your password?"-->
-        <!--android:textColor="#2E75B6"-->
-        <!--android:textSize="18sp"-->
-        <!--android:layout_marginBottom="70dp" />-->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:background="@color/basic"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_marginTop="10dp"
+            android:background="@color/cameraTransparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </ListView>
+
+    </LinearLayout>
 
 </FrameLayout>
