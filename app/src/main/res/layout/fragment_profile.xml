@@ -32,19 +32,21 @@
     <TextView
         android:id="@+id/profile"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="70dp"
         android:text="@string/profile_user"
         android:background="@color/homeFragmentBg"
+        android:layout_gravity="left"
         android:textSize="20dp"
-        android:gravity="left"
+        android:gravity="left|center"
         android:paddingLeft="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:textColor="@color/textColor" />
 
     <LinearLayout
         android:id="@+id/LlProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
         android:layout_gravity="center_horizontal|center" >
 
         <ImageView
@@ -58,7 +60,7 @@
         android:id="@+id/driver_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="400dp"
+        android:paddingTop="420dp"
         android:gravity="left"
         android:paddingLeft="20dp"
         android:text="@string/driver_name"
@@ -69,7 +71,7 @@
         android:id="@+id/sim_no"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="450dp"
+        android:paddingTop="460dp"
         android:gravity="left"
         android:paddingLeft="20dp"
         android:text="@string/sim_no"
