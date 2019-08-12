@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/homeFragmentBg"
+    android:background="@color/cameraTransparent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfileFragment">
 
@@ -34,10 +34,58 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/profile_user"
+        android:background="@color/homeFragmentBg"
         android:textSize="20dp"
         android:gravity="left"
         android:paddingLeft="20dp"
         android:layout_marginTop="60dp"
         android:textColor="@color/textColor" />
+
+    <LinearLayout
+        android:id="@+id/LlProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center" >
+
+        <ImageView
+            android:id="@+id/profile_pict"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/profile" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/driver_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="400dp"
+        android:gravity="left"
+        android:paddingLeft="20dp"
+        android:text="@string/driver_name"
+        android:textColor="@color/textColor"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/sim_no"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="450dp"
+        android:gravity="left"
+        android:paddingLeft="20dp"
+        android:text="@string/sim_no"
+        android:textColor="@color/textColor"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="500dp"
+        android:gravity="left"
+        android:paddingLeft="20dp"
+        android:text="@string/driver_address"
+        android:textColor="@color/textColor"
+        android:textSize="20dp" />
+
 
 </FrameLayout>

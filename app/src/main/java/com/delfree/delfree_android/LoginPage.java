@@ -19,6 +19,7 @@ public class LoginPage extends Activity {
 
     Button btnLogin;
     EditText edUsername, edPassword;
+    TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,14 @@ public class LoginPage extends Activity {
                 onBtnLogin();
             }
         });
+
+        forgotPassword = (TextView) findViewById(R.id.tVforgotPassword);
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onForgotPassword();
+            }
+        });
     }
 
     public static void ShowFragment(int resId, Fragment fragment, android.support.v4.app.FragmentManager fm) {
@@ -46,6 +55,11 @@ public class LoginPage extends Activity {
 
     private void onBtnLogin () {
         Intent intent = new Intent(LoginPage.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void onForgotPassword() {
+        Intent intent = new Intent(LoginPage.this, ForgotPasswordPage.class);
         startActivity(intent);
     }
 

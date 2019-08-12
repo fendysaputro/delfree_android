@@ -23,6 +23,7 @@
             android:name=".MainActivity"
             android:theme="@style/CustomActionBarTheme">
         </activity>
+        <activity android:name=".ForgotPasswordPage"></activity>
     </application>
 
 </manifest>
