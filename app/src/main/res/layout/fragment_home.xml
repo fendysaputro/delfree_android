@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/homeFragmentBg"
-    tools:context=".HomeFragment">
+    tools:context="HomeFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:clickable="true"
             android:background="@color/cameraTransparent">
         </ListView>
 

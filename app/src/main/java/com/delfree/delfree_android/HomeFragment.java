@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import static com.delfree.delfree_android.CustomArrayAdapter.ShowFragment;
+
 
 /**
  * Created by phephen on 6/8/19.
@@ -24,11 +29,7 @@ import android.widget.Toast;
 
 public class HomeFragment extends Fragment {
 
-    private ListView listView;
-//    private String[] myImageNameList = new String[]{"Benz", "Bike",
-//            "Car","Carrera"
-//            ,"Ferrari","Harly",
-//            "Lamborghini","Silver"};
+    private ListView listJobs;
     String[] items = new String[] {"WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019"};
 
     @Nullable
@@ -36,16 +37,32 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-//        ListView listJobs = (ListView) view.findViewById(R.id.list);
-//
-//        String[] items = new String[] {"WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019"};
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
-//
-//        listJobs.setAdapter(adapter);
-        listView=(ListView) view.findViewById(R.id.list);
+        listJobs=(ListView) view.findViewById(R.id.list);
 
         CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), R.layout.custom_item, items);
-        listView.setAdapter(arrayAdapter);
+        listJobs.setAdapter(arrayAdapter);
+
+        listJobs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DetailJobFragment detailJobFragment = new DetailJobFragment();
+                ShowFragment(R.id.fl_container, detailJobFragment, getFragmentManager());
+                Toast.makeText(getContext(), "ini tests", Toast.LENGTH_LONG).show();
+            }
+        });
+
+//        listJobs.setOnItemClickListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                DetailJobFragment detailJobFragment = new DetailJobFragment();
+//                ShowFragment(R.id.fl_container, detailJobFragment, getFragmentManager());
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                Log.i("ini error", "ini error");
+//            }
+//        }
 
         return view;
     }
