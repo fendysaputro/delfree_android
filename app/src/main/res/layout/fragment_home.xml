@@ -17,19 +17,19 @@
         android:textColor="@color/textColor" />
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
-        android:background="@color/basic"
+        android:background="@color/littleBack"
         android:orientation="vertical" >
 
         <ListView
             android:id="@+id/list"
-            android:layout_marginTop="10dp"
-            android:background="@color/cameraTransparent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/cameraTransparent">
+
         </ListView>
 
     </LinearLayout>
