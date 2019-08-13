@@ -23,17 +23,29 @@ import android.widget.Toast;
  */
 
 public class HomeFragment extends Fragment {
+
+    private ListView listView;
+//    private String[] myImageNameList = new String[]{"Benz", "Bike",
+//            "Car","Carrera"
+//            ,"Ferrari","Harly",
+//            "Lamborghini","Silver"};
+    String[] items = new String[] {"WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019"};
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ListView listJobs = (ListView) view.findViewById(R.id.list);
+//        ListView listJobs = (ListView) view.findViewById(R.id.list);
+//
+//        String[] items = new String[] {"WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019"};
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
+//
+//        listJobs.setAdapter(adapter);
+        listView=(ListView) view.findViewById(R.id.list);
 
-        String[] items = new String[] {"WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
-
-        listJobs.setAdapter(adapter);
+        CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), R.layout.custom_item, items);
+        listView.setAdapter(arrayAdapter);
 
         return view;
     }
