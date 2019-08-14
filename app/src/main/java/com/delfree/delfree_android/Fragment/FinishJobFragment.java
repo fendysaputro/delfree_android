@@ -1,24 +1,17 @@
-package com.delfree.delfree_android;
+package com.delfree.delfree_android.Fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.Button;
 
-import com.delfree.delfree_android.Adapter.HistoryAdapter;
-import com.delfree.delfree_android.Adapter.HomeAdapter;
+import com.delfree.delfree_android.R;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
@@ -27,15 +20,14 @@ import static com.delfree.delfree_android.MainActivity.ShowFragment;
  * Created by phephen on 6/8/19.
  */
 
-public class HistoryFragment extends Fragment {
+public class FinishJobFragment extends Fragment {
 
-    private ListView listJobsHistory;
-    String[] itemHistory = new String[] {"WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019"};
+    Button doneBtn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_finish_job, container, false);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("Back");
@@ -49,10 +41,13 @@ public class HistoryFragment extends Fragment {
             }
         });
 
-        listJobsHistory=(ListView) view.findViewById(R.id.list);
-
-        HistoryAdapter historyAdapter = new HistoryAdapter(getActivity(), R.layout.custom_item, itemHistory);
-        listJobsHistory.setAdapter(historyAdapter);
+        doneBtn = (Button) view.findViewById(R.id.doneButton);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onDoneButton();
+            }
+        });
 
         return view;
     }
@@ -61,5 +56,10 @@ public class HistoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+    }
+
+    public void onDoneButton(){
+        HistoryFragment historyFragment = new HistoryFragment();
+        ShowFragment(R.id.fl_container, historyFragment, getFragmentManager());
     }
 }

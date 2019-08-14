@@ -1,4 +1,4 @@
-package com.delfree.delfree_android;
+package com.delfree.delfree_android.Fragment;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.delfree.delfree_android.R;
 
 
 /**

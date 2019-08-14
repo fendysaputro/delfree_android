@@ -1,4 +1,4 @@
-package com.delfree.delfree_android;
+package com.delfree.delfree_android.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.delfree.delfree_android.Adapter.HomeAdapter;
+import com.delfree.delfree_android.Fragment.DetailJobFragment;
+import com.delfree.delfree_android.R;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 

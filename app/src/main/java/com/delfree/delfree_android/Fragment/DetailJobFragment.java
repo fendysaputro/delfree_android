@@ -1,4 +1,4 @@
-package com.delfree.delfree_android;
+package com.delfree.delfree_android.Fragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,8 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.delfree.delfree_android.Adapter.DetailJobAdapter;
+import com.delfree.delfree_android.Adapter.HomeAdapter;
+import com.delfree.delfree_android.R;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
@@ -21,14 +26,15 @@ import static com.delfree.delfree_android.MainActivity.ShowFragment;
  * Created by phephen on 6/8/19.
  */
 
-public class FinishJobFragment extends Fragment {
+public class DetailJobFragment extends Fragment {
 
-    Button doneBtn;
+    private ListView listJobsById;
+    String[] dropPoint = new String[] {"Drop point 1: Bandung Timur", "Drop point 2: Bandung Selatan", "Drop point 3: Bandung Barat"};
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_finish_job, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail_job, container, false);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("Back");
@@ -42,13 +48,10 @@ public class FinishJobFragment extends Fragment {
             }
         });
 
-        doneBtn = (Button) view.findViewById(R.id.doneButton);
-        doneBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onDoneButton();
-            }
-        });
+        listJobsById = (ListView) view.findViewById(R.id.list_jobs);
+
+        DetailJobAdapter arrayAdapter = new DetailJobAdapter(getActivity(), R.layout.custom_item, dropPoint);
+        listJobsById.setAdapter(arrayAdapter);
 
         return view;
     }
@@ -57,10 +60,5 @@ public class FinishJobFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-    }
-
-    public void onDoneButton(){
-        HistoryFragment historyFragment = new HistoryFragment();
-        ShowFragment(R.id.fl_container, historyFragment, getFragmentManager());
     }
 }

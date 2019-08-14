@@ -1,21 +1,13 @@
 package com.delfree.delfree_android.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.delfree.delfree_android.DetailJobFragment;
-import com.delfree.delfree_android.HistoryFragment;
 import com.delfree.delfree_android.R;
-
-import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
 public class HistoryAdapter extends ArrayAdapter {
 

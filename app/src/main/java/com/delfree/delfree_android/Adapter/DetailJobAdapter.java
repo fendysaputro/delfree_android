@@ -11,8 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.delfree.delfree_android.DetailJobFragment;
-import com.delfree.delfree_android.FinishJobFragment;
+import com.delfree.delfree_android.Fragment.FinishJobFragment;
 import com.delfree.delfree_android.R;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
