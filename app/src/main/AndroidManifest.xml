@@ -24,6 +24,15 @@
             android:theme="@style/CustomActionBarTheme">
         </activity>
         <activity android:name=".ForgotPasswordPage"></activity>
+        <service android:name=".Service.SentDataService"
+            android:enabled="true">
+        </service>
+        <receiver
+            android:name=".Service.RestartService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="RestartServiceWhenStopped">
+        </receiver>
     </application>
 
 </manifest>
