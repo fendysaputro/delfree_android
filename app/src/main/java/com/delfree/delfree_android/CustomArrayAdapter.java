@@ -1,12 +1,18 @@
 package com.delfree.delfree_android;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +22,7 @@ public class CustomArrayAdapter extends ArrayAdapter {
 
     private String[] myListJobs;
     private Context context;
+
 
     public CustomArrayAdapter(Context context, int textViewResourceId, String[] myListJobs) {
 
@@ -35,10 +42,15 @@ public class CustomArrayAdapter extends ArrayAdapter {
         TextView textView = (TextView) view.findViewById(R.id.tv);
         textView.setText(myListJobs[position]);
 
-        textView.setOnClickListener(new View.OnClickListener() {
+        ImageButton moreBtn = (ImageButton) view.findViewById(R.id.iconList);
+        moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "ini toast", Toast.LENGTH_LONG).show();
+                DetailJobFragment detailJobFragment = new DetailJobFragment();
+                Activity activity = (Activity) context;
+                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                ShowFragment(R.id.fl_container, detailJobFragment,fragmentManager);
+                Toast.makeText(getContext(), "ini tests", Toast.LENGTH_LONG).show();
             }
         });
 

@@ -31,7 +31,7 @@
         android:id="@+id/detail_job"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="WO No. 124/7A/VI/2019"
+        android:text="ini detail job"
         android:textSize="20dp"
         android:gravity="left"
         android:paddingLeft="20dp"

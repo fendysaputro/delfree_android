@@ -51,19 +51,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        listJobs.setOnItemClickListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                DetailJobFragment detailJobFragment = new DetailJobFragment();
-//                ShowFragment(R.id.fl_container, detailJobFragment, getFragmentManager());
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//                Log.i("ini error", "ini error");
-//            }
-//        }
-
         return view;
     }
 
