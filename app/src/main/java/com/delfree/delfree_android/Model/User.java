@@ -1,27 +1,26 @@
 package com.delfree.delfree_android.Model;
 
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by phephen on 6/8/19.
  */
 
 public class User {
 
-    String name;
-    String phone;
-    String email;
-    String address;
-    boolean active;
-    String token;
-
-    public User(String name, String phone, String email, String address, boolean active, String token){
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.active = active;
-        this.token = token;
-    }
+    @SerializedName("name")
+    private String name;
+    @SerializedName("phone")
+    private String phone;
+    @SerializedName("email")
+    private String email;
+    @SerializedName("address")
+    private String address;
+    @SerializedName("active")
+    private boolean active;
+    @SerializedName("token")
+    private String token;
 
     public String getName() {
         return name;
