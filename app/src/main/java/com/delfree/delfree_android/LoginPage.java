@@ -46,13 +46,6 @@ public class LoginPage extends Activity {
         });
     }
 
-    public static void ShowFragment(int resId, Fragment fragment, android.support.v4.app.FragmentManager fm) {
-        final FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(resId, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
     private void onBtnLogin () {
         Intent intent = new Intent(LoginPage.this, MainActivity.class);
         startActivity(intent);

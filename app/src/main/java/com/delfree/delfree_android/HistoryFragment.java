@@ -12,6 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.delfree.delfree_android.Adapter.HistoryAdapter;
+import com.delfree.delfree_android.Adapter.HomeAdapter;
+
+import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
 
 /**
@@ -19,6 +28,10 @@ import android.view.ViewGroup;
  */
 
 public class HistoryFragment extends Fragment {
+
+    private ListView listJobsHistory;
+    String[] itemHistory = new String[] {"WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019"};
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,21 +45,16 @@ public class HistoryFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                getActivity().onBackPressed();
-                FinishJobFragment finishJobFragment = new FinishJobFragment();
-                ShowFragment(R.id.fl_container, finishJobFragment, getFragmentManager());
-
+                getActivity().onBackPressed();
             }
         });
 
-        return view;
-    }
+        listJobsHistory=(ListView) view.findViewById(R.id.list);
 
-    public static void ShowFragment(int resId, Fragment fragment, android.support.v4.app.FragmentManager fm) {
-        final FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(resId, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        HistoryAdapter historyAdapter = new HistoryAdapter(getActivity(), R.layout.custom_item, itemHistory);
+        listJobsHistory.setAdapter(historyAdapter);
+
+        return view;
     }
 
     @Override

@@ -11,6 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.delfree.delfree_android.Adapter.DetailJobAdapter;
+import com.delfree.delfree_android.Adapter.HomeAdapter;
+
+import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
 
 /**
@@ -18,6 +26,9 @@ import android.view.ViewGroup;
  */
 
 public class DetailJobFragment extends Fragment {
+
+    private ListView listJobsById;
+    String[] dropPoint = new String[] {"Drop point 1: Bandung Timur", "Drop point 2: Bandung Selatan", "Drop point 3: Bandung Barat"};
 
     @Nullable
     @Override
@@ -35,6 +46,11 @@ public class DetailJobFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+
+        listJobsById = (ListView) view.findViewById(R.id.list_jobs);
+
+        DetailJobAdapter arrayAdapter = new DetailJobAdapter(getActivity(), R.layout.custom_item, dropPoint);
+        listJobsById.setAdapter(arrayAdapter);
 
         return view;
     }

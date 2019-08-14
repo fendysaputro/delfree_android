@@ -1,4 +1,4 @@
-package com.delfree.delfree_android;
+package com.delfree.delfree_android.Model;
 
 
 /**

@@ -2,6 +2,8 @@ package com.delfree.delfree_android;
 
 import android.app.Application;
 
+import com.delfree.delfree_android.Model.User;
+
 /**
  * Created by phephen on 6/8/19.
  */

@@ -11,6 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
 
 /**
@@ -18,6 +22,9 @@ import android.view.ViewGroup;
  */
 
 public class FinishJobFragment extends Fragment {
+
+    Button doneBtn;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,6 +42,14 @@ public class FinishJobFragment extends Fragment {
             }
         });
 
+        doneBtn = (Button) view.findViewById(R.id.doneButton);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onDoneButton();
+            }
+        });
+
         return view;
     }
 
@@ -42,5 +57,10 @@ public class FinishJobFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+    }
+
+    public void onDoneButton(){
+        HistoryFragment historyFragment = new HistoryFragment();
+        ShowFragment(R.id.fl_container, historyFragment, getFragmentManager());
     }
 }

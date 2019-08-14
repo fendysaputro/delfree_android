@@ -31,11 +31,30 @@
         android:id="@+id/detail_job"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="ini detail job"
+        android:text="WO No. 124/7A/VI/2019"
         android:textSize="20dp"
+        android:layout_gravity="center_horizontal"
         android:gravity="left"
         android:paddingLeft="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="70dp"
         android:textColor="@color/textColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="110dp"
+        android:background="@color/littleBack"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/list_jobs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:background="@color/cameraTransparent">
+        </ListView>
+
+    </LinearLayout>
 
 </FrameLayout>
