@@ -23,6 +23,10 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by phephen on 6/8/19.
  */
@@ -52,6 +56,10 @@ public class GpsTracking extends AppCompatActivity implements  GoogleApiClient.C
 
 //        mLatitudeTextView = (TextView) findViewById((R.id.latitude_textview));
 //        mLongitudeTextView = (TextView) findViewById((R.id.longitude_textview));
+
+        String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
+//        TextView date  = (TextView) findViewById(R.id.date);
+//        date.setText(date_n);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
