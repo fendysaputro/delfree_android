@@ -10,6 +10,10 @@ import android.util.Log;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Created by phephen on 6/8/19.
+ */
+
 public class SentDataService extends Service {
 
     public int counter=0;
