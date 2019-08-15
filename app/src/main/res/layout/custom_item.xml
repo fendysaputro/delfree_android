@@ -15,6 +15,20 @@
         android:textColor="@color/textColor"
         android:background="@color/cameraTransparent"/>
 
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/cameraTransparent"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="-30dp"
+        android:paddingLeft="20dp"
+        android:text="18 Aug 2019"
+        android:textSize="15sp"
+        />
+
     <ImageButton
         android:id="@+id/iconList"
         android:layout_width="wrap_content"
