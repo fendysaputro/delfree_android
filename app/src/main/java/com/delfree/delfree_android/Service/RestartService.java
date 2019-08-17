@@ -14,6 +14,6 @@ public class RestartService extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i(RestartService.class.getSimpleName(), "Service Stops! Oooooooooooooppppssssss!!!!");
-        context.startService(new Intent(context, SentDataService.class));;
+        context.startService(new Intent(context, SentDataService.class));
     }
 }

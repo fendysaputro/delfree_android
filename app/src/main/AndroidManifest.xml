@@ -28,6 +28,7 @@
             android:theme="@style/CustomActionBarTheme">
         </activity>
         <activity android:name=".ForgotPasswordPage"></activity>
+        <activity android:name=".GpsTracking"></activity>
         <service android:name=".Service.SentDataService"
             android:enabled="true">
         </service>

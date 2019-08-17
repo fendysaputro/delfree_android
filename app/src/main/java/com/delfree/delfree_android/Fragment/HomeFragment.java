@@ -1,5 +1,6 @@
 package com.delfree.delfree_android.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +14,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.delfree.delfree_android.Adapter.HomeAdapter;
+import com.delfree.delfree_android.ForgotPasswordPage;
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
+import com.delfree.delfree_android.GpsTracking;
+import com.delfree.delfree_android.LoginPage;
 import com.delfree.delfree_android.R;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
@@ -37,15 +41,6 @@ public class HomeFragment extends Fragment {
 
         HomeAdapter arrayAdapter = new HomeAdapter(getActivity(), R.layout.custom_item, items);
         listJobs.setAdapter(arrayAdapter);
-
-        listJobs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DetailJobFragment detailJobFragment = new DetailJobFragment();
-                ShowFragment(R.id.fl_container, detailJobFragment, getFragmentManager());
-                Toast.makeText(getContext(), "ini tests", Toast.LENGTH_LONG).show();
-            }
-        });
 
         return view;
     }

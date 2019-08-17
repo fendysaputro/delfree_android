@@ -57,7 +57,8 @@ public class GpsTracking extends AppCompatActivity implements  GoogleApiClient.C
 //        mLatitudeTextView = (TextView) findViewById((R.id.latitude_textview));
 //        mLongitudeTextView = (TextView) findViewById((R.id.longitude_textview));
 
-        String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
+        String date_n = new SimpleDateFormat("MM:dd:yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
+        Log.i("current date", date_n);
 //        TextView date  = (TextView) findViewById(R.id.date);
 //        date.setText(date_n);
 
