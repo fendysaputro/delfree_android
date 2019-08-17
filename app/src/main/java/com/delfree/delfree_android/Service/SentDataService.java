@@ -37,7 +37,7 @@ public class SentDataService extends Service implements
     private long FASTEST_INTERVAL = 2000; /* 5 minutes */
     double lati = 0;
     double longi = 0;
-    public static ArrayList<Tracking> tracks;
+//    public static ArrayList<Tracking> tracks;
 
     @Override
     public void onCreate() {
@@ -100,18 +100,14 @@ public class SentDataService extends Service implements
         longi = location.getLongitude();
 
         DbHelper dB = new DbHelper(this);
-        final String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
+        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
         dB.insertTracking(date, lati, longi);
 
-//        Toast.makeText(this, "data" + dB, Toast.LENGTH_LONG).show();
-//        Bundle extras = getIntent().getExtras();
-//        int Value = extras.getInt("id");
-//
-//        Tracking rs = dB.getTracking(Value);
-
-        DbHelper db = new DbHelper(this);
-        tracks = db.getAllTracking();
-        Log.i("ini data", tracks.toString());
+        int id = dB.getAllTracking().get(1).getId();
+        date = dB.getAllTracking().get(1).getDate();
+        Double latitude = dB.getAllTracking().get(1).getLocation_lat();
+        Double longitude = dB.getAllTracking().get(1).getLocation_long();
+        Log.i("ini data", "id= " + id + " " + "date= " + date + " " + "latitude= " + latitude.toString() + " " + "longitude= " + longitude.toString());
 
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
     }
