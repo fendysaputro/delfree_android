@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -13,11 +14,18 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.delfree.delfree_android.DbHelper;
+import com.delfree.delfree_android.MainActivity;
+import com.delfree.delfree_android.Model.Tracking;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class SentDataService extends Service implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
@@ -27,6 +35,9 @@ public class SentDataService extends Service implements
     private static final String LOGSERVICE = "#######";
     private long UPDATE_INTERVAL = 2 * 1000;  /* 5 minutes */
     private long FASTEST_INTERVAL = 2000; /* 5 minutes */
+    double lati = 0;
+    double longi = 0;
+    public static ArrayList<Tracking> tracks;
 
     @Override
     public void onCreate() {
@@ -42,7 +53,6 @@ public class SentDataService extends Service implements
 
         if (!mGoogleApiClient.isConnected())
             mGoogleApiClient.connect();
-
         return START_STICKY;
     }
 
@@ -85,6 +95,24 @@ public class SentDataService extends Service implements
         Log.i(LOGSERVICE, "lat " + location.getLatitude());
         Log.i(LOGSERVICE, "lng " + location.getLongitude());
         LatLng mLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
+        lati = location.getLatitude();
+        longi = location.getLongitude();
+
+        DbHelper dB = new DbHelper(this);
+        final String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
+        dB.insertTracking(date, lati, longi);
+
+//        Toast.makeText(this, "data" + dB, Toast.LENGTH_LONG).show();
+//        Bundle extras = getIntent().getExtras();
+//        int Value = extras.getInt("id");
+//
+//        Tracking rs = dB.getTracking(Value);
+
+        DbHelper db = new DbHelper(this);
+        tracks = db.getAllTracking();
+        Log.i("ini data", tracks.toString());
+
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
     }
 
@@ -117,7 +145,9 @@ public class SentDataService extends Service implements
 
     private void startLocationUpdate() {
         initLocationRequest();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -142,5 +172,13 @@ public class SentDataService extends Service implements
                 .addApi(LocationServices.API)
                 .build();
     }
+
+//    private void saveData () {
+//        DbHelper dB = new DbHelper(this);
+//        final String date = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+//        lati = mLocation.getLatitude();
+//        longi = mLocation.getLongitude();
+//        dB.insertTracking(date, lati, longi);
+//    }
 
 }

@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.delfree.delfree_android.Model.Tracking;
 
+import java.util.ArrayList;
+
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "com_batavree.db";
@@ -46,20 +48,31 @@ public class DbHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Integer deleteTracking(Integer id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(GPSTRACKING_TABLE_NAME,
-                "id = ? ",
-                new String[] { Integer.toString(id) });
-    }
-
-    public Tracking getTracking(int id){
+    public Tracking getTracking(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("select * from"+GPSTRACKING_TABLE_NAME+" where id="+id+"", null);
-        Tracking retTracking = new Tracking(res.getInt(res.getColumnIndex(TRACKING_COLUMN_ID)),
+        Cursor res =  db.rawQuery( "select * from tracking where id="+id+"", null );
+        Tracking retTrack = new Tracking(res.getInt(res.getColumnIndex(TRACKING_COLUMN_ID)),
                 res.getString(res.getColumnIndex(TRACKING_COLUMN_DATE)),
                 res.getDouble(res.getColumnIndex(TRACKING_COLUMN_LOCATION_LAT)),
                 res.getDouble(res.getColumnIndex(TRACKING_COLUMN_LOCATION_LONG)));
-        return retTracking;
+        Log.i("ini data", res.toString());
+        return retTrack;
+    }
+
+    public ArrayList<Tracking> getAllTracking(){
+        ArrayList<Tracking> array_list = new ArrayList<Tracking>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from " + GPSTRACKING_TABLE_NAME, null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            array_list.add(new Tracking(res.getInt(res.getColumnIndex(TRACKING_COLUMN_ID)),
+                    res.getString(res.getColumnIndex(TRACKING_COLUMN_DATE)),
+                    res.getDouble(res.getColumnIndex(TRACKING_COLUMN_LOCATION_LAT)),
+                    res.getDouble(res.getColumnIndex(TRACKING_COLUMN_LOCATION_LONG))));
+            res.moveToNext();
+        }
+        return array_list;
     }
 }
