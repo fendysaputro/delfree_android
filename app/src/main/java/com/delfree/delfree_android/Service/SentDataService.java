@@ -168,13 +168,4 @@ public class SentDataService extends Service implements
                 .addApi(LocationServices.API)
                 .build();
     }
-
-//    private void saveData () {
-//        DbHelper dB = new DbHelper(this);
-//        final String date = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-//        lati = mLocation.getLatitude();
-//        longi = mLocation.getLongitude();
-//        dB.insertTracking(date, lati, longi);
-//    }
-
 }
