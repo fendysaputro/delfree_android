@@ -29,10 +29,14 @@ import com.delfree.delfree_android.Fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    App app;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        requestPermission();
 
         loadFragment(new HomeFragment());
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return loadFragment(fragment);
     }
 
-    private void requestPermission(){
+    public void requestPermission(){
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {

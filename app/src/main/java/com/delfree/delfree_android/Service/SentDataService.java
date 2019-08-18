@@ -33,8 +33,8 @@ public class SentDataService extends Service implements
     private GoogleApiClient mGoogleApiClient;
     private Location mLocation;
     private static final String LOGSERVICE = "#######";
-    private long UPDATE_INTERVAL = 2 * 1000;  /* 5 minutes */
-    private long FASTEST_INTERVAL = 2000; /* 5 minutes */
+    private long UPDATE_INTERVAL = 50 * 1000;  /* 5 minutes */
+    private long FASTEST_INTERVAL = 20000; /* 2 minutes */
     double lati = 0;
     double longi = 0;
 //    public static ArrayList<Tracking> tracks;
@@ -103,11 +103,11 @@ public class SentDataService extends Service implements
         String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
         dB.insertTracking(date, lati, longi);
 
-        int id = dB.getAllTracking().get(1).getId();
-        date = dB.getAllTracking().get(1).getDate();
-        Double latitude = dB.getAllTracking().get(1).getLocation_lat();
-        Double longitude = dB.getAllTracking().get(1).getLocation_long();
-        Log.i("ini data", "id= " + id + " " + "date= " + date + " " + "latitude= " + latitude.toString() + " " + "longitude= " + longitude.toString());
+//        int id = dB.getAllTracking().get(1).getId();
+//        date = dB.getAllTracking().get(1).getDate();
+//        Double latitude = dB.getAllTracking().get(1).getLocation_lat();
+//        Double longitude = dB.getAllTracking().get(1).getLocation_long();
+//        Log.i("ini data", "id= " + id + " " + "date= " + date + " " + "latitude= " + latitude.toString() + " " + "longitude= " + longitude.toString());
 
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
     }
@@ -132,9 +132,9 @@ public class SentDataService extends Service implements
 
     @SuppressLint("RestrictedApi")
     private void initLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(2000);
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
     }

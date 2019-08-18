@@ -39,6 +39,19 @@
         android:textColor="@color/textColor"
         android:textSize="20dp" />
 
+    <ImageView
+        android:id="@+id/IdimageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:layout_marginBottom="190dp"
+        android:background="#ccc"
+        android:gravity="center"
+        android:padding="5dp"
+        android:visibility="invisible"/>
+
     <LinearLayout
         android:id="@+id/LlCamera"
         android:layout_width="wrap_content"
@@ -67,6 +80,7 @@
             android:gravity="center"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="160dp"
+            android:enabled="false"
             android:background="@drawable/radio_border"
             android:text="@string/done_button" />
 
