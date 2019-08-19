@@ -49,6 +49,9 @@ public class App extends Application {
     }
 
     public void setImage(Bitmap image) {
+        if (this.image == null){
+            this.image = Bitmap.createBitmap(0, 0, Bitmap.Config.ARGB_8888);
+        }
         this.image = image;
     }
 }

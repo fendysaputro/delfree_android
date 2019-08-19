@@ -40,7 +40,7 @@
         android:textSize="20dp" />
 
     <ImageView
-        android:id="@+id/IdimageView"
+        android:id="@+id/imView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"

@@ -14,6 +14,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 import com.delfree.delfree_android.App;
 import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.R;
+import com.delfree.delfree_android.Service.SentDataService;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,15 +69,15 @@ public class FinishJobFragment extends Fragment {
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
         toolbar.setNavigationIcon(R.drawable.back);
 
-        app = this.app;
-        imageView = (ImageView) view.findViewById(R.id.IdimageView);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                getActivity().onBackPressed();
             }
         });
+
+        app = this.app;
+        imageView = (ImageView) view.findViewById(R.id.imView);
 
         cameraButton = (Button) view.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -104,13 +107,17 @@ public class FinishJobFragment extends Fragment {
 
     public void onDoneButton(){
         HistoryFragment historyFragment = new HistoryFragment();
-        ShowFragment(R.id.fl_container, historyFragment, getFragmentManager());
+        Activity activity = (Activity) getContext();
+        FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
+        ShowFragment(R.id.fl_container, historyFragment,fragmentManager);
+        getContext().stopService(new Intent(getContext(), SentDataService.class));
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK && data != null){
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK){
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
+//            app.setImage(photo);
             imageView.setVisibility(View.VISIBLE);
             cameraButton.setEnabled(false);
             cameraButton.setVisibility(View.INVISIBLE);
