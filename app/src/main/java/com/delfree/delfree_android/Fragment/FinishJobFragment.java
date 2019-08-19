@@ -55,13 +55,6 @@ public class FinishJobFragment extends Fragment {
         // Required empty public constructor
     }
 
-//    private void setImagePreview(){
-//        Bitmap bmp = BitmapFactory.decodeFile(app.getImageFile().getPath());
-//        imageView.setImageBitmap(bmp);
-//        imageView.setVisibility(View.VISIBLE);
-//        doneBtn.setEnabled(false);
-//    }
-
 
     @Nullable
     @Override
@@ -79,7 +72,7 @@ public class FinishJobFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().onBackPressed();
+//                getActivity().onBackPressed();
             }
         });
 
@@ -114,74 +107,13 @@ public class FinishJobFragment extends Fragment {
         ShowFragment(R.id.fl_container, historyFragment, getFragmentManager());
     }
 
-//    private void takePhoto(String mediaType, int codeRequest){
-//        Intent takeMediaIntent = new Intent(mediaType);
-//        if (takeMediaIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-//            try {
-//                if (codeRequest == REQUEST_IMAGE_CAPTURE) {
-//                    photoFile = createImageFile();
-//                    Log.i("batavree", "fotofile " + photoFile.getAbsolutePath());
-//                    if (photoFile != null) {
-//                        Uri photoURI = FileProvider.getUriForFile(getActivity(),
-//                                "com.delfree.delfree_android",
-//                                photoFile);
-//                        Log.i("batavree", "fotofileUri " + photoURI.getPath());
-////                        Uri photoURI = Uri.fromFile(photoFile);
-//                        takeMediaIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                        startActivityForResult(takeMediaIntent, codeRequest);
-//                        Log.i("batavree", photoFile.getName());
-//                    }
-//                }
-//            } catch (IOException ex) {
-//                Log.e("amg", ex.getMessage());
-//            }
-//        }
-//    }
-//
-//    String mCurrentPhotoPath;
-//
-//    private File createImageFile() throws IOException {
-//        // Create an image file name
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        String imageFileName = "JPEG_" + timeStamp + "_";
-//        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        File image = File.createTempFile(
-//                imageFileName,  /* prefix */
-//                ".jpg",         /* suffix */
-//                storageDir      /* directory */
-//        );
-//
-//        mCurrentPhotoPath = image.getAbsolutePath();
-//        return image;
-//    }
-
-//    private void dispatchTakePictureIntent() {
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//        }
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if (permissions.length == 1 && permissions[0] == Manifest.permission.CAMERA && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
-//                    PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
-//                    Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//
-//                return;
-//            }
-//        } else {
-//        }
-//    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK && data != null){
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
             imageView.setVisibility(View.VISIBLE);
-//            app.setImage(photo);
             cameraButton.setEnabled(false);
+            cameraButton.setVisibility(View.INVISIBLE);
             doneBtn.setEnabled(true);
         }
     }
