@@ -47,7 +47,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(TRACKING_COLUMN_DATE, date);
         contentValues.put(TRACKING_COLUMN_LOCATION_LAT, location_lat);
         contentValues.put(TRACKING_COLUMN_LOCATION_LONG, location_long);
-        Log.i("AMG", contentValues.toString());
+        Log.i("Batavree", contentValues.toString());
         db.insert(GPSTRACKING_TABLE_NAME, null, contentValues);
         return true;
     }

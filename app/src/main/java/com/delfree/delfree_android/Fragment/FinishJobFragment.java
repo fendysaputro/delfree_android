@@ -49,6 +49,7 @@ public class FinishJobFragment extends Fragment {
     ImageView imageView;
     File photoFile = null;
     App app;
+    private static final int CAMERA_REQUEST =123;
 
     public FinishJobFragment() {
         // Required empty public constructor
@@ -73,6 +74,7 @@ public class FinishJobFragment extends Fragment {
         toolbar.setNavigationIcon(R.drawable.back);
 
         app = this.app;
+        imageView = (ImageView) view.findViewById(R.id.IdimageView);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,8 +87,8 @@ public class FinishJobFragment extends Fragment {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 0);
+                Intent startCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
+                startActivityForResult(startCamera, CAMERA_REQUEST);
             }
         });
 
@@ -111,39 +113,6 @@ public class FinishJobFragment extends Fragment {
         HistoryFragment historyFragment = new HistoryFragment();
         ShowFragment(R.id.fl_container, historyFragment, getFragmentManager());
     }
-
-//    private void requestPermission (){
-//
-//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.INTERNET)
-//                == PackageManager.PERMISSION_GRANTED) {
-//        } else {
-//            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.INTERNET}, 5);
-//        }
-//
-//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                == PackageManager.PERMISSION_GRANTED) {
-//        } else {
-//            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 6);
-//        }
-//
-//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
-//                == PackageManager.PERMISSION_GRANTED) {
-//        } else {
-//            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA}, 7);
-//        }
-//
-//        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.RECORD_AUDIO)
-//                == PackageManager.PERMISSION_GRANTED) {
-//        } else {
-//            ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.RECORD_AUDIO}, 8);
-//        }
-//
-//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
-//                == PackageManager.PERMISSION_GRANTED) {
-//        } else {
-//            ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
-//        }
-//    }
 
 //    private void takePhoto(String mediaType, int codeRequest){
 //        Intent takeMediaIntent = new Intent(mediaType);
@@ -193,11 +162,27 @@ public class FinishJobFragment extends Fragment {
 //        }
 //    }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            Bitmap bp = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(bp);
-            app.setImage(bp);
-            doneBtn.setEnabled(true);
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        if (permissions.length == 1 && permissions[0] == Manifest.permission.CAMERA && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
+//                    PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
+//                    Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//
+//                return;
+//            }
+//        } else {
+//        }
+//    }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK && data != null){
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(photo);
+            imageView.setVisibility(View.VISIBLE);
+//            app.setImage(photo);
+            cameraButton.setEnabled(false);
+            doneBtn.setEnabled(true);
+        }
     }
 }
