@@ -13,6 +13,7 @@
 
 
     <application
+        android:name=".AppDelfree"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/title_header"

@@ -2,7 +2,9 @@ package com.delfree.delfree_android;
 
 import android.app.Application;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.delfree.delfree_android.Model.User;
 
@@ -12,13 +14,14 @@ import java.io.File;
  * Created by phephen on 6/8/19.
  */
 
-public class App extends Application {
+public class AppDelfree extends Application {
 
     private String baseUrl = "";
     boolean login;
     User user;
     File imageFile;
     private Bitmap image;
+    boolean picture;
 
     public boolean isLogin() {
         return login;
@@ -49,10 +52,15 @@ public class App extends Application {
     }
 
     public void setImage(Bitmap image) {
-        if (this.image == null){
-            this.image = Bitmap.createBitmap(0, 0, Bitmap.Config.ARGB_8888);
-        }
         this.image = image;
+    }
+
+    public boolean isPicture() {
+        return picture;
+    }
+
+    public void setPicture(boolean picture) {
+        this.picture = picture;
     }
 }
 

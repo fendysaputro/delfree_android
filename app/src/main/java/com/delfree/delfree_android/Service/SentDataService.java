@@ -3,10 +3,13 @@ package com.delfree.delfree_android.Service;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -26,6 +29,11 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+/**
+ * Created by phephen on 6/8/19.
+ */
+
 
 public class SentDataService extends Service implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
@@ -138,6 +146,29 @@ public class SentDataService extends Service implements
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
     }
+
+//    public void getLastLocation(){
+//        LolocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+//        Criteria criteria = new Criteria();
+//        provider = locationManager.getBestProvider(criteria, false);
+//        Log.i("amg", "ini provider " + provider);
+//        if(provider == null){
+//            requestPermission();
+//            return;
+//        }
+//        Location location = null;
+//        try {
+//            location = locationManager.getLastKnownLocation(provider);
+//        } catch (SecurityException e){
+//
+//        }
+//        if (location != null) {
+//            System.out.println("Provider " + provider + " has been selected.");
+//            onLocationChanged(location);
+//        } else {
+//            Log.i("AMG", "Location not available");
+//        }
+//    }
 
     private void startLocationUpdate() {
         initLocationRequest();

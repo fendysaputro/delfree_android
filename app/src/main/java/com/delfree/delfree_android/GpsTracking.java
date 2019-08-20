@@ -177,7 +177,7 @@ public class GpsTracking extends AppCompatActivity implements  GoogleApiClient.C
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Enable Location")
                 .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
-                        "use this app")
+                        "use this appDelfree")
                 .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface paramDialogInterface, int paramInt) {

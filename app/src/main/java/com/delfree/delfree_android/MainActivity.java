@@ -1,7 +1,6 @@
 package com.delfree.delfree_android;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -29,7 +28,7 @@ import com.delfree.delfree_android.Fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    App app;
+    AppDelfree appDelfree;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
