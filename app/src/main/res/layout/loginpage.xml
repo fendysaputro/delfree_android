@@ -18,13 +18,13 @@
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/editTextPhone"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#FFFFFF"
         android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
+        android:hint="Phone"
+        android:inputType="textPhonetic"
         android:paddingLeft="20dp"
         android:layout_marginTop="50dp"
         android:textSize="20dp"
@@ -51,9 +51,9 @@
         android:textColor="@color/cardview_dark_background"
         android:inputType="textPassword"
         android:textSize="20dp"
-        android:layout_below="@+id/editTextUsername"
-        android:layout_alignLeft="@+id/editTextUsername"
-        android:layout_alignStart="@+id/editTextUsername" />
+        android:layout_below="@+id/editTextPhone"
+        android:layout_alignLeft="@+id/editTextPhone"
+        android:layout_alignStart="@+id/editTextPhone" />
 
     <Button
         android:id="@+id/loginBtn"

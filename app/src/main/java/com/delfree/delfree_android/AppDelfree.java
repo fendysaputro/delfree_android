@@ -1,14 +1,19 @@
 package com.delfree.delfree_android;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.delfree.delfree_android.Model.User;
+import com.delfree.delfree_android.Model.Driver;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+
+import static android.media.MediaCodec.MetricsConstants.MODE;
 
 /**
  * Created by phephen on 6/8/19.
@@ -18,12 +23,31 @@ public class AppDelfree extends Application {
 
     private String baseUrl = "";
     boolean login;
-    User user;
+    Driver driver;
     File imageFile;
     private Bitmap image;
     boolean picture;
+    public static String HOST = "http://api.batavree.com/apis/v1/";
+    public static String LOGIN_PATH = "driver/authenticate";
 
-    public boolean isLogin() {
+
+    public boolean isLogin(Activity activity, int MODE) {
+
+        SharedPreferences sharedPref = activity.getPreferences(MODE);
+        String driverString = sharedPref.getString("batavree", "");
+        if(driverString.isEmpty()){
+            login = false;
+        } else {
+            login = true;
+            try {
+                JSONObject driverObj = new JSONObject(driverString);
+                driver = new Driver(driverObj.getString("name"),driverObj.getString("phone"),
+                        driverObj.getString("address"),driverObj.getString("simNumber"),
+                        driverObj.getString("simExpired"),driverObj.getString("token"));
+            } catch (JSONException es){
+                Log.e("amg", es.getMessage());
+            }
+        }
         return login;
     }
 
@@ -31,12 +55,12 @@ public class AppDelfree extends Application {
         this.login = login;
     }
 
-    public User getUser() {
-        return user;
+    public Driver getDriver() {
+        return driver;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     public File getImageFile() {
