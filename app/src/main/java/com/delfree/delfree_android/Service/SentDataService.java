@@ -45,6 +45,8 @@ public class SentDataService extends Service implements
     private long FASTEST_INTERVAL = 20000; /* 2 minutes */
     double lati = 0;
     double longi = 0;
+    private LocationManager mlocationManager;
+    private String provider;
 //    public static ArrayList<Tracking> tracks;
 
     @Override
@@ -85,6 +87,7 @@ public class SentDataService extends Service implements
         mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (mLocation != null) {
+            getLastLocation();
             Log.i(LOGSERVICE, "lat " + mLocation.getLatitude());
             Log.i(LOGSERVICE, "lng " + mLocation.getLongitude());
         }
@@ -147,28 +150,40 @@ public class SentDataService extends Service implements
 
     }
 
-//    public void getLastLocation(){
-//        LolocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-//        Criteria criteria = new Criteria();
-//        provider = locationManager.getBestProvider(criteria, false);
-//        Log.i("amg", "ini provider " + provider);
-//        if(provider == null){
-//            requestPermission();
-//            return;
-//        }
-//        Location location = null;
-//        try {
-//            location = locationManager.getLastKnownLocation(provider);
-//        } catch (SecurityException e){
-//
-//        }
-//        if (location != null) {
-//            System.out.println("Provider " + provider + " has been selected.");
-//            onLocationChanged(location);
-//        } else {
-//            Log.i("AMG", "Location not available");
-//        }
-//    }
+    public void getLastLocation(){
+        mlocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        provider = mlocationManager.getBestProvider(criteria, false);
+        Log.i("amg", "ini provider " + provider);
+        if(provider == null){
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            return;
+        }
+
+        Location location = null;
+        try {
+            location = mlocationManager.getLastKnownLocation(provider);
+        } catch (SecurityException e){
+
+        }
+        if (location != null) {
+            System.out.println("Provider " + provider + " has been selected.");
+            onLocationChanged(location);
+        } else {
+            Log.i("AMG", "Location not available");
+        }
+    }
 
     private void startLocationUpdate() {
         initLocationRequest();

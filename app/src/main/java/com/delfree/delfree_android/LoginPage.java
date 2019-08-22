@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,7 @@ public class LoginPage extends Activity {
     TextView forgotPassword;
     AppDelfree appDelfree;
     Context context;
+    APIService mService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,14 @@ public class LoginPage extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBtnLogin();
+                String phone = edPhone.getText().toString().trim();
+                String password = edPassword.getText().toString().trim();
+                onBtnLogin(edPhone.getText().toString().trim(), edPassword.getText().toString().trim());
+                if(!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password)) {
+                    onBtnLogin(phone, password);
+                } else {
+                    Toast.makeText(getApplicationContext(), "phone or password can't be empty", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -66,39 +75,49 @@ public class LoginPage extends Activity {
             }
         });
 
+        mService = ApiUtils.getAPIService();
+
     }
 
-    private void onBtnLogin () {
-        AsyncHttpTask mAuthTask = new AsyncHttpTask("phone="+edPhone.getText()+"&password="+edPassword.getText());
-        mAuthTask.execute(AppDelfree.HOST + AppDelfree.LOGIN_PATH, "POST");
-        mAuthTask.setHttpResponseListener(new OnHttpResponseListener() {
-            @Override
-            public void OnHttpResponse(String response) {
-                Log.i("batavree", "ini response " + response);
-                try {
-                    JSONObject resObj = new JSONObject(response);
-                    if (resObj.getBoolean("r")){
-                        JSONObject dataObj = new JSONObject("d");
-                        appDelfree.setLogin(true);
-                        Driver driver = new Driver(dataObj.getString("name"), dataObj.getString("phone"), dataObj.getString("address"),
-                                dataObj.getString("simNumber"), dataObj.getString("simExpired"), dataObj.getString("token"));
-                        appDelfree.setDriver(driver);
+    private void onBtnLogin (String phone, String password) {
+        mService.driverLogin(phone, password)
+                .enqueue(new Callback<Driver>() {
+                    @Override
+                    public void onResponse(Call<Driver> call, Response<Driver> res) {
+                        Log.i("batavree", "ini response" + res);
+                        if (res.isSuccessful()){
+                            JSONObject resObj = new JSONObject();
+                            Log.i("batavree", "ini json" + resObj);
+                            try {
 
-                        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("batavree", 0);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("batavree", dataObj.toString());
-                        editor.commit();
-                        Intent intent = new Intent(LoginPage.this, MainActivity.class);
-                        startActivity(intent);
+                                if (resObj.getBoolean("r")){
+                                    JSONObject dataObj = new JSONObject("d");
+                                    appDelfree.setLogin(true);
+                                    Driver driver = new Driver(dataObj.getString("name"), dataObj.getString("phone"), dataObj.getString("address"),
+                                            dataObj.getString("simNumber"), dataObj.getString("simExpired"), dataObj.getString("token"));
+                                    appDelfree.setDriver(driver);
 
-                    } else {
-                        Toast.makeText(getApplicationContext(), resObj.getString("m"), Toast.LENGTH_LONG).show();
+                                    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("batavree", 0);
+                                    SharedPreferences.Editor editor = sharedPref.edit();
+                                    editor.putString("batavree", dataObj.toString());
+                                    editor.commit();
+                                    Intent intent = new Intent(LoginPage.this, MainActivity.class);
+                                    startActivity(intent);
+
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "ini error", Toast.LENGTH_LONG).show();
+                            }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                } catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-        });
+
+                    @Override
+                    public void onFailure(Call<Driver> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void onForgotPassword() {

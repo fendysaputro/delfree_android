@@ -11,17 +11,17 @@ import java.util.Date;
 
 public class Driver {
 
-//    @SerializedName("name")
+    @SerializedName("name")
     private String name;
-//    @SerializedName("phone")
+    @SerializedName("phone")
     private String phone;
-//    @SerializedName("address")
+    @SerializedName("address")
     private String address;
-//    @SerializedName("sim_number")
+    @SerializedName("sim_number")
     private String simNumber;
-//    @SerializedName("sim_expired")
+    @SerializedName("sim_expired")
     private String simExpired;
-//    @SerializedName("token")
+    @SerializedName("token")
     private String token;
 
     public Driver(String name, String phone, String address, String simNumber, String simExpired, String token){
@@ -80,5 +80,19 @@ public class Driver {
     public void setToken(String token) {
         this.token = token;
     }
+
+    @Override
+    public String toString(){
+        return
+                "Driver{" +
+                        "name = '" + name + '\'' +
+                        ",phone = '" + phone + '\'' +
+                        ",address = '" + address + '\'' +
+                        ",simNumber = '" + simNumber + '\'' +
+                        ",simExpired = '" + simExpired + '\'' +
+                        ",token = '" + token + '\'' +
+                        "}";
+    }
+
 }
 
