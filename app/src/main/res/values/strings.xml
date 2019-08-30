@@ -12,6 +12,8 @@
     <string name="driver_name">Name : Fendy Saputro</string>
     <string name="sim_no">SIM No : 123456789</string>
     <string name="driver_address">Address : Jalan Petojo Sabangan gg 1</string>
+    <string name="sign_in">Sign In</string>
+    <string name="save">Save</string>
 
     <string-array name="jobs">
         <item>WO No. 124/7A/VI/2019</item>

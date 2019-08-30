@@ -16,14 +16,14 @@ import android.widget.Toast;
 public class ForgotPasswordPage extends Activity {
 
     Button btnSave;
-    EditText edUsername, edNewPassword, edConfirmPassword;
+    EditText edPhone, edNewPassword, edConfirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgotpasswordpage);
 
-        edUsername = (EditText) findViewById(R.id.editTextUsername);
+        edPhone = (EditText) findViewById(R.id.editTextPhone);
         edNewPassword = (EditText) findViewById(R.id.eTNewPassword);
         edConfirmPassword = (EditText) findViewById(R.id.eTConfirmPassword);
 

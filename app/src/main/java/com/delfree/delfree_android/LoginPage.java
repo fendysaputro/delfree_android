@@ -19,11 +19,18 @@ import com.delfree.delfree_android.Model.Driver;
 import com.delfree.delfree_android.Network.APIService;
 import com.delfree.delfree_android.Network.ApiUtils;
 import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.HttpHandler;
+import com.delfree.delfree_android.Network.OnHttpCancel;
 import com.delfree.delfree_android.Network.OnHttpResponseListener;
+import com.delfree.delfree_android.Network.RetrofitClient;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Observable;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,7 +53,7 @@ public class LoginPage extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginpage);
 
-        appDelfree = (AppDelfree) getBaseContext().getApplicationContext();
+        appDelfree = (AppDelfree) getApplication();
         context = getApplicationContext();
 
         edPhone = findViewById(R.id.editTextPhone);
@@ -58,9 +65,8 @@ public class LoginPage extends Activity {
             public void onClick(View view) {
                 String phone = edPhone.getText().toString().trim();
                 String password = edPassword.getText().toString().trim();
-                onBtnLogin(edPhone.getText().toString().trim(), edPassword.getText().toString().trim());
                 if(!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password)) {
-                    onBtnLogin(phone, password);
+                    onBtnLogin();
                 } else {
                     Toast.makeText(getApplicationContext(), "phone or password can't be empty", Toast.LENGTH_LONG).show();
                 }
@@ -79,43 +85,17 @@ public class LoginPage extends Activity {
 
     }
 
-    private void onBtnLogin (String phone, String password) {
-        mService.driverLogin(phone, password)
-                .enqueue(new Callback<Driver>() {
+    private void onBtnLogin(){
+        mService.driverLogin(edPhone.getText().toString(), edPassword.getText().toString())
+                .enqueue(new Callback<ResponseBody>() {
                     @Override
-                    public void onResponse(Call<Driver> call, Response<Driver> res) {
-                        Log.i("batavree", "ini response" + res);
-                        if (res.isSuccessful()){
-                            JSONObject resObj = new JSONObject();
-                            Log.i("batavree", "ini json" + resObj);
-                            try {
-
-                                if (resObj.getBoolean("r")){
-                                    JSONObject dataObj = new JSONObject("d");
-                                    appDelfree.setLogin(true);
-                                    Driver driver = new Driver(dataObj.getString("name"), dataObj.getString("phone"), dataObj.getString("address"),
-                                            dataObj.getString("simNumber"), dataObj.getString("simExpired"), dataObj.getString("token"));
-                                    appDelfree.setDriver(driver);
-
-                                    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("batavree", 0);
-                                    SharedPreferences.Editor editor = sharedPref.edit();
-                                    editor.putString("batavree", dataObj.toString());
-                                    editor.commit();
-                                    Intent intent = new Intent(LoginPage.this, MainActivity.class);
-                                    startActivity(intent);
-
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "ini error", Toast.LENGTH_LONG).show();
-                            }
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Log.i("batavree", "response" + response);
                     }
 
                     @Override
-                    public void onFailure(Call<Driver> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "onFailure", Toast.LENGTH_LONG).show();
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
                     }
                 });
     }

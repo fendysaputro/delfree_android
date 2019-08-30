@@ -57,38 +57,46 @@
             android:background="@drawable/profile" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/driver_name"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="420dp"
-        android:gravity="left"
-        android:paddingLeft="20dp"
-        android:text="@string/driver_name"
-        android:textColor="@color/textColor"
-        android:textSize="20dp" />
+    <RelativeLayout
+        android:id="@+id/iLProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"
+        android:background="@color/littleBack" >
 
-    <TextView
-        android:id="@+id/sim_no"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="460dp"
-        android:gravity="left"
-        android:paddingLeft="20dp"
-        android:text="@string/sim_no"
-        android:textColor="@color/textColor"
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/driver_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="20dp"
+            android:text="@string/driver_name"
+            android:textColor="@color/textColor"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="500dp"
-        android:gravity="left"
-        android:paddingLeft="20dp"
-        android:text="@string/driver_address"
-        android:textColor="@color/textColor"
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/sim_no"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:text="@string/sim_no"
+            android:textColor="@color/textColor"
+            android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
+            android:gravity="left"
+            android:paddingLeft="20dp"
+            android:text="@string/driver_address"
+            android:textColor="@color/textColor"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
 
 </FrameLayout>

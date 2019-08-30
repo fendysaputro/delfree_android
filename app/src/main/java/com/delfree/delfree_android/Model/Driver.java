@@ -23,6 +23,8 @@ public class Driver {
     private String simExpired;
     @SerializedName("token")
     private String token;
+    @SerializedName("message")
+    private String message;
 
     public Driver(String name, String phone, String address, String simNumber, String simExpired, String token){
         this.name = name;
