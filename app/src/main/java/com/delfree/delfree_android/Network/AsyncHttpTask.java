@@ -9,22 +9,25 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Created by Phephen on 31/08/2019
+ */
 
-public class AsyncHttpTask extends AsyncTask<String, Void, String> {
+public class AsyncHttpTask extends AsyncTask<String, Void, String>{
 
     OnHttpResponseListener onHttpResponseListener;
     OnHttpCancel onHttpCancel;
     String data;
 
     public void setHttpResponseListener(OnHttpResponseListener listener) {
-        onHttpResponseListener = listener;
+        this.onHttpResponseListener = listener;
     }
 
-    public void setOnHttpCancel(OnHttpCancel onHttpCancel) {
+    public void setOnHttpCancel(OnHttpCancel onHttpCancel){
         this.onHttpCancel = onHttpCancel;
     }
 
-    public AsyncHttpTask(String data) {
+    public AsyncHttpTask(String data){
         this.data = data;
     }
 
@@ -34,64 +37,54 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
         try {
             String url = params[0];
             String method = params[1];
-            URL obj;
-            if (method.equals("POST")) {
-                obj = new URL(url);
-            } else {
-                obj = new URL(url + "?" + data);
-            }
-            Log.d("tracking", url+data);
+            URL obj = new URL(url);
+            Log.d("tracking", url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod(method);
             if (method.equals("POST")) {
-                con.setRequestProperty("Content-Type",
-                        "application/x-www-form-urlencoded; charset=UTF-8");
-                con.setRequestProperty("Content-Length", "" +
-                        Integer.toString(data.getBytes().length));
-                con.setUseCaches (false);
+                con.setRequestProperty("Content-Type", "application/z-www-form-urlencoded;charset=UTF-8");
+                con.setRequestProperty("Content-Lenght", "" + Integer.toString(data.getBytes().length));
+                con.setUseCaches(false);
                 con.setDoInput(true);
                 con.setDoOutput(true);
 
-                DataOutputStream wr = new DataOutputStream (
-                        con.getOutputStream ());
-                wr.writeBytes (data);
-                wr.flush ();
-                wr.close ();
+                DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+                wr.writeBytes(data);
+                wr.flush();
+                wr.close();
             }
             con.connect();
-            if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(con.getInputStream()));
+            if (con.getResponseCode() == HttpURLConnection.HTTP_OK){
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 String inputLine;
                 response = new StringBuffer();
-                while ((inputLine = in.readLine()) != null) {
+                while ((inputLine = in.readLine()) != null){
                     response.append(inputLine);
                 }
                 in.close();
             }
             con.disconnect();
-        } catch (Exception e) {
-            Log.d("tracking", "error AsyncHTTPTask: "+e.getMessage());
+        } catch (Exception e){
+            Log.d("tracking", "error AsyncHTTPTASK: "+e.getMessage());
         }
 
-        if (response != null) {
+        if (response != null){
             return response.toString();
-        }else{
+        } else {
             return "";
         }
-
     }
 
     @Override
     protected void onPostExecute(String result) {
-        if (onHttpResponseListener != null) {
+        if (onHttpResponseListener != null){
             onHttpResponseListener.OnHttpResponse(result);
         }
     }
 
     @Override
     protected void onCancelled() {
-        if (onHttpCancel != null) {
+        if (onHttpCancel != null){
             onHttpCancel.OnHttpCancel();
         }
     }

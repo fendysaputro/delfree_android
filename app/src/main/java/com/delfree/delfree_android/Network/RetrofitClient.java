@@ -16,23 +16,35 @@ public class RetrofitClient {
 
     public static Retrofit getClient(String baseUrl){
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                //here we can add Interceptor for dynamical adding headers
+                .addNetworkInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request().newBuilder()
+                                .addHeader("Content-Type", "application/x-www-form-urlencoded")
 
-//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(new CustomInterceptor()) // This is used to add ApplicationInterceptor.
-//                .addNetworkInterceptor(new CustomInterceptor()) //This is used to add NetworkInterceptor.
-//                .build();
+                                .build();
+                        return chain.proceed(request);
+                    }
+                })
+                //here we adding Interceptor for full level logging
+                .addNetworkInterceptor(new HttpLoggingInterceptor()
+                        .setLevel(HttpLoggingInterceptor.Level.BODY))
+                .build();
 
         if (retrofit == null){
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .client(client)
+                    .client(httpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+
+////            APIService client = retrofit.create(APIService.class);
         }
         return retrofit;
     }
 }
+
+
 

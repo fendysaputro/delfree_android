@@ -1,6 +1,7 @@
 package com.delfree.delfree_android;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.StrictMode;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        appDelfree = (AppDelfree) getApplication();
 
         if (android.os.Build.VERSION.SDK_INT > 9)
         {

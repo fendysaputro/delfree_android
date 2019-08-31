@@ -27,8 +27,10 @@ public class AppDelfree extends Application {
     File imageFile;
     private Bitmap image;
     boolean picture;
-    public static String HOST = "http://api.batavree.com/apis/v1/";
-    public static String LOGIN_PATH = "driver/authenticate";
+//    public static String HOST = "http://api.batavree.com/apis/v1/";
+//    public static String LOGIN_PATH = "driver/authenticate";
+    public static String HOST = "http://mms.amg.id/";
+    public static String LOGIN_PATH = "api/user/authenticate";
 
 
     public boolean isLogin(Activity activity, int MODE) {
@@ -43,7 +45,7 @@ public class AppDelfree extends Application {
                 JSONObject driverObj = new JSONObject(driverString);
                 driver = new Driver(driverObj.getString("name"),driverObj.getString("phone"),
                         driverObj.getString("address"),driverObj.getString("simNumber"),
-                        driverObj.getString("simExpired"),driverObj.getString("token"));
+                        driverObj.getString("simExpire"),driverObj.getString("token"));
             } catch (JSONException es){
                 Log.e("amg", es.getMessage());
             }

@@ -3,37 +3,24 @@ package com.delfree.delfree_android;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.delfree.delfree_android.Model.Driver;
 import com.delfree.delfree_android.Network.APIService;
 import com.delfree.delfree_android.Network.ApiUtils;
-import com.delfree.delfree_android.Network.AsyncHttpTask;
-import com.delfree.delfree_android.Network.HttpHandler;
-import com.delfree.delfree_android.Network.OnHttpCancel;
-import com.delfree.delfree_android.Network.OnHttpResponseListener;
-import com.delfree.delfree_android.Network.RetrofitClient;
-import com.google.gson.JsonObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Observable;
+import com.delfree.delfree_android.Storage.SharedPrefManager;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 
 /**
  * Created by phephen on 6/8/19.
@@ -59,6 +46,11 @@ public class LoginPage extends Activity {
         edPhone = findViewById(R.id.editTextPhone);
         edPassword = findViewById(R.id.editTextPassword);
 
+        if(SharedPrefManager.getLoggedStatus(getApplicationContext())){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+        }
+
         btnLogin = findViewById(R.id.loginBtn);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +58,7 @@ public class LoginPage extends Activity {
                 String phone = edPhone.getText().toString().trim();
                 String password = edPassword.getText().toString().trim();
                 if(!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password)) {
-                    onBtnLogin();
+                    onBtnLogin(phone, password);
                 } else {
                     Toast.makeText(getApplicationContext(), "phone or password can't be empty", Toast.LENGTH_LONG).show();
                 }
@@ -85,12 +77,24 @@ public class LoginPage extends Activity {
 
     }
 
-    private void onBtnLogin(){
-        mService.driverLogin(edPhone.getText().toString(), edPassword.getText().toString())
+    private void onBtnLogin (String phone, String password) {
+        mService.driverLogin(phone, password)
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        Log.i("batavree", "response" + response);
+                        if (response.isSuccessful()){
+                            try {
+                                appDelfree.setLogin(true);
+                                SharedPrefManager.setLoggedIn(getApplicationContext(), true);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "phone or password doesn't match", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
@@ -98,6 +102,7 @@ public class LoginPage extends Activity {
 
                     }
                 });
+
     }
 
     private void onForgotPassword() {

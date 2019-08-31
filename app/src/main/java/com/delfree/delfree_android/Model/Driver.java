@@ -19,19 +19,19 @@ public class Driver {
     private String address;
     @SerializedName("sim_number")
     private String simNumber;
-    @SerializedName("sim_expired")
-    private String simExpired;
+    @SerializedName("sim_expire")
+    private String simExpire;
     @SerializedName("token")
     private String token;
     @SerializedName("message")
     private String message;
 
-    public Driver(String name, String phone, String address, String simNumber, String simExpired, String token){
+    public Driver(String name, String phone, String address, String simNumber, String simExpire, String token){
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.simNumber = simNumber;
-        this.simExpired = simExpired;
+        this.simExpire = simExpire;
         this.token = token;
     }
 
@@ -67,12 +67,12 @@ public class Driver {
         this.simNumber = simNumber;
     }
 
-    public String getSimExpired() {
-        return simExpired;
+    public String getSimExpire() {
+        return simExpire;
     }
 
-    public void setSimExpired(String simExpired) {
-        this.simExpired = simExpired;
+    public void setSimExpire(String simExpire) {
+        this.simExpire = simExpire;
     }
 
     public String getToken() {
@@ -91,7 +91,7 @@ public class Driver {
                         ",phone = '" + phone + '\'' +
                         ",address = '" + address + '\'' +
                         ",simNumber = '" + simNumber + '\'' +
-                        ",simExpired = '" + simExpired + '\'' +
+                        ",simExpired = '" + simExpire + '\'' +
                         ",token = '" + token + '\'' +
                         "}";
     }
