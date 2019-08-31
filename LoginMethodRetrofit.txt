@@ -38,3 +38,33 @@ private void onBtnLogin (String phone, String password) {
                     }
                 });
     }
+
+
+
+//    private void onBtnLogin (String phone, String password) {
+//        mService.driverLogin(phone, password)
+//                .enqueue(new Callback<ResponseBody>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                        if (response.isSuccessful()){
+//                            try {
+//                                appDelfree.setLogin(true);
+//                                SharedPrefManager.setLoggedIn(getApplicationContext(), true);
+//                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
+//                                startActivity(intent);
+//                            }catch (Exception e){
+//                                e.printStackTrace();
+//                            }
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "phone or password doesn't match", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//                    }
+//                });
+//
+//    }

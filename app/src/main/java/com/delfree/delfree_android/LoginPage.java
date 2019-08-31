@@ -3,17 +3,25 @@ package com.delfree.delfree_android;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.delfree.delfree_android.Model.Driver;
 import com.delfree.delfree_android.Network.APIService;
 import com.delfree.delfree_android.Network.ApiUtils;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.Storage.SharedPrefManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -46,9 +54,10 @@ public class LoginPage extends Activity {
         edPhone = findViewById(R.id.editTextPhone);
         edPassword = findViewById(R.id.editTextPassword);
 
-        if(SharedPrefManager.getLoggedStatus(getApplicationContext())){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
+        if(appDelfree.isLogin(LoginPage.this, MainActivity.MODE_PRIVATE)){
+            finish();
+            Intent i = new Intent(LoginPage.this, MainActivity.class);
+            startActivity(i);
         }
 
         btnLogin = findViewById(R.id.loginBtn);
@@ -58,7 +67,7 @@ public class LoginPage extends Activity {
                 String phone = edPhone.getText().toString().trim();
                 String password = edPassword.getText().toString().trim();
                 if(!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password)) {
-                    onBtnLogin(phone, password);
+                    onBtnLogin();
                 } else {
                     Toast.makeText(getApplicationContext(), "phone or password can't be empty", Toast.LENGTH_LONG).show();
                 }
@@ -77,33 +86,40 @@ public class LoginPage extends Activity {
 
     }
 
-    private void onBtnLogin (String phone, String password) {
-        mService.driverLogin(phone, password)
-                .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.isSuccessful()){
-                            try {
-                                appDelfree.setLogin(true);
-                                SharedPrefManager.setLoggedIn(getApplicationContext(), true);
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        } else {
-                            Toast.makeText(getApplicationContext(), "phone or password doesn't match", Toast.LENGTH_LONG).show();
-                        }
+    private void onBtnLogin () {
+        AsyncHttpTask mAuthTask = new AsyncHttpTask("phone="+edPhone.getText()+"&password="+edPassword.getText());
+        mAuthTask.execute(AppDelfree.HOST + AppDelfree.LOGIN_PATH, "POST");
+        mAuthTask.setHttpResponseListener(new OnHttpResponseListener() {
+            @Override
+            public void OnHttpResponse(String response) {
+                Log.i("batavree", "ini response " + response);
+                try {
+                    JSONObject resObj = new JSONObject(response);
+                    if (resObj.getBoolean("r")){
+                        JSONObject dataObj = resObj.getJSONObject("d");
+                        appDelfree.setLogin(true);
+                        Driver driver = new Driver(dataObj.getString("name"), dataObj.getString("phone"), dataObj.getString("address"),
+                                dataObj.getString("sim_number"), dataObj.getString("sim_expire"), dataObj.getString("token"));
+                        appDelfree.setDriver(driver);
+
+//                        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("batavree", 0);
+                        SharedPreferences sharedPref = getPreferences(getApplication().MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("batavree", dataObj.toString());
+                        editor.commit();
+                        Intent intent = new Intent(LoginPage.this, MainActivity.class);
+                        startActivity(intent);
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), resObj.getString("m"), Toast.LENGTH_LONG).show();
                     }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    }
-                });
-
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
 
     private void onForgotPassword() {
         Intent intent = new Intent(LoginPage.this, ForgotPasswordPage.class);

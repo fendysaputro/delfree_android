@@ -18,20 +18,20 @@ public class Driver {
     @SerializedName("address")
     private String address;
     @SerializedName("sim_number")
-    private String simNumber;
+    private String sim_number;
     @SerializedName("sim_expire")
-    private String simExpire;
+    private String sim_expire;
     @SerializedName("token")
     private String token;
     @SerializedName("message")
     private String message;
 
-    public Driver(String name, String phone, String address, String simNumber, String simExpire, String token){
+    public Driver(String name, String phone, String address, String sim_number, String sim_expire, String token){
         this.name = name;
         this.phone = phone;
         this.address = address;
-        this.simNumber = simNumber;
-        this.simExpire = simExpire;
+        this.sim_number = sim_number;
+        this.sim_expire = sim_expire;
         this.token = token;
     }
 
@@ -59,20 +59,20 @@ public class Driver {
         this.address = address;
     }
 
-    public String getSimNumber() {
-        return simNumber;
+    public String getSim_number() {
+        return sim_number;
     }
 
-    public void setSimNumber(String simNumber) {
-        this.simNumber = simNumber;
+    public void setSim_number(String sim_number) {
+        this.sim_number = sim_number;
     }
 
-    public String getSimExpire() {
-        return simExpire;
+    public String getSim_expire() {
+        return sim_expire;
     }
 
-    public void setSimExpire(String simExpire) {
-        this.simExpire = simExpire;
+    public void setSim_expire(String sim_expire) {
+        this.sim_expire = sim_expire;
     }
 
     public String getToken() {
@@ -90,8 +90,8 @@ public class Driver {
                         "name = '" + name + '\'' +
                         ",phone = '" + phone + '\'' +
                         ",address = '" + address + '\'' +
-                        ",simNumber = '" + simNumber + '\'' +
-                        ",simExpired = '" + simExpire + '\'' +
+                        ",simNumber = '" + sim_number + '\'' +
+                        ",simExpired = '" + sim_expire + '\'' +
                         ",token = '" + token + '\'' +
                         "}";
     }

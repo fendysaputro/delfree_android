@@ -32,7 +32,6 @@ public class AppDelfree extends Application {
 
 
     public boolean isLogin(Activity activity, int MODE) {
-
         SharedPreferences sharedPref = activity.getPreferences(MODE);
         String driverString = sharedPref.getString("batavree", "");
         if(driverString.isEmpty()){
@@ -42,10 +41,10 @@ public class AppDelfree extends Application {
             try {
                 JSONObject driverObj = new JSONObject(driverString);
                 driver = new Driver(driverObj.getString("name"),driverObj.getString("phone"),
-                        driverObj.getString("address"),driverObj.getString("simNumber"),
-                        driverObj.getString("simExpire"),driverObj.getString("token"));
+                        driverObj.getString("address"),driverObj.getString("sim_number"),
+                        driverObj.getString("sim_expire"),driverObj.getString("token"));
             } catch (JSONException es){
-                Log.e("amg", es.getMessage());
+                Log.e("batavree", es.getMessage());
             }
         }
         return login;
