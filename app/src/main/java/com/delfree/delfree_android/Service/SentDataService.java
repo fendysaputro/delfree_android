@@ -17,9 +17,12 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.DbHelper;
 import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.Model.Tracking;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -29,6 +32,8 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import retrofit2.http.POST;
 
 /**
  * Created by phephen on 6/8/19.
@@ -47,6 +52,8 @@ public class SentDataService extends Service implements
     double longi = 0;
     private LocationManager mlocationManager;
     private String provider;
+    DbHelper dB;
+    AppDelfree appDelfree;
 //    public static ArrayList<Tracking> tracks;
 
     @Override
@@ -103,14 +110,14 @@ public class SentDataService extends Service implements
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.i(LOGSERVICE, "lat " + location.getLatitude());
-        Log.i(LOGSERVICE, "lng " + location.getLongitude());
+        Log.i(LOGSERVICE, "latitude " + location.getLatitude());
+        Log.i(LOGSERVICE, "longitude " + location.getLongitude());
         LatLng mLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
         lati = location.getLatitude();
         longi = location.getLongitude();
 
-        DbHelper dB = new DbHelper(this);
+        dB = new DbHelper(this);
         String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
         dB.insertTracking(date, lati, longi);
 
@@ -121,6 +128,17 @@ public class SentDataService extends Service implements
 //        Log.i("ini data", "id= " + id + " " + "date= " + date + " " + "latitude= " + latitude.toString() + " " + "longitude= " + longitude.toString());
 
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
+    }
+
+    public void onSendData(){
+        AsyncHttpTask sendData = new AsyncHttpTask("");
+        sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
+        sendData.setHttpResponseListener(new OnHttpResponseListener() {
+            @Override
+            public void OnHttpResponse(String result) {
+                dB.getAllTracking();
+            }
+        });
     }
 
     @Override

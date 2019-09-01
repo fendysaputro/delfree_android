@@ -29,6 +29,7 @@ public class AppDelfree extends Application {
     boolean picture;
     public static String HOST = "http://api.batavree.com/apis/v1/";
     public static String LOGIN_PATH = "driver/authenticate";
+    public static String UPLOAD_PATH = "";
 
 
     public boolean isLogin(Activity activity, int MODE) {

@@ -92,14 +92,17 @@ public class LoginPage extends Activity {
         mAuthTask.setHttpResponseListener(new OnHttpResponseListener() {
             @Override
             public void OnHttpResponse(String response) {
-                Log.i("batavree", "ini response " + response);
                 try {
                     JSONObject resObj = new JSONObject(response);
                     if (resObj.getBoolean("r")){
                         JSONObject dataObj = resObj.getJSONObject("d");
                         appDelfree.setLogin(true);
-                        Driver driver = new Driver(dataObj.getString("name"), dataObj.getString("phone"), dataObj.getString("address"),
-                                dataObj.getString("sim_number"), dataObj.getString("sim_expire"), dataObj.getString("token"));
+                        Driver driver = new Driver(dataObj.getString("name"),
+                                dataObj.getString("phone"),
+                                dataObj.getString("address"),
+                                dataObj.getString("sim_number"),
+                                dataObj.getString("sim_expire"),
+                                dataObj.getString("token"));
                         appDelfree.setDriver(driver);
 
                         SharedPreferences sharedPref = getPreferences(getApplication().MODE_PRIVATE);

@@ -30,3 +30,22 @@ private void onBtnLogin () {
             }
         });
     }
+
+
+
+
+SharedPreferences sharedPreferences = log.getPreferences(MODE);
+        String userString = sharedPreferences.getString("amg", "");
+        if (userString.isEmpty()){
+            login = false;
+        } else {
+            login = true;
+            try {
+                JSONObject userObj = new JSONObject(userString);
+                user = new User(userObj.getString("name"),userObj.getString("phone"),userObj.getString("email"),
+                        userObj.getBoolean("active"),userObj.getString("token"));
+            } catch (JSONException es){
+                Log.e("player-activation", es.getMessage());
+            }
+        }
+        return login;
