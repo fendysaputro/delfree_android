@@ -102,7 +102,6 @@ public class LoginPage extends Activity {
                                 dataObj.getString("sim_number"), dataObj.getString("sim_expire"), dataObj.getString("token"));
                         appDelfree.setDriver(driver);
 
-//                        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("batavree", 0);
                         SharedPreferences sharedPref = getPreferences(getApplication().MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("batavree", dataObj.toString());

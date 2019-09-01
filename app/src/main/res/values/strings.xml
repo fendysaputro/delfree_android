@@ -9,9 +9,9 @@
     <string name="profile_user">Profile</string>
     <string name="done_button">Done</string>
     <string name="upload_photo">Upload Photo</string>
-    <string name="driver_name">Name : Fendy Saputro</string>
-    <string name="sim_no">SIM No : 123456789</string>
-    <string name="driver_address">Address : Jalan Petojo Sabangan gg 1</string>
+    <string name="driver_name">Name : </string>
+    <string name="sim_no">SIM No : </string>
+    <string name="driver_address">Address : </string>
     <string name="sign_in">Sign In</string>
     <string name="save">Save</string>
 

@@ -49,11 +49,6 @@ public class HomeFragment extends Fragment {
         HomeAdapter arrayAdapter = new HomeAdapter(getActivity(), R.layout.custom_item, items);
         listJobs.setAdapter(arrayAdapter);
 
-//        textView = (TextView) view.findViewById(R.id.checkUser);
-//        name = appDelfree.getDriver().getName();
-
-//        textView.setText(name + " false");
-
         return view;
     }
 
