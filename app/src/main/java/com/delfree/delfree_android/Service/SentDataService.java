@@ -54,6 +54,7 @@ public class SentDataService extends Service implements
     private String provider;
     DbHelper dB;
     AppDelfree appDelfree;
+    private long INTERVAL_SEND_DATA = 0;
 //    public static ArrayList<Tracking> tracks;
 
     @Override
@@ -121,16 +122,23 @@ public class SentDataService extends Service implements
         String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
         dB.insertTracking(date, lati, longi);
 
-        AsyncHttpTask sendData = new AsyncHttpTask("");
-        sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
-        sendData.setHttpResponseListener(new OnHttpResponseListener() {
-            @Override
-            public void OnHttpResponse(String result) {
-                if (UPDATE_INTERVAL == UPDATE_INTERVAL * 5){
+        Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
 
-                }
-            }
-        });
+        if (INTERVAL_SEND_DATA == FASTEST_INTERVAL * 1){
+            Log.i("Batavree", "test");
+            Toast.makeText(this, "save to server ", Toast.LENGTH_LONG).show();
+        }
+//        AsyncHttpTask sendData = new AsyncHttpTask("");
+//        sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
+//        sendData.setHttpResponseListener(new OnHttpResponseListener() {
+//            @Override
+//            public void OnHttpResponse(String result) {
+//                if (UPDATE_INTERVAL == UPDATE_INTERVAL * 5){
+//                    Log.i("batavree", "test");
+////                    dB.getAllTracking();
+//                }
+//            }
+//        });
 
 //        int id = dB.getAllTracking().get(1).getId();
 //        date = dB.getAllTracking().get(1).getDate();
@@ -138,7 +146,7 @@ public class SentDataService extends Service implements
 //        Double longitude = dB.getAllTracking().get(1).getLocation_long();
 //        Log.i("ini data", "id= " + id + " " + "date= " + date + " " + "latitude= " + latitude.toString() + " " + "longitude= " + longitude.toString());
 
-        Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
+
     }
 
 
@@ -173,7 +181,7 @@ public class SentDataService extends Service implements
         mlocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         provider = mlocationManager.getBestProvider(criteria, false);
-        Log.i("amg", "ini provider " + provider);
+        Log.i("Batavree", "ini provider " + provider);
         if(provider == null){
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -200,7 +208,7 @@ public class SentDataService extends Service implements
             System.out.println("Provider " + provider + " has been selected.");
             onLocationChanged(location);
         } else {
-            Log.i("AMG", "Location not available");
+            Log.i("Batavree", "Location not available");
         }
     }
 
