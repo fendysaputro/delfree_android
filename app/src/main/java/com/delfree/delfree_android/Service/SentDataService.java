@@ -46,8 +46,8 @@ public class SentDataService extends Service implements
     private GoogleApiClient mGoogleApiClient;
     private Location mLocation;
     private static final String LOGSERVICE = "#######";
-    private long UPDATE_INTERVAL = 50 * 1000;  /* 5 minutes */
-    private long FASTEST_INTERVAL = 20000; /* 2 minutes */
+    private long UPDATE_INTERVAL = 10 * 1000;  /* 1 minutes */
+    private long FASTEST_INTERVAL = 10000; /* 2 minutes */
     double lati = 0;
     double longi = 0;
     private LocationManager mlocationManager;
@@ -121,6 +121,17 @@ public class SentDataService extends Service implements
         String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
         dB.insertTracking(date, lati, longi);
 
+        AsyncHttpTask sendData = new AsyncHttpTask("");
+        sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
+        sendData.setHttpResponseListener(new OnHttpResponseListener() {
+            @Override
+            public void OnHttpResponse(String result) {
+                if (UPDATE_INTERVAL == UPDATE_INTERVAL * 5){
+
+                }
+            }
+        });
+
 //        int id = dB.getAllTracking().get(1).getId();
 //        date = dB.getAllTracking().get(1).getDate();
 //        Double latitude = dB.getAllTracking().get(1).getLocation_lat();
@@ -130,16 +141,6 @@ public class SentDataService extends Service implements
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
     }
 
-    public void onSendData(){
-        AsyncHttpTask sendData = new AsyncHttpTask("");
-        sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
-        sendData.setHttpResponseListener(new OnHttpResponseListener() {
-            @Override
-            public void OnHttpResponse(String result) {
-                dB.getAllTracking();
-            }
-        });
-    }
 
     @Override
     public void onDestroy() {
