@@ -21,9 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
         <activity
-            android:name=".LoginPage"
-            android:configChanges = "orientation"
-            android:screenOrientation="portrait">
+            android:name=".Activity.SplashScreen"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,10 +31,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Activity.LoginPage"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:theme="@style/CustomActionBarTheme">
         </activity>
-        <activity android:name=".ForgotPasswordPage"></activity>
+        <activity android:name=".Activity.ForgotPasswordPage"></activity>
         <activity android:name=".GpsTracking"></activity>
         <service android:name=".Service.SentDataService"
             android:enabled="true">

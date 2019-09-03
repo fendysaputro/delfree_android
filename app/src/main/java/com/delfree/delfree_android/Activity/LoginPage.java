@@ -1,4 +1,4 @@
-package com.delfree.delfree_android;
+package com.delfree.delfree_android.Activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,29 +6,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.delfree.delfree_android.AppDelfree;
+import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.Model.Driver;
 import com.delfree.delfree_android.Network.APIService;
 import com.delfree.delfree_android.Network.ApiUtils;
 import com.delfree.delfree_android.Network.AsyncHttpTask;
 import com.delfree.delfree_android.Network.OnHttpResponseListener;
-import com.delfree.delfree_android.Storage.SharedPrefManager;
+import com.delfree.delfree_android.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 
 /**
  * Created by phephen on 6/8/19.

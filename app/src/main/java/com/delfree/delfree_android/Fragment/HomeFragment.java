@@ -1,6 +1,5 @@
 package com.delfree.delfree_android.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,20 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.delfree.delfree_android.Adapter.HomeAdapter;
 import com.delfree.delfree_android.AppDelfree;
-import com.delfree.delfree_android.ForgotPasswordPage;
-import com.delfree.delfree_android.Fragment.DetailJobFragment;
-import com.delfree.delfree_android.GpsTracking;
-import com.delfree.delfree_android.LoginPage;
 import com.delfree.delfree_android.R;
-
-import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
 
 /**

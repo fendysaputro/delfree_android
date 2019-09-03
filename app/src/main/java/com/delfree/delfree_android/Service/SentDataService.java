@@ -47,7 +47,7 @@ public class SentDataService extends Service implements
     private Location mLocation;
     private static final String LOGSERVICE = "#######";
     private long UPDATE_INTERVAL = 10 * 1000;  /* 1 minutes */
-    private long FASTEST_INTERVAL = 10000; /* 2 minutes */
+    private long FASTEST_INTERVAL = 10000; /* 1 minutes */
     double lati = 0;
     double longi = 0;
     private LocationManager mlocationManager;
@@ -124,7 +124,7 @@ public class SentDataService extends Service implements
 
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
 
-        if (INTERVAL_SEND_DATA == FASTEST_INTERVAL * 1){
+        if (INTERVAL_SEND_DATA == 1000){
             Log.i("Batavree", "test");
             Toast.makeText(this, "save to server ", Toast.LENGTH_LONG).show();
         }
