@@ -13,6 +13,10 @@ import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.R;
 
+/**
+ * created by phephen 03/09/2019
+ */
+
 public class SplashScreen extends AppCompatActivity {
 
     AppDelfree appDelfree;

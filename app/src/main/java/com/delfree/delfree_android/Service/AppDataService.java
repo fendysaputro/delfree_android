@@ -36,11 +36,11 @@ import java.util.Date;
 import retrofit2.http.POST;
 
 /**
- * Created by phephen on 6/8/19.
+ * Created by phephen on 6/8/19
  */
 
 
-public class SentDataService extends Service implements
+public class AppDataService extends Service implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
@@ -123,11 +123,14 @@ public class SentDataService extends Service implements
         dB.insertTracking(date, lati, longi);
 
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
+//        Log.i("data", dB.getAllTracking().toString());
 
-        if (INTERVAL_SEND_DATA == 1000){
-            Log.i("Batavree", "test");
-            Toast.makeText(this, "save to server ", Toast.LENGTH_LONG).show();
-        }
+        sentData();
+
+//        if (INTERVAL_SEND_DATA == 1000){
+//            Log.i("Batavree", "test");
+//            Toast.makeText(this, "save to server ", Toast.LENGTH_LONG).show();
+//        }
 //        AsyncHttpTask sendData = new AsyncHttpTask("");
 //        sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
 //        sendData.setHttpResponseListener(new OnHttpResponseListener() {
@@ -149,6 +152,14 @@ public class SentDataService extends Service implements
 
     }
 
+
+    public void sentData (){
+        if (UPDATE_INTERVAL == 1 * 1000) {
+            Log.i("Batavree", "Test");
+        } else {
+            Log.i("Batavree", "5 menit");
+        }
+    }
 
     @Override
     public void onDestroy() {

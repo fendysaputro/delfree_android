@@ -13,9 +13,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
-import com.delfree.delfree_android.GpsTracking;
 import com.delfree.delfree_android.R;
-import com.delfree.delfree_android.Service.SentDataService;
+import com.delfree.delfree_android.Service.AppDataService;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
@@ -24,7 +23,7 @@ public class HomeAdapter extends ArrayAdapter {
     private String[] myListJobs;
     private Context context;
     Intent mServiceIntent;
-    private SentDataService sentDataService;
+    private AppDataService appDataService;
 
 
     public HomeAdapter(Context context, int textViewResourceId, String[] myListJobs) {
@@ -41,8 +40,8 @@ public class HomeAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.custom_item, null);
 
-        sentDataService = new SentDataService();
-        mServiceIntent = new Intent(context, sentDataService.getClass());
+        appDataService = new AppDataService();
+        mServiceIntent = new Intent(context, appDataService.getClass());
 
         TextView textView = (TextView) view.findViewById(R.id.tv);
         textView.setText(myListJobs[position]);
@@ -55,7 +54,7 @@ public class HomeAdapter extends ArrayAdapter {
                 Activity activity = (Activity) context;
                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
                 ShowFragment(R.id.fl_container, detailJobFragment,fragmentManager);
-                context.startService(new Intent(context, SentDataService.class));
+                context.startService(new Intent(context, AppDataService.class));
             }
         });
 

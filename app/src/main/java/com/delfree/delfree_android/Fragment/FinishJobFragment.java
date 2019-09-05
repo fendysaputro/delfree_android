@@ -3,7 +3,6 @@ package com.delfree.delfree_android.Fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,7 @@ import android.widget.Toast;
 
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.R;
-import com.delfree.delfree_android.Service.SentDataService;
+import com.delfree.delfree_android.Service.AppDataService;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
@@ -96,9 +94,9 @@ public class FinishJobFragment extends Fragment {
         FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
         if (appDelfree.isPicture()){
             ShowFragment(R.id.fl_container, historyFragment,fragmentManager);
-            getContext().stopService(new Intent(getContext(), SentDataService.class));
+            getContext().stopService(new Intent(getContext(), AppDataService.class));
         } else {
-            Toast.makeText(this.getContext(), "You must take picture later", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), "You must take picture first", Toast.LENGTH_LONG).show();
         }
     }
 

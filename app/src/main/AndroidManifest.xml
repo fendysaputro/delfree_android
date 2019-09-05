@@ -19,6 +19,7 @@
         android:label="@string/title_header"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/CustomActionBarTheme">
         <activity
             android:name=".Activity.SplashScreen"
@@ -41,7 +42,7 @@
         </activity>
         <activity android:name=".Activity.ForgotPasswordPage"></activity>
         <activity android:name=".GpsTracking"></activity>
-        <service android:name=".Service.SentDataService"
+        <service android:name=".Service.AppDataService"
             android:enabled="true">
         </service>
         <receiver
