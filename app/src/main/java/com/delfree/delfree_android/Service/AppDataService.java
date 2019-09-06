@@ -166,7 +166,7 @@ public class AppDataService extends Service implements
         super.onDestroy();
         if (mlocationManager != null){
             stopLocationUpdate();
-            Log.i(LOGSERVICE, "onDestroy");
+            Log.i(LOGSERVICE, "Service Stop");
         }
     }
 
