@@ -38,7 +38,7 @@ public class HomeAdapter extends ArrayAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.custom_item, null);
+        View view = inflater.inflate(R.layout.custom_item_home_adapter, null);
 
         appDataService = new AppDataService();
         mServiceIntent = new Intent(context, appDataService.getClass());

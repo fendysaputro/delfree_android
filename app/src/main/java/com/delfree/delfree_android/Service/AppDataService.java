@@ -164,7 +164,10 @@ public class AppDataService extends Service implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(LOGSERVICE, "onDestroy");
+        if (mlocationManager != null){
+            stopLocationUpdate();
+            Log.i(LOGSERVICE, "onDestroy");
+        }
     }
 
     @Nullable

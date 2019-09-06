@@ -1,6 +1,7 @@
 package com.delfree.delfree_android.Fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -36,6 +37,9 @@ public class FinishJobFragment extends Fragment {
     ImageView imageView;
     AppDelfree appDelfree;
     private static final int CAMERA_REQUEST =123;
+    private AppDataService appDataService;
+    private Context context;
+    Intent mServiceIntent;
 
     public FinishJobFragment() {
         // Required empty public constructor
@@ -58,6 +62,8 @@ public class FinishJobFragment extends Fragment {
 //                getActivity().onBackPressed();
             }
         });
+
+        context = getContext();
 
         appDelfree = (AppDelfree) getActivity().getApplicationContext();
         imageView = (ImageView) view.findViewById(R.id.imView);
@@ -90,11 +96,12 @@ public class FinishJobFragment extends Fragment {
 
     public void onDoneButton(){
         HistoryFragment historyFragment = new HistoryFragment();
-        Activity activity = (Activity) getContext();
+        Activity activity = (Activity) context;
         FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
         if (appDelfree.isPicture()){
+            DetailJobFragment detailJobFragment = new DetailJobFragment();
             ShowFragment(R.id.fl_container, historyFragment,fragmentManager);
-            getContext().stopService(new Intent(getContext(), AppDataService.class));
+            context.stopService(new Intent(context, AppDataService.class));
         } else {
             Toast.makeText(this.getContext(), "You must take picture first", Toast.LENGTH_LONG).show();
         }

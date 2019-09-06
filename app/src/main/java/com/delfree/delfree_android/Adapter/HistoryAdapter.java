@@ -25,7 +25,7 @@ public class HistoryAdapter extends ArrayAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.custom_item, null);
+        View view = inflater.inflate(R.layout.custom_item_home_adapter, null);
 
         TextView textView = (TextView) view.findViewById(R.id.tv);
         textView.setText(myJobsHistory[position]);

@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
 
         listJobs=(ListView) view.findViewById(R.id.list);
 
-        HomeAdapter arrayAdapter = new HomeAdapter(getActivity(), R.layout.custom_item, items);
+        HomeAdapter arrayAdapter = new HomeAdapter(getActivity(), R.layout.custom_item_home_adapter, items);
         listJobs.setAdapter(arrayAdapter);
 
         return view;
