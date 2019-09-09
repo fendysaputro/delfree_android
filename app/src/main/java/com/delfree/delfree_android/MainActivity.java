@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.delfree.delfree_android.Fragment.HistoryFragment;
 import com.delfree.delfree_android.Fragment.HomeFragment;
@@ -31,6 +33,7 @@ import com.delfree.delfree_android.Fragment.ProfileFragment;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     AppDelfree appDelfree;
+    public static boolean allowBackPressed = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,5 +122,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         transaction.replace(resId, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(allowBackPressed){
+            super.onBackPressed();
+            finish();
+            return;
+        }
+        this.allowBackPressed = false;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                allowBackPressed=true;          }
+        }, 500);
     }
 }
