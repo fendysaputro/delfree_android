@@ -33,8 +33,8 @@ import com.delfree.delfree_android.Fragment.ProfileFragment;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     AppDelfree appDelfree;
-    public static boolean allowBackPressed = true;
-    private boolean isFirstBackPressed = false;
+    public static boolean allowBackPressed = false;
+    public boolean isFirstBackPressed = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -125,23 +125,41 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         transaction.commit();
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        if (getSupportFragmentManager().getBackStackEntryCount() != 0){
+//            super.onBackPressed();
+//        }else{
+//            if (allowBackPressed) {
+//                super.onBackPressed();
+//            } else {
+//                allowBackPressed = true;
+//                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        allowBackPressed = false;
+//                    }
+//                }, 500);
+//            }
+//        }
+//    }
+
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() != 0){
+        if(allowBackPressed){
             super.onBackPressed();
-        }else{
-            if (isFirstBackPressed) {
-                super.onBackPressed();
-            } else {
-                isFirstBackPressed = true;
-                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        isFirstBackPressed = false;
-                    }
-                }, 500);
-            }
+            finish();
+            return;
         }
+        this.allowBackPressed = false;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                allowBackPressed=true;          }
+        }, 500);
     }
 }

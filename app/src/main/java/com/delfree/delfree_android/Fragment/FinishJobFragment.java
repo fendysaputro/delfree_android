@@ -26,10 +26,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.delfree.delfree_android.AppDelfree;
+import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
+import static com.delfree.delfree_android.MainActivity.allowBackPressed;
 
 
 /**
@@ -117,6 +119,7 @@ public class FinishJobFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        MainActivity.allowBackPressed = false;
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
