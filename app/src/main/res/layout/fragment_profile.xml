@@ -32,7 +32,7 @@
     <TextView
         android:id="@+id/profile"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:text="@string/profile_user"
         android:background="@color/homeFragmentBg"
         android:layout_gravity="left"
@@ -61,7 +61,7 @@
         android:id="@+id/iLProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="400dp"
         android:background="@color/littleBack" >
 
         <TextView

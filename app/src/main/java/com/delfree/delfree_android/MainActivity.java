@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     AppDelfree appDelfree;
     public static boolean allowBackPressed = true;
+    private boolean isFirstBackPressed = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,19 +127,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onBackPressed() {
-        if(allowBackPressed){
+        if (getSupportFragmentManager().getBackStackEntryCount() != 0){
             super.onBackPressed();
-            finish();
-            return;
+        }else{
+            if (isFirstBackPressed) {
+                super.onBackPressed();
+            } else {
+                isFirstBackPressed = true;
+                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isFirstBackPressed = false;
+                    }
+                }, 500);
+            }
         }
-        this.allowBackPressed = false;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                allowBackPressed=true;          }
-        }, 500);
     }
 }

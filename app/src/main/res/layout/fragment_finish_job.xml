@@ -79,7 +79,7 @@
             android:layout_height="50dp"
             android:gravity="center"
             android:layout_marginTop="40dp"
-            android:layout_marginLeft="160dp"
+            android:layout_marginLeft="132.5dp"
             android:background="@drawable/radio_border"
             android:textColor="@color/basic"
             android:text="@string/done_button" />

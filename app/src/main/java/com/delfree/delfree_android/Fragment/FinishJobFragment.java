@@ -1,18 +1,23 @@
 package com.delfree.delfree_android.Fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +41,7 @@ public class FinishJobFragment extends Fragment {
     Button doneBtn, cameraButton;
     ImageView imageView;
     AppDelfree appDelfree;
-    private static final int CAMERA_REQUEST =123;
+    private static final int CAMERA_REQUEST = 1;
     private AppDataService appDataService;
     private Context context;
     Intent mServiceIntent;
@@ -64,6 +69,7 @@ public class FinishJobFragment extends Fragment {
         });
 
         context = getContext();
+        requestPermission();
 
         appDelfree = (AppDelfree) getActivity().getApplicationContext();
         imageView = (ImageView) view.findViewById(R.id.imView);
@@ -72,7 +78,7 @@ public class FinishJobFragment extends Fragment {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
+                Intent startCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(startCamera, CAMERA_REQUEST);
             }
         });
@@ -86,6 +92,26 @@ public class FinishJobFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void requestPermission (){
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 6);
+        }
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA}, 7);
+        }
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+        } else {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+        }
     }
 
     @Override
