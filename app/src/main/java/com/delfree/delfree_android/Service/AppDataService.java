@@ -154,7 +154,7 @@ public class AppDataService extends Service implements
 
 
     public void sentData (){
-        if (UPDATE_INTERVAL == 1 * 1000) {
+        if (UPDATE_INTERVAL == 10000) {
             Log.i("Batavree", "Test");
         } else {
             Log.i("Batavree", "5 menit");

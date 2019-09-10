@@ -65,7 +65,7 @@
             android:background="@drawable/camera" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/LlDone"
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -75,16 +75,16 @@
 
         <Button
             android:id="@+id/doneButton"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:layout_marginLeft="132.5dp"
             android:background="@drawable/radio_border"
             android:textColor="@color/basic"
             android:text="@string/done_button" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </FrameLayout>
