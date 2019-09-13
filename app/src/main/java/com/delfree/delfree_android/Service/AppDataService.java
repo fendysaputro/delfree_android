@@ -125,12 +125,11 @@ public class AppDataService extends Service implements
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
 //        Log.i("data", dB.getAllTracking().toString());
 
-        sentData();
-
-//        if (INTERVAL_SEND_DATA == 1000){
-//            Log.i("Batavree", "test");
-//            Toast.makeText(this, "save to server ", Toast.LENGTH_LONG).show();
-//        }
+        if (INTERVAL_SEND_DATA == UPDATE_INTERVAL * 5){
+            sentData();
+        } else {
+            Log.i("Batavree", "data can't sent");
+        }
 //        AsyncHttpTask sendData = new AsyncHttpTask("");
 //        sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
 //        sendData.setHttpResponseListener(new OnHttpResponseListener() {
@@ -154,11 +153,11 @@ public class AppDataService extends Service implements
 
 
     public void sentData (){
-        if (UPDATE_INTERVAL == 10000) {
+//        if (UPDATE_INTERVAL == 10000) {
             Log.i("Batavree", "Test");
-        } else {
-            Log.i("Batavree", "5 menit");
-        }
+//        } else {
+//            Log.i("Batavree", "5 menit");
+//        }
     }
 
     @Override
@@ -188,7 +187,6 @@ public class AppDataService extends Service implements
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
     }
 
     public void getLastLocation(){
