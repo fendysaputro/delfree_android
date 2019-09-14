@@ -2,6 +2,8 @@ package com.delfree.delfree_android.Service;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +13,9 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -57,6 +61,25 @@ public class AppDataService extends Service implements
     private long INTERVAL_SEND_DATA = 0;
 //    public static ArrayList<Tracking> tracks;
 
+    Handler handler = new Handler();
+    private Runnable periodicUpdate = new Runnable() {
+        @Override
+        public void run() {
+            handler.postDelayed(periodicUpdate, 1000); // schedule next wake up every second
+            Intent notificationIntent = new Intent(AppDataService.this, AppDataService.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(AppDataService.this, 0, notificationIntent, 0);
+            AlarmManager keepAwake = (AlarmManager) getSystemService(ALARM_SERVICE);
+            keepAwake.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), pendingIntent);
+
+            long current = System.currentTimeMillis();
+            if ((current-current%1000)%(1000*10)  == 0) { // record on every tenth seconds (0s, 10s, 20s, 30s...)
+                // whatever you want to do
+                Log.i("Batavree", "this is periodic");
+            }
+        }
+    };
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -69,6 +92,7 @@ public class AppDataService extends Service implements
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(LOGSERVICE, "onStartCommand");
 
+        handler.post(periodicUpdate);
         if (!mGoogleApiClient.isConnected())
             mGoogleApiClient.connect();
         return START_STICKY;
@@ -124,12 +148,6 @@ public class AppDataService extends Service implements
 
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
 //        Log.i("data", dB.getAllTracking().toString());
-
-        if (INTERVAL_SEND_DATA == UPDATE_INTERVAL * 5){
-            sentData();
-        } else {
-            Log.i("Batavree", "data can't sent");
-        }
 //        AsyncHttpTask sendData = new AsyncHttpTask("");
 //        sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
 //        sendData.setHttpResponseListener(new OnHttpResponseListener() {
@@ -154,7 +172,7 @@ public class AppDataService extends Service implements
 
     public void sentData (){
 //        if (UPDATE_INTERVAL == 10000) {
-            Log.i("Batavree", "Test");
+        Log.i("Batavree", "Test");
 //        } else {
 //            Log.i("Batavree", "5 menit");
 //        }

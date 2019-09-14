@@ -1,8 +1,14 @@
 package com.delfree.delfree_android.Adapter;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.os.IBinder;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -15,6 +21,12 @@ import android.widget.TextView;
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
@@ -23,7 +35,9 @@ public class HomeAdapter extends ArrayAdapter {
     private String[] myListJobs;
     private Context context;
     Intent mServiceIntent;
-    private AppDataService appDataService;
+    public AppDataService appDataService;
+    public boolean mTracking = false;
+    Activity activity;
 
 
     public HomeAdapter(Context context, int textViewResourceId, String[] myListJobs) {
@@ -39,6 +53,8 @@ public class HomeAdapter extends ArrayAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.custom_item_home_adapter, null);
+
+
 
         appDataService = new AppDataService();
         mServiceIntent = new Intent(context, appDataService.getClass());
