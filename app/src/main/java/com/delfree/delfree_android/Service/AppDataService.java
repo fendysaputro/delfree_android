@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -73,8 +74,18 @@ public class AppDataService extends Service implements
 
             long current = System.currentTimeMillis();
             if ((current-current%1000)%(1000*10)  == 0) { // record on every tenth seconds (0s, 10s, 20s, 30s...)
-                // whatever you want to do
                 Log.i("Batavree", "this is periodic");
+//                Log.i("Batavree", dB.getAllTracking().toString());
+                String driverName = appDelfree.getDriver().getName();
+                Log.i("Batavree", driverName);
+//                AsyncHttpTask sendData = new AsyncHttpTask("");
+//                sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH);
+//                sendData.setHttpResponseListener(new OnHttpResponseListener() {
+//                    @Override
+//                    public void OnHttpResponse(String result) {
+//
+//                    }
+//                });
             }
         }
     };
@@ -83,6 +94,9 @@ public class AppDataService extends Service implements
     @Override
     public void onCreate() {
         super.onCreate();
+
+        appDelfree = (AppDelfree) getApplicationContext();
+
         buildGoogleApiClient();
         Log.i(LOGSERVICE, "onCreate");
 
@@ -167,15 +181,6 @@ public class AppDataService extends Service implements
 //        Log.i("ini data", "id= " + id + " " + "date= " + date + " " + "latitude= " + latitude.toString() + " " + "longitude= " + longitude.toString());
 
 
-    }
-
-
-    public void sentData (){
-//        if (UPDATE_INTERVAL == 10000) {
-        Log.i("Batavree", "Test");
-//        } else {
-//            Log.i("Batavree", "5 menit");
-//        }
     }
 
     @Override
