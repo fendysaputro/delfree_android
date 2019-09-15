@@ -78,14 +78,14 @@ public class AppDataService extends Service implements
 //                Log.i("Batavree", dB.getAllTracking().toString());
                 String driverName = appDelfree.getDriver().getName();
                 Log.i("Batavree", driverName);
-//                AsyncHttpTask sendData = new AsyncHttpTask("");
-//                sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH);
-//                sendData.setHttpResponseListener(new OnHttpResponseListener() {
-//                    @Override
-//                    public void OnHttpResponse(String result) {
-//
-//                    }
-//                });
+                AsyncHttpTask sendData = new AsyncHttpTask("");
+                sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH);
+                sendData.setHttpResponseListener(new OnHttpResponseListener() {
+                    @Override
+                    public void OnHttpResponse(String result) {
+
+                    }
+                });
             }
         }
     };
@@ -161,26 +161,6 @@ public class AppDataService extends Service implements
         dB.insertTracking(date, lati, longi);
 
         Toast.makeText(this, "ini mLocation " + mLocation, Toast.LENGTH_LONG).show();
-//        Log.i("data", dB.getAllTracking().toString());
-//        AsyncHttpTask sendData = new AsyncHttpTask("");
-//        sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
-//        sendData.setHttpResponseListener(new OnHttpResponseListener() {
-//            @Override
-//            public void OnHttpResponse(String result) {
-//                if (UPDATE_INTERVAL == UPDATE_INTERVAL * 5){
-//                    Log.i("batavree", "test");
-////                    dB.getAllTracking();
-//                }
-//            }
-//        });
-
-//        int id = dB.getAllTracking().get(1).getId();
-//        date = dB.getAllTracking().get(1).getDate();
-//        Double latitude = dB.getAllTracking().get(1).getLocation_lat();
-//        Double longitude = dB.getAllTracking().get(1).getLocation_long();
-//        Log.i("ini data", "id= " + id + " " + "date= " + date + " " + "latitude= " + latitude.toString() + " " + "longitude= " + longitude.toString());
-
-
     }
 
     @Override
