@@ -66,24 +66,24 @@ public class AppDataService extends Service implements
     private Runnable periodicUpdate = new Runnable() {
         @Override
         public void run() {
-            handler.postDelayed(periodicUpdate, 300000); // schedule next wake up every second
+            handler.postDelayed(periodicUpdate, 1000); // schedule next wake up every second
             Intent notificationIntent = new Intent(AppDataService.this, AppDataService.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(AppDataService.this, 0, notificationIntent, 0);
             AlarmManager keepAwake = (AlarmManager) getSystemService(ALARM_SERVICE);
             keepAwake.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), pendingIntent);
 
             long current = System.currentTimeMillis();
-            if ((current-current%300000)%(300000*10)  == 0) { // record on every tenth seconds (0s, 10s, 20s, 30s...)
+            if ((current-current%1000)%(1000*10)  == 0) { // record on every tenth seconds (0s, 10s, 20s, 30s...)
                 Log.i("Batavree", "this is periodic");
 //                Log.i("Batavree", dB.getAllTracking().toString());
                 String driverName = appDelfree.getDriver().getName();
                 Log.i("Batavree", driverName);
                 AsyncHttpTask sendData = new AsyncHttpTask("");
-                sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH);
+                sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
                 sendData.setHttpResponseListener(new OnHttpResponseListener() {
                     @Override
                     public void OnHttpResponse(String result) {
-
+                        Log.i("Batavree", "ini response send to server");
                     }
                 });
             }
