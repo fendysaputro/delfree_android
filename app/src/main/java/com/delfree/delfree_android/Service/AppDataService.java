@@ -90,6 +90,10 @@ public class AppDataService extends Service implements
         }
     };
 
+    public void stopHandler() {
+        handler.removeCallbacks(periodicUpdate);
+    }
+
 
     @Override
     public void onCreate() {
@@ -170,6 +174,7 @@ public class AppDataService extends Service implements
             stopLocationUpdate();
             Log.i(LOGSERVICE, "Service Stop");
         }
+        stopHandler();
     }
 
     @Nullable
