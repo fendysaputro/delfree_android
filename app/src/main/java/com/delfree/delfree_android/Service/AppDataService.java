@@ -76,6 +76,7 @@ public class AppDataService extends Service implements
             if ((current-current%1000)%(1000*10)  == 0) { // record on every tenth seconds (0s, 10s, 20s, 30s...)
                 Log.i("Batavree", "this is periodic");
 //                Log.i("Batavree", dB.getAllTracking().toString());
+                String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
                 String driverName = appDelfree.getDriver().getName();
                 Log.i("Batavree", driverName);
                 AsyncHttpTask sendData = new AsyncHttpTask("");

@@ -16,18 +16,15 @@
         android:background="@color/cameraTransparent"/>
 
     <TextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tvItems"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:background="@color/cameraTransparent"
         android:textColor="@color/textColor"
         android:layout_marginTop="-30dp"
         android:paddingLeft="20dp"
-        android:text="18 Aug 2019"
-        android:textSize="15sp"
-        />
+        android:text="Items:"
+        android:textSize="15sp" />
 
     <ImageButton
         android:id="@+id/iconList"
@@ -37,7 +34,6 @@
         android:src="@drawable/more"
         android:layout_gravity="right"
         android:background="@color/cameraTransparent"
-        android:paddingRight="20dp"
-        />
+        android:paddingRight="20dp" />
 
 </LinearLayout>
