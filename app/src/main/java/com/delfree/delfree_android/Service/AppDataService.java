@@ -77,6 +77,7 @@ public class AppDataService extends Service implements
                 Log.i("Batavree", "this is periodic");
 //                Log.i("Batavree", dB.getAllTracking().toString());
                 String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
+                Log.i("Batavree", date);
                 String driverName = appDelfree.getDriver().getName();
                 Log.i("Batavree", driverName);
                 AsyncHttpTask sendData = new AsyncHttpTask("");
