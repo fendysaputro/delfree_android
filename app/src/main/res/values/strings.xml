@@ -31,6 +31,13 @@
         <item>18 Aug 2019</item>
     </string-array>
 
+    <string name="items">
+        <ul><li>Items : </li> \n
+            <li>1. Kerupuk Bawang 5000 Kg</li> \n
+            <li>2. Kerupuk Kulit Bawang 5000 Kg</li> \n
+        </ul>
+    </string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

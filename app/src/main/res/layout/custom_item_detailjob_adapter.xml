@@ -23,7 +23,7 @@
         android:textColor="@color/textColor"
         android:layout_marginTop="-30dp"
         android:paddingLeft="20dp"
-        android:text="Items:"
+        android:text="@string/items"
         android:textSize="15sp" />
 
     <ImageButton
