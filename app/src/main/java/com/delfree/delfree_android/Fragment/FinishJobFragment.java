@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,9 +30,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.delfree.delfree_android.AppDelfree;
+import com.delfree.delfree_android.DbHelper;
 import com.delfree.delfree_android.MainActivity;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
+import com.delfree.delfree_android.Network.UploadDataTask;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import okhttp3.MediaType;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 import static com.delfree.delfree_android.MainActivity.allowBackPressed;
@@ -47,6 +62,8 @@ public class FinishJobFragment extends Fragment {
     private AppDataService appDataService;
     private Context context;
     Intent mServiceIntent;
+    File photoFile = null;
+    String fileName = "";
 
     public FinishJobFragment() {
         // Required empty public constructor
@@ -124,16 +141,25 @@ public class FinishJobFragment extends Fragment {
     }
 
     public void onDoneButton(){
-        HistoryFragment historyFragment = new HistoryFragment();
-        Activity activity = (Activity) context;
-        FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
-        if (appDelfree.isPicture()){
-            DetailJobFragment detailJobFragment = new DetailJobFragment();
-            ShowFragment(R.id.fl_container, historyFragment,fragmentManager);
-            context.stopService(new Intent(context, AppDataService.class));
-        } else {
-            Toast.makeText(this.getContext(), "You must take picture first", Toast.LENGTH_LONG).show();
-        }
+        UploadDataTask uploadTask = new UploadDataTask();
+        uploadTask.setHttpResponseListener(new OnHttpResponseListener() {
+            @Override
+            public void OnHttpResponse(String result) {
+                HistoryFragment historyFragment = new HistoryFragment();
+                Activity activity = (Activity) context;
+                FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
+                if (appDelfree.isPicture()){
+                    DetailJobFragment detailJobFragment = new DetailJobFragment();
+                    ShowFragment(R.id.fl_container, historyFragment,fragmentManager);
+                    context.stopService(new Intent(context, AppDataService.class));
+                } else {
+                    Toast.makeText(getContext(), "You must take picture first", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
+        uploadTask.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH + appDelfree.getImage() +
+                appDelfree.getDriver().getName() + date );
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
