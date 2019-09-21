@@ -144,11 +144,11 @@ public class FinishJobFragment extends Fragment {
         UploadDataTask uploadTask = new UploadDataTask();
         String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
         String wo_No = "Wo_No";
-        uploadTask.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH + wo_No + date + appDelfree.getImage() +
-                appDelfree.getDriver().getName() + appDelfree.getLatitude() + appDelfree.getLongitude());
-        uploadTask.setHttpResponseListener(new OnHttpResponseListener() {
-            @Override
-            public void OnHttpResponse(String result) {
+//        uploadTask.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH + date + appDelfree.getImage() +
+//                appDelfree.getDriver().getName() + appDelfree.getLatitude() + appDelfree.getLongitude());
+//        uploadTask.setHttpResponseListener(new OnHttpResponseListener() {
+//            @Override
+//            public void OnHttpResponse(String result) {
                 HistoryFragment historyFragment = new HistoryFragment();
                 Activity activity = (Activity) context;
                 FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
@@ -160,8 +160,8 @@ public class FinishJobFragment extends Fragment {
                     Toast.makeText(getContext(), "You must take picture first", Toast.LENGTH_LONG).show();
                 }
             }
-        });
-    }
+//        });
+//    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK){
