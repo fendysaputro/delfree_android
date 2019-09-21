@@ -154,6 +154,8 @@ public class FinishJobFragment extends Fragment {
                 FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
                 if (appDelfree.isPicture()){
                     DetailJobFragment detailJobFragment = new DetailJobFragment();
+                    ShowFragment(R.id.fl_container, historyFragment,fragmentManager);
+                    context.stopService(new Intent(context, AppDataService.class));
                 } else {
                     Toast.makeText(getContext(), "You must take picture first", Toast.LENGTH_LONG).show();
                 }
