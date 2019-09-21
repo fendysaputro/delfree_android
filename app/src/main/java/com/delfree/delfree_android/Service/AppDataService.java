@@ -162,6 +162,9 @@ public class AppDataService extends Service implements
         lati = location.getLatitude();
         longi = location.getLongitude();
 
+        appDelfree.setLatitude(lati);
+        appDelfree.setLongitude(longi);
+
         dB = new DbHelper(this);
         String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
         dB.insertTracking(date, lati, longi);

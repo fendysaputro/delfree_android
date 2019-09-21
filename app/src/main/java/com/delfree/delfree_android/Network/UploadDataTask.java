@@ -22,10 +22,11 @@ public class UploadDataTask extends AsyncTask<Object, Void, String> {
     protected String doInBackground(Object... params) {
         String url = (String) params[0];
         String WO_no = (String) params[1];
-        String name = (String) params[2];
-        String date = (String) params[3];
-        String last_location = (String) params[4];
-        Bitmap bmp = (Bitmap) params[5];
+        String date = (String) params[2];
+        String name = (String) params[3];
+        String latitude = (String) params[4];
+        String longitude = (String) params[5];
+        Bitmap bmp = (Bitmap) params[6];
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 0, baos);
         String data = "";
@@ -34,9 +35,10 @@ public class UploadDataTask extends AsyncTask<Object, Void, String> {
             HttpMultipartClient client = new HttpMultipartClient(url);
             client.connectForMultipart();
             client.addFormPart("WO_no", WO_no);
-            client.addFormPart("name", name);
             client.addFormPart("date", date);
-            client.addFormPart("last_location", last_location);
+            client.addFormPart("name", name);
+            client.addFormPart("latitude", latitude);
+            client.addFormPart("longitude", longitude);
             client.addFilePart("file", WO_no, baos.toByteArray());
             client.finishMultipart();
             data = client.getResponse();

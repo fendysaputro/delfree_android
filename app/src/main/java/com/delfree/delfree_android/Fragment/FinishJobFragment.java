@@ -142,6 +142,10 @@ public class FinishJobFragment extends Fragment {
 
     public void onDoneButton(){
         UploadDataTask uploadTask = new UploadDataTask();
+        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
+        String wo_No = "Wo_No";
+        uploadTask.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH + wo_No + date + appDelfree.getImage() +
+                appDelfree.getDriver().getName() + appDelfree.getLatitude() + appDelfree.getLongitude());
         uploadTask.setHttpResponseListener(new OnHttpResponseListener() {
             @Override
             public void OnHttpResponse(String result) {
@@ -150,16 +154,11 @@ public class FinishJobFragment extends Fragment {
                 FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
                 if (appDelfree.isPicture()){
                     DetailJobFragment detailJobFragment = new DetailJobFragment();
-                    ShowFragment(R.id.fl_container, historyFragment,fragmentManager);
-                    context.stopService(new Intent(context, AppDataService.class));
                 } else {
                     Toast.makeText(getContext(), "You must take picture first", Toast.LENGTH_LONG).show();
                 }
             }
         });
-        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
-        uploadTask.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH + appDelfree.getImage() +
-                appDelfree.getDriver().getName() + date );
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

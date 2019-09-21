@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.util.Log;
 
 import com.delfree.delfree_android.Model.Driver;
@@ -27,6 +28,8 @@ public class AppDelfree extends Application {
     File imageFile;
     private Bitmap image;
     boolean picture;
+    double latitude;
+    double longitude;
     public static String HOST = "http://api.batavree.com/apis/v1/";
     public static String LOGIN_PATH = "driver/authenticate";
     public static String UPLOAD_PATH = "";
@@ -87,6 +90,23 @@ public class AppDelfree extends Application {
     public void setPicture(boolean picture) {
         this.picture = picture;
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 }
+
 
 
