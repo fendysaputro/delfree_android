@@ -8,13 +8,49 @@ import java.io.Serializable;
 
 public class WorkOrders implements Serializable {
 
-    private String WO_number;
+    private String WODetails;
+    private String WODate;
+    private String driver;
+    private String refNo;
+    private String shipmentNum;
 
-    public String getWO_number() {
-        return WO_number;
+    public String getWODetails() {
+        return WODetails;
     }
 
-    public void setWO_number(String WO_number) {
-        this.WO_number = WO_number;
+    public void setWODetails(String WODetails) {
+        this.WODetails = WODetails;
+    }
+
+    public String getWODate() {
+        return WODate;
+    }
+
+    public void setWODate(String WODate) {
+        this.WODate = WODate;
+    }
+
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
+    public String getRefNo() {
+        return refNo;
+    }
+
+    public void setRefNo(String refNo) {
+        this.refNo = refNo;
+    }
+
+    public String getShipmentNum() {
+        return shipmentNum;
+    }
+
+    public void setShipmentNum(String shipmentNum) {
+        this.shipmentNum = shipmentNum;
     }
 }

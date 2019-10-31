@@ -22,7 +22,6 @@ import static android.media.MediaCodec.MetricsConstants.MODE;
 
 public class AppDelfree extends Application {
 
-    private String baseUrl = "";
     boolean login;
     Driver driver;
     File imageFile;
@@ -35,6 +34,7 @@ public class AppDelfree extends Application {
     public static String LOGIN_PATH = "driver/authenticate";
     public static String UPLOAD_PATH = "";
     public static String PICTURE_PATH = "delfree/pictures/";
+    public static String WO = "wo";
 
 
     public boolean isLogin(Activity activity, int MODE) {

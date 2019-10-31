@@ -54,8 +54,6 @@ public class HomeAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.custom_item_home_adapter, null);
 
-
-
         appDataService = new AppDataService();
         mServiceIntent = new Intent(context, appDataService.getClass());
 

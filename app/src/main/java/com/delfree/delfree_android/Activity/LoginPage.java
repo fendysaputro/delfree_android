@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,7 +83,7 @@ public class LoginPage extends Activity {
 
     private void onBtnLogin () {
         AsyncHttpTask mAuthTask = new AsyncHttpTask("phone="+edPhone.getText()+"&password="+edPassword.getText());
-        mAuthTask.execute(AppDelfree.HOST + AppDelfree.LOGIN_PATH, "POST");
+        mAuthTask.execute(appDelfree.HOST + appDelfree.LOGIN_PATH, "POST");
         mAuthTask.setHttpResponseListener(new OnHttpResponseListener() {
             @Override
             public void OnHttpResponse(String response) {
