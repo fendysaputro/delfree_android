@@ -22,6 +22,10 @@ import com.delfree.delfree_android.Network.AsyncHttpTask;
 import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -37,6 +41,8 @@ public class HomeFragment extends Fragment {
     String name;
     AppDelfree appDelfree;
     private boolean isBackPressedToExit;
+    ArrayList<WorkOrders> list = null;
+    HomeAdapter adapter = null;
 
     @Nullable
     @Override
@@ -45,22 +51,49 @@ public class HomeFragment extends Fragment {
 
         appDelfree = (AppDelfree) getActivity().getApplication();
 
-        getData("");
         listJobs=(ListView) view.findViewById(R.id.list);
-
-        HomeAdapter arrayAdapter = new HomeAdapter(getActivity(), R.layout.custom_item_home_adapter, items);
-        listJobs.setAdapter(arrayAdapter);
+        list = new ArrayList<WorkOrders>();
+        adapter = new HomeAdapter(getContext(), R.layout.custom_item_home_adapter, list);
+        listJobs.setAdapter(adapter);
+//
+//        HomeAdapter arrayAdapter = new HomeAdapter(getActivity(), R.layout.custom_item_home_adapter, items);
+//        listJobs.setAdapter(arrayAdapter);
+        getDataWO("", list, adapter);
 
         return view;
     }
 
-    private void getData (String data){
+    private void getDataWO (String data, final ArrayList<WorkOrders> list, final HomeAdapter adapter){
+        getData(data, list, adapter);
+    }
+
+    private void getData (String data, final ArrayList<WorkOrders> list, final HomeAdapter adapter){
         AsyncHttpTask woHttp = new AsyncHttpTask(data);
         woHttp.execute(appDelfree.HOST + appDelfree.WO, "GET");
         woHttp.setHttpResponseListener(new OnHttpResponseListener() {
             @Override
             public void OnHttpResponse(String response) {
                 Log.i("batavree ", "ini response " + response);
+                try {
+                    JSONObject resOBJ = new JSONObject(response);
+                    if (resOBJ.getBoolean("r")){
+                        JSONArray woArray = resOBJ.getJSONArray("d");
+                        Log.i("batavree", "workorder " + woArray.toString());
+                        for (int i = 0; i < woArray.length(); i++) {
+                            JSONObject WO = woArray.getJSONObject(i);
+                            WorkOrders woOrders = new WorkOrders();
+                            woOrders.setWODetails(WO.getString("WODetails"));
+                            woOrders.setWODate(WO.getString("WODate"));
+                            woOrders.setDriver(WO.getString("driver"));
+                            woOrders.setRefNo(WO.getString("refNo"));
+                            woOrders.setShipmentNum(WO.getString("shipmentNum"));
+                            list.add(woOrders);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
             }
         });
     }

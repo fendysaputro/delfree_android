@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
+import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
 import com.karumi.dexter.Dexter;
@@ -28,11 +29,13 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.ArrayList;
+
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
 public class HomeAdapter extends ArrayAdapter {
 
-    private String[] myListJobs;
+    private ArrayList<WorkOrders> myListJobs;
     private Context context;
     Intent mServiceIntent;
     public AppDataService appDataService;
@@ -40,7 +43,7 @@ public class HomeAdapter extends ArrayAdapter {
     Activity activity;
 
 
-    public HomeAdapter(Context context, int textViewResourceId, String[] myListJobs) {
+    public HomeAdapter(Context context, int textViewResourceId, ArrayList<WorkOrders> myListJobs) {
 
         super(context, textViewResourceId, myListJobs);
 
@@ -58,7 +61,7 @@ public class HomeAdapter extends ArrayAdapter {
         mServiceIntent = new Intent(context, appDataService.getClass());
 
         TextView textView = (TextView) view.findViewById(R.id.tv);
-        textView.setText(myListJobs[position]);
+        textView.setText(myListJobs.get(position).getWODate());
 
         ImageButton moreBtn = (ImageButton) view.findViewById(R.id.iconList);
         moreBtn.setOnClickListener(new View.OnClickListener() {
