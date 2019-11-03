@@ -25,7 +25,6 @@
         android:textColor="@color/textColor"
         android:layout_marginTop="-30dp"
         android:paddingLeft="20dp"
-        android:text="18 Aug 2019"
         android:textSize="15sp"
         />
 

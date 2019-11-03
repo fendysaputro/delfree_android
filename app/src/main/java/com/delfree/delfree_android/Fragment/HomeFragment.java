@@ -55,9 +55,7 @@ public class HomeFragment extends Fragment {
         list = new ArrayList<WorkOrders>();
         adapter = new HomeAdapter(getContext(), R.layout.custom_item_home_adapter, list);
         listJobs.setAdapter(adapter);
-//
-//        HomeAdapter arrayAdapter = new HomeAdapter(getActivity(), R.layout.custom_item_home_adapter, items);
-//        listJobs.setAdapter(arrayAdapter);
+
         getDataWO("", list, adapter);
 
         return view;

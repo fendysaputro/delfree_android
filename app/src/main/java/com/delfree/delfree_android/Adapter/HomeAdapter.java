@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,11 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
@@ -61,7 +66,19 @@ public class HomeAdapter extends ArrayAdapter {
         mServiceIntent = new Intent(context, appDataService.getClass());
 
         TextView textView = (TextView) view.findViewById(R.id.tv);
-        textView.setText(myListJobs.get(position).getWODate());
+        textView.setText(myListJobs.get(position).getShipmentNum());
+
+        try {
+            String WoDate = myListJobs.get(position).getWODate();
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(WoDate);
+            String formattedDate = new SimpleDateFormat("dd MMM yyyy").format(date);
+
+            TextView textViewDate = (TextView) view.findViewById(R.id.tvDate);
+            textViewDate.setText(formattedDate);
+        } catch (ParseException e){
+            e.getStackTrace();
+        }
+
 
         ImageButton moreBtn = (ImageButton) view.findViewById(R.id.iconList);
         moreBtn.setOnClickListener(new View.OnClickListener() {
