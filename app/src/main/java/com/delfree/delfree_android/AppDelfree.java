@@ -30,6 +30,7 @@ public class AppDelfree extends Application {
     double latitude;
     double longitude;
     String WO_NO;
+    String shipmentNumber;
     public static String HOST = "http://api.batavree.com/apis/v1/";
     public static String LOGIN_PATH = "driver/authenticate";
     public static String UPLOAD_PATH = "";
@@ -114,6 +115,14 @@ public class AppDelfree extends Application {
 
     public void setWO_NO(String WO_NO) {
         this.WO_NO = WO_NO;
+    }
+
+    public String getShipmentNumber() {
+        return shipmentNumber;
+    }
+
+    public void setShipmentNumber(String shipmentNumber) {
+        this.shipmentNumber = shipmentNumber;
     }
 }
 

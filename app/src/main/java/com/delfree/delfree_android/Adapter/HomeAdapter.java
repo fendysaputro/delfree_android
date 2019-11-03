@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
 import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.R;
@@ -46,7 +47,7 @@ public class HomeAdapter extends ArrayAdapter {
     public AppDataService appDataService;
     public boolean mTracking = false;
     Activity activity;
-
+    AppDelfree appDelfree;
 
     public HomeAdapter(Context context, int textViewResourceId, ArrayList<WorkOrders> myListJobs) {
 
@@ -65,14 +66,17 @@ public class HomeAdapter extends ArrayAdapter {
         appDataService = new AppDataService();
         mServiceIntent = new Intent(context, appDataService.getClass());
 
+        appDelfree = new AppDelfree();
+        mServiceIntent = new Intent(context, appDelfree.getClass());
+
         TextView textView = (TextView) view.findViewById(R.id.tv);
-        textView.setText(myListJobs.get(position).getShipmentNum());
+        appDelfree.setShipmentNumber(myListJobs.get(position).getShipmentNum());
+        textView.setText(appDelfree.getShipmentNumber());
 
         try {
             String WoDate = myListJobs.get(position).getWODate();
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(WoDate);
             String formattedDate = new SimpleDateFormat("dd MMM yyyy").format(date);
-
             TextView textViewDate = (TextView) view.findViewById(R.id.tvDate);
             textViewDate.setText(formattedDate);
         } catch (ParseException e){

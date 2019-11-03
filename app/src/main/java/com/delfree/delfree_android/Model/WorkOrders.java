@@ -1,5 +1,8 @@
 package com.delfree.delfree_android.Model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -8,17 +11,17 @@ import java.io.Serializable;
 
 public class WorkOrders implements Serializable {
 
-    private String WODetails;
+    private JSONArray WODetails;
     private String WODate;
-    private String driver;
+    private JSONObject driver;
     private String refNo;
     private String shipmentNum;
 
-    public String getWODetails() {
+    public JSONArray getWODetails() {
         return WODetails;
     }
 
-    public void setWODetails(String WODetails) {
+    public void setWODetails(JSONArray WODetails) {
         this.WODetails = WODetails;
     }
 
@@ -30,11 +33,11 @@ public class WorkOrders implements Serializable {
         this.WODate = WODate;
     }
 
-    public String getDriver() {
+    public JSONObject getDriver() {
         return driver;
     }
 
-    public void setDriver(String driver) {
+    public void setDriver(JSONObject driver) {
         this.driver = driver;
     }
 

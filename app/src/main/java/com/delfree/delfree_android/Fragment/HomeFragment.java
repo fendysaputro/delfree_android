@@ -36,9 +36,6 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private ListView listJobs;
-    String[] items = new String[] {"WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019"};
-    TextView textView;
-    String name;
     AppDelfree appDelfree;
     private boolean isBackPressedToExit;
     ArrayList<WorkOrders> list = null;
@@ -61,7 +58,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void getDataWO (String data, final ArrayList<WorkOrders> list, final HomeAdapter adapter){
+    public void getDataWO (String data, final ArrayList<WorkOrders> list, final HomeAdapter adapter){
         getData(data, list, adapter);
     }
 
@@ -71,18 +68,18 @@ public class HomeFragment extends Fragment {
         woHttp.setHttpResponseListener(new OnHttpResponseListener() {
             @Override
             public void OnHttpResponse(String response) {
-                Log.i("batavree ", "ini response " + response);
+//                Log.i("batavree ", "ini response " + response);
                 try {
                     JSONObject resOBJ = new JSONObject(response);
                     if (resOBJ.getBoolean("r")){
                         JSONArray woArray = resOBJ.getJSONArray("d");
-                        Log.i("batavree", "workorder " + woArray.toString());
+//                        Log.i("batavree", "workorder " + woArray.toString());
                         for (int i = 0; i < woArray.length(); i++) {
                             JSONObject WO = woArray.getJSONObject(i);
                             WorkOrders woOrders = new WorkOrders();
-                            woOrders.setWODetails(WO.getString("WODetails"));
+                            woOrders.setWODetails(WO.getJSONArray("WODetails"));
                             woOrders.setWODate(WO.getString("WODate"));
-                            woOrders.setDriver(WO.getString("driver"));
+                            woOrders.setDriver(WO.getJSONObject("driver"));
                             woOrders.setRefNo(WO.getString("refNo"));
                             woOrders.setShipmentNum(WO.getString("shipmentNum"));
                             list.add(woOrders);
