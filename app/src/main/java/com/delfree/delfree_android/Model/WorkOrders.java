@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class WorkOrders implements Serializable {
 
     private JSONArray WODetails;
+    private String WONumber;
     private String WODate;
     private JSONObject driver;
     private String refNo;
@@ -23,6 +24,14 @@ public class WorkOrders implements Serializable {
 
     public void setWODetails(JSONArray WODetails) {
         this.WODetails = WODetails;
+    }
+
+    public String getWONumber() {
+        return WONumber;
+    }
+
+    public void setWONumber(String WONumber) {
+        this.WONumber = WONumber;
     }
 
     public String getWODate() {

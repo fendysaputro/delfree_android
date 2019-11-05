@@ -70,8 +70,10 @@ public class HomeAdapter extends ArrayAdapter {
         mServiceIntent = new Intent(context, appDelfree.getClass());
 
         TextView textView = (TextView) view.findViewById(R.id.tv);
-        appDelfree.setShipmentNumber(myListJobs.get(position).getShipmentNum());
-        textView.setText(appDelfree.getShipmentNumber());
+        appDelfree.setWo_Number(myListJobs.get(position).getWONumber());
+        textView.setText(appDelfree.getWo_Number());
+
+        Log.i("batavree", "wo_di home " + appDelfree.getWo_Number());
 
         try {
             String WoDate = myListJobs.get(position).getWODate();
