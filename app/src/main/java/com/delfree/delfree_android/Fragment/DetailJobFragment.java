@@ -65,28 +65,38 @@ public class DetailJobFragment extends Fragment {
         WONumber = (TextView) view.findViewById(R.id.detail_job);
         WONumber.setText(appDelfree.getWorkOrders().getWONum());
 
-        Log.i("batavree", "wo_detail " + appDelfree.getWorkOrders().getWODetails().toString());
+//        Log.i("batavree", "wo_detail " + appDelfree.getWorkOrders().getWODetails().toString());
 
         listJobsById = (ListView) view.findViewById(R.id.list_jobs);
         listByWo = new ArrayList<WorkOrderDetails>();
-//        detailJobAdapter = new DetailJobAdapter(getContext(), R.layout.custom_item_detailjob_adapter, listByWo);
-//        listJobsById.setAdapter(detailJobAdapter);
+
 //        DetailJobAdapter arrayAdapter = new DetailJobAdapter(getActivity(), R.layout.custom_item_home_adapter, dropPoint);
 //        listJobsById.setAdapter(arrayAdapter);
 
         JSONArray detailWO = getWODetails();
-        getWODetails();
-//        getDataWO("", listByWo, detailJobAdapter);
+        for (int i = 0; i < detailWO.length(); i++) {
+            try {
+                Log.i("batavree", detailWO.getJSONObject(i).toString());
+                WorkOrderDetails wod = new WorkOrderDetails();
+                wod.setRoutes(detailWO.);
+                listByWo.add(wod);
+            } catch (JSONException ex){
+                ex.printStackTrace();
+            }
+        }
+
+        WorkOrderDetailAdapter workOrderDetailAdapter = new WorkOrderDetailAdapter(getContext(), R.layout.custom_item_detailjob_adapter, listByWo);
+        listJobsById.setAdapter(workOrderDetailAdapter);
 
         return view;
     }
 
     public JSONArray getWODetails (){
-        try {
-            Log.i("batavree", appDelfree.getWorkOrders().getWODetails().getString(0));
-        } catch (JSONException ex){
-            ex.printStackTrace();
-        }
+//        try {
+//            Log.i("batavree", appDelfree.getWorkOrders().getWODetails().getString(0));
+//        } catch (JSONException ex){
+//            ex.printStackTrace();
+//        }
 
         return appDelfree.getWorkOrders().getWODetails();
     }
