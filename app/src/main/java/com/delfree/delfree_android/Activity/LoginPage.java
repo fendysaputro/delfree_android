@@ -82,7 +82,7 @@ public class LoginPage extends Activity {
     }
 
     private void onBtnLogin () {
-        AsyncHttpTask mAuthTask = new AsyncHttpTask("phone="+edPhone.getText()+"&password="+edPassword.getText());
+        AsyncHttpTask mAuthTask = new AsyncHttpTask("phone="+edPhone.getText()+"&password="+edPassword.getText(), this);
         mAuthTask.execute(appDelfree.HOST + appDelfree.LOGIN_PATH, "POST");
         mAuthTask.setHttpResponseListener(new OnHttpResponseListener() {
             @Override

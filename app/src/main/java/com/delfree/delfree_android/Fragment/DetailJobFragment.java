@@ -15,9 +15,17 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.delfree.delfree_android.Adapter.DetailJobAdapter;
+import com.delfree.delfree_android.Adapter.WorkOrderDetailAdapter;
+import com.delfree.delfree_android.Adapter.HomeAdapter;
 import com.delfree.delfree_android.AppDelfree;
+import com.delfree.delfree_android.Model.WorkOrderDetails;
+import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 
 
 /**
@@ -32,6 +40,8 @@ public class DetailJobFragment extends Fragment {
     AppDelfree appDelfree;
     private Context context;
     Intent mServiceIntent;
+    ArrayList<WorkOrderDetails> listByWo = null;
+//    DetailJobAdapter detailJobAdapter = null;
 
     @Nullable
     @Override
@@ -53,16 +63,37 @@ public class DetailJobFragment extends Fragment {
         });
 
         WONumber = (TextView) view.findViewById(R.id.detail_job);
-        WONumber.setText(appDelfree.getWo_Number());
-        Log.i("batavree", "wo_detail " + appDelfree.getWo_Number());
+        WONumber.setText(appDelfree.getWorkOrders().getWONum());
+
+        Log.i("batavree", "wo_detail " + appDelfree.getWorkOrders().getWODetails().toString());
 
         listJobsById = (ListView) view.findViewById(R.id.list_jobs);
+        listByWo = new ArrayList<WorkOrderDetails>();
+//        detailJobAdapter = new DetailJobAdapter(getContext(), R.layout.custom_item_detailjob_adapter, listByWo);
+//        listJobsById.setAdapter(detailJobAdapter);
+//        DetailJobAdapter arrayAdapter = new DetailJobAdapter(getActivity(), R.layout.custom_item_home_adapter, dropPoint);
+//        listJobsById.setAdapter(arrayAdapter);
 
-        DetailJobAdapter arrayAdapter = new DetailJobAdapter(getActivity(), R.layout.custom_item_home_adapter, dropPoint);
-        listJobsById.setAdapter(arrayAdapter);
+        JSONArray detailWO = getWODetails();
+        getWODetails();
+//        getDataWO("", listByWo, detailJobAdapter);
 
         return view;
     }
+
+    public JSONArray getWODetails (){
+        try {
+            Log.i("batavree", appDelfree.getWorkOrders().getWODetails().getString(0));
+        } catch (JSONException ex){
+            ex.printStackTrace();
+        }
+
+        return appDelfree.getWorkOrders().getWODetails();
+    }
+
+//    public void getDataWO (String data, final ArrayList<WorkOrders> listByWo, final DetailJobAdapter adapter){
+//
+//    }
 
     @Override
     public void onResume() {

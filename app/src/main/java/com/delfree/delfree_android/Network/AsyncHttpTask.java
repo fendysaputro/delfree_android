@@ -1,7 +1,10 @@
 package com.delfree.delfree_android.Network;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.delfree.delfree_android.AppDelfree;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -18,6 +21,8 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
     OnHttpResponseListener onHttpResponseListener;
     OnHttpCancel onHttpCancel;
     String data;
+    AppDelfree appDelfree;
+    Context context;
 
     public void setHttpResponseListener(OnHttpResponseListener listener) {
         onHttpResponseListener = listener;
@@ -27,8 +32,10 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
         this.onHttpCancel = onHttpCancel;
     }
 
-    public AsyncHttpTask(String data) {
+    public AsyncHttpTask(String data, Context context) {
         this.data = data;
+        this.context = context;
+        appDelfree = (AppDelfree) context.getApplicationContext();
     }
 
     @Override
@@ -40,6 +47,7 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
             URL obj = new URL(url);
             Log.d("tracking", url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestProperty ("Authorization", "Bearer " + appDelfree.getDriver().getToken());
             con.setRequestMethod(method);
             if (method.equals("POST")) {
                 con.setRequestProperty("Content-Type",

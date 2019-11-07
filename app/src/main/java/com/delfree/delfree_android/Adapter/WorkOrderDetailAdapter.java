@@ -15,22 +15,30 @@ import android.widget.TextView;
 
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.FinishJobFragment;
+import com.delfree.delfree_android.Model.WorkOrderDetails;
+import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.R;
+import com.delfree.delfree_android.Service.AppDataService;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
-public class DetailJobAdapter extends ArrayAdapter {
+public class WorkOrderDetailAdapter extends ArrayAdapter {
 
-    private String[] myListJobsById;
+    private ArrayList<WorkOrderDetails> myListJobsByWo;
     private Context context;
     AppDelfree appDelfree;
     Intent mServiceIntent;
+    public AppDataService appDataService;
 
-    public DetailJobAdapter(Context context, int textViewResourceId, String[] myListJobsById) {
+    public WorkOrderDetailAdapter(Context context, int textViewResourceId, ArrayList<WorkOrderDetails> myListJobsByWo) {
 
-        super(context, textViewResourceId, myListJobsById);
+        super(context, textViewResourceId, myListJobsByWo);
 
-        this.myListJobsById = myListJobsById;
+        this.myListJobsByWo = myListJobsByWo;
         this.context = context;
     }
 
@@ -42,8 +50,13 @@ public class DetailJobAdapter extends ArrayAdapter {
         appDelfree = new AppDelfree();
         mServiceIntent = new Intent(context, appDelfree.getClass());
 
-        TextView textView = (TextView) view.findViewById(R.id.tv);
-        textView.setText(myListJobsById[position]);
+        appDataService = new AppDataService();
+        mServiceIntent = new Intent(context, appDataService.getClass());
+
+//        TextView textView = (TextView) view.findViewById(R.id.tv);
+//        textView.setText(myListJobsByWo.get(position).getWODetails().getJSONObject(0).getString("id"));
+//        Log.i("batavree", "wo_Detail " + myListJobsByWo.get(position).getWODetails().getJSONObject(0).getString("id"));
+
 
         ImageButton moreBtn = (ImageButton) view.findViewById(R.id.iconList);
         moreBtn.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +66,7 @@ public class DetailJobAdapter extends ArrayAdapter {
                 Activity activity = (Activity) context;
                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
                 ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
+                context.startService(new Intent(context, AppDataService.class));
             }
         });
 

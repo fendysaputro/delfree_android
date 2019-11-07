@@ -80,7 +80,7 @@ public class AppDataService extends Service implements
                 Log.i("Batavree", date);
                 String driverName = appDelfree.getDriver().getName();
                 Log.i("Batavree", driverName);
-                AsyncHttpTask sendData = new AsyncHttpTask("");
+                AsyncHttpTask sendData = new AsyncHttpTask("", getApplicationContext());
                 sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
                 sendData.setHttpResponseListener(new OnHttpResponseListener() {
                     @Override

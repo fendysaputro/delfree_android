@@ -63,12 +63,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void getData (String data, final ArrayList<WorkOrders> list, final HomeAdapter adapter){
-        AsyncHttpTask woHttp = new AsyncHttpTask(data);
+        AsyncHttpTask woHttp = new AsyncHttpTask(data, getActivity());
         woHttp.execute(appDelfree.HOST + appDelfree.WO, "GET");
         woHttp.setHttpResponseListener(new OnHttpResponseListener() {
             @Override
             public void OnHttpResponse(String response) {
-                Log.i("batavree ", "ini response " + response);
+//                Log.i("batavree ", "ini response " + response);
                 try {
                     JSONObject resOBJ = new JSONObject(response);
                     if (resOBJ.getBoolean("r")){
@@ -78,12 +78,13 @@ public class HomeFragment extends Fragment {
                             JSONObject WO = woArray.getJSONObject(i);
                             WorkOrders woOrders = new WorkOrders();
                             woOrders.setWODetails(WO.getJSONArray("WODetails"));
-                            woOrders.setWONumber(WO.getString("WONum"));
+                            woOrders.setWONum(WO.getString("WONum"));
                             woOrders.setWODate(WO.getString("WODate"));
                             woOrders.setDriver(WO.getJSONObject("driver"));
                             woOrders.setRefNo(WO.getString("refNo"));
                             woOrders.setShipmentNum(WO.getString("shipmentNum"));
                             list.add(woOrders);
+                            appDelfree.setWorkOrders(woOrders);
                         }
                         adapter.notifyDataSetChanged();
                     }

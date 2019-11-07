@@ -70,10 +70,7 @@ public class HomeAdapter extends ArrayAdapter {
         mServiceIntent = new Intent(context, appDelfree.getClass());
 
         TextView textView = (TextView) view.findViewById(R.id.tv);
-        appDelfree.setWo_Number(myListJobs.get(position).getWONumber());
-        textView.setText(appDelfree.getWo_Number());
-
-        Log.i("batavree", "wo_di home " + appDelfree.getWo_Number());
+        textView.setText(myListJobs.get(position).getWONum());
 
         try {
             String WoDate = myListJobs.get(position).getWODate();
@@ -94,7 +91,6 @@ public class HomeAdapter extends ArrayAdapter {
                 Activity activity = (Activity) context;
                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
                 ShowFragment(R.id.fl_container, detailJobFragment,fragmentManager);
-                context.startService(new Intent(context, AppDataService.class));
             }
         });
 
