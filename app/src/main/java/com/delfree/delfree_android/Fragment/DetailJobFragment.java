@@ -1,11 +1,14 @@
 package com.delfree.delfree_android.Fragment;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.delfree.delfree_android.Adapter.WorkOrderDetailAdapter;
 import com.delfree.delfree_android.Adapter.HomeAdapter;
@@ -78,7 +82,7 @@ public class DetailJobFragment extends Fragment {
             try {
                 Log.i("batavree", detailWO.getJSONObject(i).toString());
                 WorkOrderDetails wod = new WorkOrderDetails();
-                wod.setRoutes(detailWO.);
+//                wod.setRoutes(detailWO.get);
                 listByWo.add(wod);
             } catch (JSONException ex){
                 ex.printStackTrace();
@@ -92,18 +96,9 @@ public class DetailJobFragment extends Fragment {
     }
 
     public JSONArray getWODetails (){
-//        try {
-//            Log.i("batavree", appDelfree.getWorkOrders().getWODetails().getString(0));
-//        } catch (JSONException ex){
-//            ex.printStackTrace();
-//        }
 
         return appDelfree.getWorkOrders().getWODetails();
     }
-
-//    public void getDataWO (String data, final ArrayList<WorkOrders> listByWo, final DetailJobAdapter adapter){
-//
-//    }
 
     @Override
     public void onResume() {

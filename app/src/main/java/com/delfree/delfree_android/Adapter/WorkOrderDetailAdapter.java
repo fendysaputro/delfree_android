@@ -1,10 +1,13 @@
 package com.delfree.delfree_android.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.FinishJobFragment;
@@ -62,15 +66,37 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
         moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FinishJobFragment finishJobFragment = new FinishJobFragment();
-                Activity activity = (Activity) context;
-                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
-                context.startService(new Intent(context, AppDataService.class));
+                dialog();
             }
         });
 
         return view;
     }
 
+    public void dialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Mulai Perjalanan");
+        alertDialog.setMessage("Apakah anda yakin memulai perjalanan?");
+        alertDialog.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
+                        FinishJobFragment finishJobFragment = new FinishJobFragment();
+                        Activity activity = (Activity) context;
+                        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                        ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
+//                        context.startService(new Intent(context, AppDataService.class));
+                    }
+                });
+        alertDialog.setNegativeButton("NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+
+        return;
+    }
 }
