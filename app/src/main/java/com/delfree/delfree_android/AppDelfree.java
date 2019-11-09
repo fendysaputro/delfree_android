@@ -8,6 +8,7 @@ import android.location.Location;
 import android.util.Log;
 
 import com.delfree.delfree_android.Model.Driver;
+import com.delfree.delfree_android.Model.WorkOrderDetails;
 import com.delfree.delfree_android.Model.WorkOrders;
 
 import org.json.JSONException;
@@ -33,6 +34,7 @@ public class AppDelfree extends Application {
     String Wo_Number;
     String shipmentNumber;
     WorkOrders workOrders;
+    WorkOrderDetails workOrderDetails;
     public static String HOST = "http://api.batavree.com/apis/v1/";
     public static String LOGIN_PATH = "driver/authenticate";
     public static String UPLOAD_PATH = "";
@@ -111,28 +113,20 @@ public class AppDelfree extends Application {
         this.longitude = longitude;
     }
 
-//    public String getWo_Number() {
-//        return Wo_Number;
-//    }
-//
-//    public void setWo_Number(String Wo_Number) {
-//        this.Wo_Number = Wo_Number;
-//    }
-//
-//    public String getShipmentNumber() {
-//        return shipmentNumber;
-//    }
-//
-//    public void setShipmentNumber(String shipmentNumber) {
-//        this.shipmentNumber = shipmentNumber;
-//    }
-
     public WorkOrders getWorkOrders() {
         return workOrders;
     }
 
     public void setWorkOrders(WorkOrders workOrders) {
         this.workOrders = workOrders;
+    }
+
+    public WorkOrderDetails getWorkOrderDetails() {
+        return workOrderDetails;
+    }
+
+    public void setWorkOrderDetails(WorkOrderDetails workOrderDetails) {
+        this.workOrderDetails = workOrderDetails;
     }
 }
 

@@ -28,6 +28,7 @@ import com.delfree.delfree_android.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 public class DetailJobFragment extends Fragment {
 
     private ListView listJobsById;
-    String[] dropPoint = new String[] {"Drop point 1: Bandung Timur", "Drop point 2: Bandung Selatan", "Drop point 3: Bandung Barat"};
+//    String[] dropPoint = new String[] {"Drop point 1: Bandung Timur", "Drop point 2: Bandung Selatan", "Drop point 3: Bandung Barat"};
     TextView WONumber;
     AppDelfree appDelfree;
     private Context context;
@@ -80,10 +81,12 @@ public class DetailJobFragment extends Fragment {
         JSONArray detailWO = getWODetails();
         for (int i = 0; i < detailWO.length(); i++) {
             try {
-                Log.i("batavree", detailWO.getJSONObject(i).toString());
+                JSONObject WoObj = detailWO.getJSONObject(i);
                 WorkOrderDetails wod = new WorkOrderDetails();
-//                wod.setRoutes(detailWO.get);
+                wod.setRoutes(WoObj.getJSONArray("routes"));
+                wod.setWONum(WoObj.getString("WONum"));
                 listByWo.add(wod);
+                appDelfree.setWorkOrderDetails(wod);
             } catch (JSONException ex){
                 ex.printStackTrace();
             }

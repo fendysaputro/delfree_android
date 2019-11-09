@@ -23,6 +23,7 @@ import com.delfree.delfree_android.Model.WorkOrderDetails;
 import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
+import com.google.gson.JsonIOException;
 
 import org.json.JSONException;
 
@@ -57,10 +58,12 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
         appDataService = new AppDataService();
         mServiceIntent = new Intent(context, appDataService.getClass());
 
-//        TextView textView = (TextView) view.findViewById(R.id.tv);
-//        textView.setText(myListJobsByWo.get(position).getWODetails().getJSONObject(0).getString("id"));
-//        Log.i("batavree", "wo_Detail " + myListJobsByWo.get(position).getWODetails().getJSONObject(0).getString("id"));
-
+        try {
+            TextView textView = (TextView) view.findViewById(R.id.tv);
+            textView.setText(myListJobsByWo.get(position).getRoutes().getJSONObject(0).getJSONObject("src").getString("addr"));
+        } catch (JSONException jexx) {
+            jexx.printStackTrace();
+        }
 
         ImageButton moreBtn = (ImageButton) view.findViewById(R.id.iconList);
         moreBtn.setOnClickListener(new View.OnClickListener() {

@@ -48,6 +48,7 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
             Log.d("tracking", url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestProperty ("Authorization", "Bearer " + appDelfree.getDriver().getToken());
+            Log.i("batavree", "ini token " + appDelfree.getDriver().getToken());
             con.setRequestMethod(method);
             if (method.equals("POST")) {
                 con.setRequestProperty("Content-Type",
