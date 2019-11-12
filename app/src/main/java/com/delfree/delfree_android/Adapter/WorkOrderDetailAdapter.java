@@ -59,8 +59,12 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
         mServiceIntent = new Intent(context, appDataService.getClass());
 
         try {
-            TextView textView = (TextView) view.findViewById(R.id.tv);
-            textView.setText(myListJobsByWo.get(position).getRoutes().getJSONObject(0).getJSONObject("src").getString("addr"));
+            TextView listOrder = (TextView) view.findViewById(R.id.tv);
+            listOrder.setText("Order No : " + myListJobsByWo.get(position).getRoutes().getJSONObject(0).getString("order"));
+            TextView routeSrc = (TextView) view.findViewById(R.id.tvRouteSrc);
+            routeSrc.setText("Alamat dari : " + myListJobsByWo.get(position).getRoutes().getJSONObject(0).getJSONObject("src").getString("addr"));
+            TextView routeDest = (TextView) view.findViewById(R.id.tvRouteDest);
+            routeDest.setText("Alamat ke : " + myListJobsByWo.get(position).getRoutes().getJSONObject(0).getJSONObject("dest").getString("addr"));
         } catch (JSONException jexx) {
             jexx.printStackTrace();
         }
