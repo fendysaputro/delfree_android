@@ -58,15 +58,17 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
         appDataService = new AppDataService();
         mServiceIntent = new Intent(context, appDataService.getClass());
 
-        try {
-            TextView listOrder = (TextView) view.findViewById(R.id.tv);
-            listOrder.setText("Rute " + myListJobsByWo.get(position).getRoutes().getJSONObject(0).getString("order"));
-            TextView routeSrc = (TextView) view.findViewById(R.id.tvRouteSrc);
-            routeSrc.setText("Alamat dari : " + myListJobsByWo.get(position).getRoutes().getJSONObject(0).getJSONObject("src").getString("addr"));
-            TextView routeDest = (TextView) view.findViewById(R.id.tvRouteDest);
-            routeDest.setText("Alamat ke : " + myListJobsByWo.get(position).getRoutes().getJSONObject(0).getJSONObject("dest").getString("addr"));
-        } catch (JSONException jexx) {
-            jexx.printStackTrace();
+        for (int i = 0; i < myListJobsByWo.size(); i++) {
+            try {
+                TextView listOrder = (TextView) view.findViewById(R.id.tv);
+                listOrder.setText("Rute " + myListJobsByWo.get(position).getRoutes().getJSONObject(i).getString("order"));
+                TextView routeSrc = (TextView) view.findViewById(R.id.tvRouteSrc);
+                routeSrc.setText("Alamat dari : " + myListJobsByWo.get(position).getRoutes().getJSONObject(i).getJSONObject("src").getString("addr"));
+                TextView routeDest = (TextView) view.findViewById(R.id.tvRouteDest);
+                routeDest.setText("Alamat ke : " + myListJobsByWo.get(position).getRoutes().getJSONObject(i).getJSONObject("dest").getString("addr"));
+            } catch (JSONException jexx) {
+                jexx.printStackTrace();
+            }
         }
 
         ImageButton moreBtn = (ImageButton) view.findViewById(R.id.iconList);
