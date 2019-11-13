@@ -60,7 +60,7 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
 
         try {
             TextView listOrder = (TextView) view.findViewById(R.id.tv);
-            listOrder.setText("Order No : " + myListJobsByWo.get(position).getRoutes().getJSONObject(0).getString("order"));
+            listOrder.setText("Rute " + myListJobsByWo.get(position).getRoutes().getJSONObject(0).getString("order"));
             TextView routeSrc = (TextView) view.findViewById(R.id.tvRouteSrc);
             routeSrc.setText("Alamat dari : " + myListJobsByWo.get(position).getRoutes().getJSONObject(0).getJSONObject("src").getString("addr"));
             TextView routeDest = (TextView) view.findViewById(R.id.tvRouteDest);
