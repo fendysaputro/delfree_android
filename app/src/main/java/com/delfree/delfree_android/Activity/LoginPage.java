@@ -19,6 +19,7 @@ import com.delfree.delfree_android.Model.Driver;
 import com.delfree.delfree_android.Network.APIService;
 import com.delfree.delfree_android.Network.ApiUtils;
 import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpCancel;
 import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
 
@@ -50,9 +51,9 @@ public class LoginPage extends Activity {
         edPassword = findViewById(R.id.editTextPassword);
 
         if(appDelfree.isLogin(LoginPage.this, MainActivity.MODE_PRIVATE)){
-            finish();
             Intent i = new Intent(LoginPage.this, MainActivity.class);
             startActivity(i);
+            finish();
         }
 
         btnLogin = findViewById(R.id.loginBtn);
@@ -83,10 +84,12 @@ public class LoginPage extends Activity {
 
     private void onBtnLogin () {
         AsyncHttpTask mAuthTask = new AsyncHttpTask("phone="+edPhone.getText()+"&password="+edPassword.getText(), this);
+        mAuthTask.setLoginPurpose(true);
         mAuthTask.execute(appDelfree.HOST + appDelfree.LOGIN_PATH, "POST");
         mAuthTask.setHttpResponseListener(new OnHttpResponseListener() {
             @Override
             public void OnHttpResponse(String response) {
+                Log.i("batavree", "response " + response);
                 try {
                     JSONObject resObj = new JSONObject(response);
                     if (resObj.getBoolean("r")){
@@ -113,6 +116,12 @@ public class LoginPage extends Activity {
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
+            }
+        });
+
+        mAuthTask.setOnHttpCancel(new OnHttpCancel() {
+            @Override
+            public void OnHttpCancel() {
             }
         });
     }

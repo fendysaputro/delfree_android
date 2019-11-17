@@ -23,6 +23,7 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
     String data;
     AppDelfree appDelfree;
     Context context;
+    boolean loginPurpose;
 
     public void setHttpResponseListener(OnHttpResponseListener listener) {
         onHttpResponseListener = listener;
@@ -38,6 +39,14 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
         appDelfree = (AppDelfree) context.getApplicationContext();
     }
 
+    public boolean isLoginPurpose() {
+        return loginPurpose;
+    }
+
+    public void setLoginPurpose(boolean loginPurpose) {
+        this.loginPurpose = loginPurpose;
+    }
+
     @Override
     protected String doInBackground(String... params) {
         StringBuffer response = null;
@@ -47,8 +56,10 @@ public class AsyncHttpTask extends AsyncTask<String, Void, String> {
             URL obj = new URL(url);
             Log.d("tracking", url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestProperty ("Authorization", "Bearer " + appDelfree.getDriver().getToken());
-            Log.i("batavree", "ini token " + appDelfree.getDriver().getToken());
+            if (!isLoginPurpose()){
+                con.setRequestProperty ("Authorization", "Bearer " + appDelfree.getDriver().getToken());
+                Log.i("batavree", "ini token " + appDelfree.getDriver().getToken());
+            }
             con.setRequestMethod(method);
             if (method.equals("POST")) {
                 con.setRequestProperty("Content-Type",
