@@ -21,8 +21,18 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/CustomActionBarTheme">
+<!--        <activity-->
+<!--            android:name=".Activity.SplashScreen"-->
+<!--            android:theme="@style/SplashTheme"-->
+<!--            android:screenOrientation="portrait" >-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
-            android:name=".Activity.SplashScreen"
+            android:name=".Activity.ProgressRoute"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait" >
             <intent-filter>

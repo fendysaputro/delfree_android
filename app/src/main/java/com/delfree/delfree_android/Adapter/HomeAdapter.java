@@ -31,6 +31,8 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import org.json.JSONException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,7 +52,6 @@ public class HomeAdapter extends ArrayAdapter {
     AppDelfree appDelfree;
 
     public HomeAdapter(Context context, int textViewResourceId, ArrayList<WorkOrders> myListJobs) {
-
         super(context, textViewResourceId, myListJobs);
 
         this.myListJobs = myListJobs;
