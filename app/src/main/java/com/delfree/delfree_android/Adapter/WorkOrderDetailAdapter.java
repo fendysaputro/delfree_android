@@ -17,6 +17,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.delfree.delfree_android.Activity.ForgotPasswordPage;
+import com.delfree.delfree_android.Activity.LoginPage;
+import com.delfree.delfree_android.Activity.ProgressRoute;
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.FinishJobFragment;
 import com.delfree.delfree_android.Model.WorkOrderDetails;
@@ -62,6 +65,7 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
             try {
                 TextView listOrder = (TextView) view.findViewById(R.id.tv);
                 listOrder.setText("Rute " + myListJobsByWo.get(position).getRoutes().getJSONObject(i).getString("order"));
+//                listOrder.setText("Rute " + appDelfree.getWorkOrderDetails().getRoutes().getJSONObject(position).getString("order"));
                 TextView routeSrc = (TextView) view.findViewById(R.id.tvRouteSrc);
                 routeSrc.setText("Alamat dari : " + myListJobsByWo.get(position).getRoutes().getJSONObject(i).getJSONObject("src").getString("addr"));
                 TextView routeDest = (TextView) view.findViewById(R.id.tvRouteDest);
@@ -86,18 +90,20 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Mulai Perjalanan");
         alertDialog.setMessage("Apakah anda yakin memulai perjalanan?");
-        alertDialog.setPositiveButton("YES",
+        alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
-                        FinishJobFragment finishJobFragment = new FinishJobFragment();
+//                        Toast.makeText(getContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
+//                        FinishJobFragment finishJobFragment = new FinishJobFragment();
                         Activity activity = (Activity) context;
-                        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                        ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
+//                        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+//                        ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
+                        Intent intent = new Intent(activity, ProgressRoute.class);
+                        context.startActivity(intent);
 //                        context.startService(new Intent(context, AppDataService.class));
                     }
                 });
-        alertDialog.setNegativeButton("NO",
+        alertDialog.setNegativeButton("TIDAK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();

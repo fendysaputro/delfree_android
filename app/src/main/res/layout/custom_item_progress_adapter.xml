@@ -6,15 +6,25 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/tvRouteSrc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:gravity="top"
         android:padding="20dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:background="@color/cameraTransparent"
         android:textColor="@color/textColor"
-        android:background="@color/cameraTransparent"/>
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:id="@+id/tvRouteDest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/cameraTransparent"
+        android:textColor="@color/textColor"
+        android:layout_toRightOf="@+id/tvRouteSrc"
+        android:textSize="15sp"
+        />
 
     <TextView
         android:id="@+id/tvStatus"

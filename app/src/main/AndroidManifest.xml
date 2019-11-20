@@ -21,18 +21,8 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/CustomActionBarTheme">
-<!--        <activity-->
-<!--            android:name=".Activity.SplashScreen"-->
-<!--            android:theme="@style/SplashTheme"-->
-<!--            android:screenOrientation="portrait" >-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
         <activity
-            android:name=".Activity.ProgressRoute"
+            android:name=".Activity.SplashScreen"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -51,6 +41,7 @@
             android:theme="@style/CustomActionBarTheme">
         </activity>
         <activity android:name=".Activity.ForgotPasswordPage"></activity>
+        <activity android:name=".Activity.ProgressRoute"></activity>
         <activity android:name=".GpsTracking"></activity>
         <service android:name=".Service.AppDataService"
             android:enabled="true">
