@@ -28,6 +28,7 @@ import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
 import com.google.gson.JsonIOException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -65,7 +66,6 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
             try {
                 TextView listOrder = (TextView) view.findViewById(R.id.tv);
                 listOrder.setText("Rute " + myListJobsByWo.get(position).getRoutes().getJSONObject(i).getString("order"));
-//                listOrder.setText("Rute " + appDelfree.getWorkOrderDetails().getRoutes().getJSONObject(position).getString("order"));
                 TextView routeSrc = (TextView) view.findViewById(R.id.tvRouteSrc);
                 routeSrc.setText("Alamat dari : " + myListJobsByWo.get(position).getRoutes().getJSONObject(i).getJSONObject("src").getString("addr"));
                 TextView routeDest = (TextView) view.findViewById(R.id.tvRouteDest);
