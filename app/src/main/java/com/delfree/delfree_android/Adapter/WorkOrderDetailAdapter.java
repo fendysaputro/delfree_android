@@ -100,7 +100,7 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
 //                        ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
                         Intent intent = new Intent(activity, ProgressRoute.class);
                         context.startActivity(intent);
-//                        context.startService(new Intent(context, AppDataService.class));
+                        context.startService(new Intent(context, AppDataService.class));
                     }
                 });
         alertDialog.setNegativeButton("TIDAK",

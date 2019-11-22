@@ -34,6 +34,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,12 +83,22 @@ public class AppDataService extends Service implements
                 Log.i("Batavree", date);
                 String driverName = appDelfree.getDriver().getName();
                 Log.i("Batavree", driverName);
-                AsyncHttpTask sendData = new AsyncHttpTask("", getApplicationContext());
-                sendData.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH, "POST");
+                AsyncHttpTask sendData = new AsyncHttpTask("woid=" + appDelfree.getWorkOrders(), getApplicationContext());
+                sendData.execute(appDelfree.HOST + appDelfree.SEND_LOG, "POST");
                 sendData.setHttpResponseListener(new OnHttpResponseListener() {
                     @Override
-                    public void OnHttpResponse(String result) {
-                        Log.i("Batavree", "ini response send to server");
+                    public void OnHttpResponse(String response) {
+                        try {
+                            JSONObject resObj = new JSONObject(response);
+                            Log.i("Batavree", "ini response send to server" + resObj.toString());
+                            if (resObj.getBoolean("r")){
+                                JSONObject dataObj = resObj.getJSONObject("d");
+
+
+                            }
+                        } catch (JSONException jex){
+                            jex.printStackTrace();
+                        }
                     }
                 });
             }

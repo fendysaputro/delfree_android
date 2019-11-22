@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.FinishJobFragment;
+import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.Model.WorkOrderDetails;
 import com.delfree.delfree_android.R;
 
@@ -47,6 +48,7 @@ public class ProgressRoute extends AppCompatActivity {
         setContentView(R.layout.progress_route_activity);
 
         appDelfree = (AppDelfree) getApplication();
+        context = appDelfree.getApplicationContext();
 //        progressList=(ListView) findViewById(R.id.list);
 //        list = new ArrayList<WorkOrderDetails>();
 //
@@ -104,8 +106,8 @@ public class ProgressRoute extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         FinishJobFragment finishJobFragment = new FinishJobFragment();
-                        Activity activity = (Activity) context;
-                        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+//                        Activity activity = (Activity) context;
+                        FragmentManager fragmentManager = getSupportFragmentManager();
                         ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
 
 //                        stopService(new Intent(getApplication(), AppDataService.class));
