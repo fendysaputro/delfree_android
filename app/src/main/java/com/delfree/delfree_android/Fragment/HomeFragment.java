@@ -77,10 +77,12 @@ public class HomeFragment extends Fragment {
                         for (int i = 0; i < woArray.length(); i++) {
                             JSONObject WO = woArray.getJSONObject(i);
                             WorkOrders woOrders = new WorkOrders();
+                            woOrders.setId(WO.getString("_id"));
                             woOrders.setWODetails(WO.getJSONArray("WODetails"));
                             woOrders.setWONum(WO.getString("WONum"));
                             woOrders.setWODate(WO.getString("WODate"));
                             woOrders.setDriver(WO.getJSONObject("driver"));
+                            woOrders.setVehicle(WO.getJSONObject("vehicle"));
                             woOrders.setRefNo(WO.getString("refNo"));
                             woOrders.setShipmentNum(WO.getString("shipmentNum"));
                             list.add(woOrders);

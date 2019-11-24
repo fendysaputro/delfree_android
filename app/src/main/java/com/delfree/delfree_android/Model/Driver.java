@@ -11,6 +11,8 @@ import java.util.Date;
 
 public class Driver {
 
+    @SerializedName("id")
+    private String id;
     @SerializedName("name")
     private String name;
     @SerializedName("phone")
@@ -26,13 +28,22 @@ public class Driver {
     @SerializedName("message")
     private String message;
 
-    public Driver(String name, String phone, String address, String sim_number, String sim_expire, String token){
+    public Driver(String id, String name, String phone, String address, String sim_number, String sim_expire, String token){
+        this.id = id;
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.sim_number = sim_number;
         this.sim_expire = sim_expire;
         this.token = token;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -87,6 +98,7 @@ public class Driver {
     public String toString(){
         return
                 "Driver{" +
+                        "id = '" + id + '\'' +
                         "name = '" + name + '\'' +
                         ",phone = '" + phone + '\'' +
                         ",address = '" + address + '\'' +

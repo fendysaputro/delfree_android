@@ -11,12 +11,22 @@ import java.io.Serializable;
 
 public class WorkOrders implements Serializable {
 
+    private String id;
     private JSONArray WODetails;
     private String WONum;
     private String WODate;
     private JSONObject driver;
+    private JSONObject vehicle;
     private String refNo;
     private String shipmentNum;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public JSONArray getWODetails() {
         return WODetails;
@@ -48,6 +58,14 @@ public class WorkOrders implements Serializable {
 
     public void setDriver(JSONObject driver) {
         this.driver = driver;
+    }
+
+    public JSONObject getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(JSONObject vehicle) {
+        this.vehicle = vehicle;
     }
 
     public String getRefNo() {

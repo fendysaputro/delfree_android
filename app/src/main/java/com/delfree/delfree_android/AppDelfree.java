@@ -37,7 +37,7 @@ public class AppDelfree extends Application {
     WorkOrderDetails workOrderDetails;
     public static String HOST = "http://api.batavree.com/apis/v1/";
     public static String LOGIN_PATH = "driver/authenticate";
-    public static String SEND_LOG = "log/vehicle";
+    public static String SEND_LOC = "log/vehicle";
     public static String PICTURE_PATH = "delfree/pictures/";
     public static String WO = "wo";
 
@@ -51,7 +51,8 @@ public class AppDelfree extends Application {
             login = true;
             try {
                 JSONObject driverObj = new JSONObject(driverString);
-                driver = new Driver(driverObj.getString("name"),driverObj.getString("phone"),
+                driver = new Driver(driverObj.getString("_id"),
+                        driverObj.getString("name"),driverObj.getString("phone"),
                         driverObj.getString("address"),driverObj.getString("sim_number"),
                         driverObj.getString("sim_expire"),driverObj.getString("token"));
             } catch (JSONException es){

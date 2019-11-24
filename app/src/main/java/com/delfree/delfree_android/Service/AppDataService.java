@@ -58,6 +58,7 @@ public class AppDataService extends Service implements
     private long FASTEST_INTERVAL = 10000; /* 1 minutes */
     double lati = 0;
     double longi = 0;
+    String vehicleId;
     private LocationManager mlocationManager;
     private String provider;
     DbHelper dB;
@@ -80,27 +81,35 @@ public class AppDataService extends Service implements
                 Log.i("Batavree", "this is periodic");
 //                Log.i("Batavree", dB.getAllTracking().toString());
                 String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
-                Log.i("Batavree", date);
-                String driverName = appDelfree.getDriver().getName();
-                Log.i("Batavree", driverName);
-                AsyncHttpTask sendData = new AsyncHttpTask("woid=" + appDelfree.getWorkOrders(), getApplicationContext());
-                sendData.execute(appDelfree.HOST + appDelfree.SEND_LOG, "POST");
+                lati = appDelfree.getLatitude();
+                longi = appDelfree.getLongitude();
+                try {
+                    vehicleId = appDelfree.getWorkOrders().getVehicle().getString("_id");
+                    Log.i("Batavree", "vehicleId " + vehicleId);
+                } catch (JSONException jes){
+                    jes.getMessage();
+                }
+                AsyncHttpTask sendData = new AsyncHttpTask("woid=" + appDelfree.getWorkOrders().getId() +
+                        "&driverid=" + appDelfree.getDriver().getId() +
+                        "&vehicleid=" + vehicleId +
+                        "&lang=" + lati +
+                        "&long=" + longi, getApplicationContext());
+                sendData.execute(appDelfree.HOST + appDelfree.SEND_LOC, "POST");
                 sendData.setHttpResponseListener(new OnHttpResponseListener() {
                     @Override
                     public void OnHttpResponse(String response) {
                         try {
                             JSONObject resObj = new JSONObject(response);
-                            Log.i("Batavree", "ini response send to server" + resObj.toString());
                             if (resObj.getBoolean("r")){
-                                JSONObject dataObj = resObj.getJSONObject("d");
-
-
+                                Toast.makeText(getApplication(), resObj.getString("m"), Toast.LENGTH_LONG).show();
+                                Log.i("Batavree", "ini response send to server " + resObj);
                             }
                         } catch (JSONException jex){
                             jex.printStackTrace();
                         }
                     }
                 });
+
             }
         }
     };
@@ -168,8 +177,8 @@ public class AppDataService extends Service implements
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.i(LOGSERVICE, "latitude " + location.getLatitude());
-        Log.i(LOGSERVICE, "longitude " + location.getLongitude());
+//        Log.i(LOGSERVICE, "latitude " + location.getLatitude());
+//        Log.i(LOGSERVICE, "longitude " + location.getLongitude());
         LatLng mLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
         lati = location.getLatitude();

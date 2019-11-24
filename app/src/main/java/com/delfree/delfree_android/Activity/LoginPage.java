@@ -95,7 +95,8 @@ public class LoginPage extends Activity {
                     if (resObj.getBoolean("r")){
                         JSONObject dataObj = resObj.getJSONObject("d");
                         appDelfree.setLogin(true);
-                        Driver driver = new Driver(dataObj.getString("name"),
+                        Driver driver = new Driver(dataObj.getString("_id"),
+                                dataObj.getString("name"),
                                 dataObj.getString("phone"),
                                 dataObj.getString("address"),
                                 dataObj.getString("sim_number"),
