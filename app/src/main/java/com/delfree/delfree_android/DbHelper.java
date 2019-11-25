@@ -79,4 +79,11 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         return array_list;
     }
+
+    public boolean deleteById (int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        boolean res =  db.delete(GPSTRACKING_TABLE_NAME, "id" +  "=" + id, null) > 0;
+
+        return res;
+    }
 }

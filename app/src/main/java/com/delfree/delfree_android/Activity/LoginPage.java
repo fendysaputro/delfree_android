@@ -109,6 +109,7 @@ public class LoginPage extends Activity {
                         editor.putString("batavree", dataObj.toString());
                         editor.commit();
                         Intent intent = new Intent(LoginPage.this, MainActivity.class);
+                        intent.putExtra("fragmentName", 1);
                         startActivity(intent);
 
                     } else {

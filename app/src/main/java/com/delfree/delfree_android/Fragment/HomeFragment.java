@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.delfree.delfree_android.Adapter.HomeAdapter;
 import com.delfree.delfree_android.AppDelfree;
+import com.delfree.delfree_android.DbHelper;
 import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.Network.AsyncHttpTask;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
 
     private ListView listJobs;
+    Button button;
     AppDelfree appDelfree;
     private boolean isBackPressedToExit;
     ArrayList<WorkOrders> list = null;
@@ -54,6 +57,15 @@ public class HomeFragment extends Fragment {
         listJobs.setAdapter(adapter);
 
         getDataWO("", list, adapter);
+
+        button = (Button) view.findViewById(R.id.btnbtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DbHelper dbHelper = new DbHelper(getActivity());
+                dbHelper.deleteById(1);
+            }
+        });
 
         return view;
     }

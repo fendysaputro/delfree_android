@@ -1,6 +1,7 @@
 package com.delfree.delfree_android;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -16,13 +17,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.delfree.delfree_android.Activity.LoginPage;
 import com.delfree.delfree_android.Activity.ProgressRoute;
+import com.delfree.delfree_android.Fragment.FinishJobFragment;
 import com.delfree.delfree_android.Fragment.HistoryFragment;
 import com.delfree.delfree_android.Fragment.HomeFragment;
 import com.delfree.delfree_android.Fragment.ProfileFragment;
@@ -41,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         appDelfree = (AppDelfree) getApplication();
 
         if (android.os.Build.VERSION.SDK_INT > 9)
@@ -51,7 +54,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             StrictMode.setThreadPolicy(policy);
         }
 
+
         requestPermission();
+
 
         loadFragment(new HomeFragment());
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    private boolean loadFragment(Fragment fragment){
+    public boolean loadFragment(Fragment fragment){
         if (fragment != null){
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_container, fragment)

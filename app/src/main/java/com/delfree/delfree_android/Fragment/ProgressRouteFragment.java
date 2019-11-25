@@ -1,34 +1,34 @@
 package com.delfree.delfree_android.Fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.delfree.delfree_android.Adapter.WorkOrderDetailAdapter;
-import com.delfree.delfree_android.Adapter.HomeAdapter;
+
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.Model.WorkOrderDetails;
-import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
 
@@ -40,53 +40,24 @@ import java.util.ArrayList;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
-
-/**
- * Created by phephen on 6/8/19.
- */
-
-public class DetailJobFragment extends Fragment {
-
-    private ListView listJobsById;
-    TextView WONumber;
-    Button startService;
+public class ProgressRouteFragment extends Fragment {
     AppDelfree appDelfree;
+    private ListView progressList;
+    ArrayList<WorkOrderDetails> list = null;
+    Button btnFinish;
+    TextView status, addressFrom, addressTo;
     private Context context;
-    Intent mServiceIntent;
-    ArrayList<WorkOrderDetails> listByWo = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail_job, container, false);
+        View view = inflater.inflate(R.layout.fragment_progress_route, container, false);
 
         appDelfree = (AppDelfree) getActivity().getApplication();
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("Back");
+        toolbar.setTitle("Batavree");
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
-        toolbar.setNavigationIcon(R.drawable.back);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
-
-        WONumber = (TextView) view.findViewById(R.id.detail_job);
-        WONumber.setText(appDelfree.getWorkOrders().getWONum());
-
-        startService = (Button) view.findViewById(R.id.startServiceBtn);
-        startService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog();
-            }
-        });
-
-        listJobsById = (ListView) view.findViewById(R.id.list_jobs);
-        listByWo = new ArrayList<WorkOrderDetails>();
 
         JSONArray detailWO = getWODetails();
         for (int i = 0; i < detailWO.length(); i++) {
@@ -95,15 +66,29 @@ public class DetailJobFragment extends Fragment {
                 WorkOrderDetails wod = new WorkOrderDetails();
                 wod.setRoutes(WoObj.getJSONArray("routes"));
                 wod.setWONum(WoObj.getString("WONum"));
-                listByWo.add(wod);
                 appDelfree.setWorkOrderDetails(wod);
+
+                status = (TextView) view.findViewById(R.id.tvStatus);
+                status.setText("Status : On Progress");
+
+                addressFrom = (TextView) view.findViewById(R.id.tvRouteSrc);
+                addressFrom.setText("Alamat dari : " + appDelfree.getWorkOrderDetails().getRoutes().getJSONObject(i).getJSONObject("src").getString("addr"));
+
+                addressTo = (TextView) view.findViewById(R.id.tvRouteDest);
+                addressTo.setText("Alamat ke : " + appDelfree.getWorkOrderDetails().getRoutes().getJSONObject(i).getJSONObject("dest").getString("addr"));
+
             } catch (JSONException ex){
                 ex.printStackTrace();
             }
         }
 
-        WorkOrderDetailAdapter workOrderDetailAdapter = new WorkOrderDetailAdapter(getContext(), R.layout.custom_item_detailjob_adapter, listByWo);
-        listJobsById.setAdapter(workOrderDetailAdapter);
+        btnFinish = (Button) view.findViewById(R.id.buttonFinish);
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog();
+            }
+        });
 
         return view;
     }
@@ -114,22 +99,30 @@ public class DetailJobFragment extends Fragment {
     }
 
     public void dialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Mulai Perjalanan");
-        alertDialog.setMessage("Apakah anda yakin memulai perjalanan?");
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Selesai Perjalanan");
+        alertDialog.setMessage("Apakah anda yakin mengakhiri perjalanan?");
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        context = getContext();
-                        Intent intent = new Intent(context, MainActivity.class);
-                        context.startService(new Intent(context, AppDataService.class));
-                        context.startActivity(intent);
+//                        stopService(new Intent(getActivity(), AppDataService.class));
+
+                        Intent mainActivity = new Intent(getActivity(), MainActivity.class);
+                        mainActivity.putExtra("fragmentName", "FinishJob");
+                        startActivity(mainActivity);
+
+                        Activity activity = (Activity) context;
+                        FinishJobFragment finishJobFragment = new FinishJobFragment();
+                        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                        ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
+//                        context.stopService(new Intent(context, AppDataService.class));
+
                     }
                 });
         alertDialog.setNegativeButton("TIDAK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "You clicked on NO", Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     }
                 });
@@ -141,6 +134,7 @@ public class DetailJobFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        MainActivity.allowBackPressed = false;
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
     }
 }

@@ -30,6 +30,7 @@ import com.delfree.delfree_android.Network.AsyncHttpTask;
 import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -64,6 +65,9 @@ public class AppDataService extends Service implements
     DbHelper dB;
     AppDelfree appDelfree;
     private long INTERVAL_SEND_DATA = 0;
+    private FusedLocationProviderClient mFusedLocationClient;
+    String driverId, vehId, woId;
+    int i = 0;
 //    public static ArrayList<Tracking> tracks;
 
     Handler handler = new Handler();
@@ -77,23 +81,17 @@ public class AppDataService extends Service implements
             keepAwake.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), pendingIntent);
 
             long current = System.currentTimeMillis();
-            if ((current-current%1000)%(1000*10)  == 0) { // record on every tenth seconds (0s, 10s, 20s, 30s...)
+
+            if ((current-current%1000)%(1000*300)  == 0) { // record on every tenth seconds (0s, 10s, 20s, 30s...) 5 minutes = 300 seconds
                 Log.i("Batavree", "this is periodic");
-//                Log.i("Batavree", dB.getAllTracking().toString());
-                String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
-                lati = appDelfree.getLatitude();
-                longi = appDelfree.getLongitude();
-                try {
-                    vehicleId = appDelfree.getWorkOrders().getVehicle().getString("_id");
-                    Log.i("Batavree", "vehicleId " + vehicleId);
-                } catch (JSONException jes){
-                    jes.getMessage();
-                }
-                AsyncHttpTask sendData = new AsyncHttpTask("woid=" + appDelfree.getWorkOrders().getId() +
-                        "&driverid=" + appDelfree.getDriver().getId() +
-                        "&vehicleid=" + vehicleId +
-                        "&lang=" + lati +
-                        "&long=" + longi, getApplicationContext());
+                Log.i("Batavree", dB.getAllTracking().toString());
+                final ArrayList<Tracking> trackingList = dB.getAllTracking();
+                for (i = 0; i < trackingList.size(); i++) {
+                    AsyncHttpTask sendData = new AsyncHttpTask("woid=" + woId +
+                        "&driverid=" + driverId +
+                        "&vehicleid=" + vehId +
+                        "&lang=" + trackingList.get(i).getLocation_lat() +
+                        "&long=" + trackingList.get(i).getLocation_long(), getApplicationContext());
                 sendData.execute(appDelfree.HOST + appDelfree.SEND_LOC, "POST");
                 sendData.setHttpResponseListener(new OnHttpResponseListener() {
                     @Override
@@ -101,6 +99,7 @@ public class AppDataService extends Service implements
                         try {
                             JSONObject resObj = new JSONObject(response);
                             if (resObj.getBoolean("r")){
+                                dB.deleteById(trackingList.get(i).getId());
                                 Toast.makeText(getApplication(), resObj.getString("m"), Toast.LENGTH_LONG).show();
                                 Log.i("Batavree", "ini response send to server " + resObj);
                             }
@@ -109,10 +108,20 @@ public class AppDataService extends Service implements
                         }
                     }
                 });
-
+                }
             }
         }
     };
+
+    public void getData () {
+        try {
+            vehId = appDelfree.getWorkOrders().getVehicle().getString("_id");
+            driverId = appDelfree.getDriver().getId();
+            woId = appDelfree.getWorkOrders().getId();
+        } catch (JSONException jes){
+            jes.getMessage();
+        }
+    }
 
     public void stopHandler() {
         handler.removeCallbacks(periodicUpdate);
@@ -127,6 +136,7 @@ public class AppDataService extends Service implements
 
         buildGoogleApiClient();
         Log.i(LOGSERVICE, "onCreate");
+        getData();
 
     }
 

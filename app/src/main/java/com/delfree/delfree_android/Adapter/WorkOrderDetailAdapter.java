@@ -22,6 +22,7 @@ import com.delfree.delfree_android.Activity.LoginPage;
 import com.delfree.delfree_android.Activity.ProgressRoute;
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.FinishJobFragment;
+import com.delfree.delfree_android.Fragment.ProgressRouteFragment;
 import com.delfree.delfree_android.Model.WorkOrderDetails;
 import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.R;
@@ -75,43 +76,6 @@ public class WorkOrderDetailAdapter extends ArrayAdapter {
             }
         }
 
-        ImageButton moreBtn = (ImageButton) view.findViewById(R.id.iconList);
-        moreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog();
-            }
-        });
-
         return view;
-    }
-
-    public void dialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Mulai Perjalanan");
-        alertDialog.setMessage("Apakah anda yakin memulai perjalanan?");
-        alertDialog.setPositiveButton("YA",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-//                        Toast.makeText(getContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
-//                        FinishJobFragment finishJobFragment = new FinishJobFragment();
-                        Activity activity = (Activity) context;
-//                        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-//                        ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
-                        Intent intent = new Intent(activity, ProgressRoute.class);
-                        context.startActivity(intent);
-                        context.startService(new Intent(context, AppDataService.class));
-                    }
-                });
-        alertDialog.setNegativeButton("TIDAK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
-                        dialog.cancel();
-                    }
-                });
-        alertDialog.show();
-
-        return;
     }
 }
