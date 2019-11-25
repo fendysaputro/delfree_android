@@ -58,15 +58,6 @@ public class HomeFragment extends Fragment {
 
         getDataWO("", list, adapter);
 
-        button = (Button) view.findViewById(R.id.btnbtn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DbHelper dbHelper = new DbHelper(getActivity());
-                dbHelper.deleteById(1);
-            }
-        });
-
         return view;
     }
 

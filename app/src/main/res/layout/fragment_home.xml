@@ -31,18 +31,11 @@
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:background="@color/cameraTransparent">
         </ListView>
-
-        <Button
-            android:id="@+id/btnbtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="test"
-            />
 
     </LinearLayout>
 
