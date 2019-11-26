@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -105,17 +106,13 @@ public class ProgressRouteFragment extends Fragment {
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-//                        stopService(new Intent(getActivity(), AppDataService.class));
 
-                        Intent mainActivity = new Intent(getActivity(), MainActivity.class);
-                        mainActivity.putExtra("fragmentName", "FinishJob");
-                        startActivity(mainActivity);
-
-                        Activity activity = (Activity) context;
+                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
                         FinishJobFragment finishJobFragment = new FinishJobFragment();
-                        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                        ShowFragment(R.id.fl_container, finishJobFragment,fragmentManager);
-//                        context.stopService(new Intent(context, AppDataService.class));
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fl_container, finishJobFragment);
+                        fragmentTransaction.commit();
 
                     }
                 });

@@ -12,7 +12,18 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.delfree.delfree_android.Adapter.HistoryAdapter;
+import com.delfree.delfree_android.Adapter.HomeAdapter;
+import com.delfree.delfree_android.AppDelfree;
+import com.delfree.delfree_android.Model.WorkOrders;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 /**
@@ -22,7 +33,10 @@ import com.delfree.delfree_android.R;
 public class HistoryFragment extends Fragment {
 
     private ListView listJobsHistory;
-    String[] itemHistory = new String[] {"WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019", "WO No. 124/7A/VI/2019"};
+    AppDelfree appDelfree;
+    private boolean isBackPressedToExit;
+    ArrayList<WorkOrders> list = null;
+    HistoryAdapter adapter = null;
 
     @Nullable
     @Override
@@ -42,11 +56,54 @@ public class HistoryFragment extends Fragment {
         });
 
         listJobsHistory=(ListView) view.findViewById(R.id.list);
+        list = new ArrayList<WorkOrders>();
+        adapter = new HistoryAdapter(getContext(), R.layout.custom_item_history_adapter, list);
+        listJobsHistory.setAdapter(adapter);
 
-        HistoryAdapter historyAdapter = new HistoryAdapter(getActivity(), R.layout.custom_item_home_adapter, itemHistory);
-        listJobsHistory.setAdapter(historyAdapter);
+        getDataWO("", list, adapter);
+
+//        HistoryAdapter historyAdapter = new HistoryAdapter(getActivity(), R.layout.custom_item_home_adapter, itemHistory);
+//        listJobsHistory.setAdapter(historyAdapter);
 
         return view;
+    }
+
+    public void getDataWO (String data, final ArrayList<WorkOrders> list, final HistoryAdapter adapter){
+        getData(data, list, adapter);
+    }
+
+    private void getData (String data, final ArrayList<WorkOrders> list, final HistoryAdapter adapter){
+        AsyncHttpTask woHttp = new AsyncHttpTask(data, getActivity());
+        woHttp.execute(appDelfree.HOST + appDelfree.WO, "GET");
+        woHttp.setHttpResponseListener(new OnHttpResponseListener() {
+            @Override
+            public void OnHttpResponse(String response) {
+//                Log.i("batavree ", "ini response " + response);
+                try {
+                    JSONObject resOBJ = new JSONObject(response);
+                    if (resOBJ.getBoolean("r")){
+                        JSONArray woArray = resOBJ.getJSONArray("d");
+//                        Log.i("batavree", "workorder " + woArray.toString());
+                        for (int i = 0; i < woArray.length(); i++) {
+                            JSONObject WO = woArray.getJSONObject(i);
+                            WorkOrders woOrders = new WorkOrders();
+                            woOrders.setId(WO.getString("_id"));
+                            woOrders.setWODetails(WO.getJSONArray("WODetails"));
+                            woOrders.setWONum(WO.getString("WONum"));
+                            woOrders.setWODate(WO.getString("WODate"));
+                            woOrders.setDriver(WO.getJSONObject("driver"));
+                            woOrders.setVehicle(WO.getJSONObject("vehicle"));
+                            woOrders.setRefNo(WO.getString("refNo"));
+                            woOrders.setShipmentNum(WO.getString("shipmentNum"));
+                            list.add(woOrders);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
