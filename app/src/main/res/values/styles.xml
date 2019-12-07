@@ -23,7 +23,9 @@
         parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse" >
         <item name="android:background">@color/actionbar_background</item>
         <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
-
+        <item name="android:minWidth">24dp</item>
+        <item name="android:maxWidth">40dp</item>
+        <item name="android:width">400dp</item>
         <!-- Support library compatibility -->
         <item name="background">@color/actionbar_background</item>
         <item name="titleTextStyle">@style/MyActionBarTitleText</item>
@@ -40,7 +42,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="SplashTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/logonew</item>
+        <item name="android:windowBackground">@drawable/logobatavree</item>
     </style>
 
 </resources>

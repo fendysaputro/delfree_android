@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -49,7 +50,7 @@ public class DetailJobFragment extends Fragment {
 
     private ListView listJobsById;
     TextView WONumber;
-    Button startService;
+    Button startLoading;
     AppDelfree appDelfree;
     private Context context;
     Intent mServiceIntent;
@@ -77,8 +78,8 @@ public class DetailJobFragment extends Fragment {
         WONumber = (TextView) view.findViewById(R.id.detail_job);
         WONumber.setText(appDelfree.getWorkOrders().getWONum());
 
-        startService = (Button) view.findViewById(R.id.startServiceBtn);
-        startService.setOnClickListener(new View.OnClickListener() {
+        startLoading = (Button) view.findViewById(R.id.startLoadingBtn);
+        startLoading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog();
@@ -115,15 +116,16 @@ public class DetailJobFragment extends Fragment {
 
     public void dialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Mulai Perjalanan");
-        alertDialog.setMessage("Apakah anda yakin memulai perjalanan?");
+        alertDialog.setTitle("Muat Barang");
+        alertDialog.setMessage("Apakah anda yakin memulai untuk muat barang?");
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        context = getContext();
-                        Intent intent = new Intent(context, MainActivity.class);
-                        context.startService(new Intent(context, AppDataService.class));
-                        context.startActivity(intent);
+                        LoadingFragment loadingFragment = new LoadingFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fl_container, loadingFragment);
+                        fragmentTransaction.commit();
                     }
                 });
         alertDialog.setNegativeButton("TIDAK",

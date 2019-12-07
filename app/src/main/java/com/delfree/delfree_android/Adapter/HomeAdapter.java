@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
+import com.delfree.delfree_android.Fragment.LoadingFragment;
 import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
@@ -60,7 +61,7 @@ public class HomeAdapter extends ArrayAdapter {
 
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.custom_item_home_adapter, null);
 

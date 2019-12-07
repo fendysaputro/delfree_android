@@ -142,7 +142,6 @@ public class FinishJobFragment extends Fragment {
 
     public void onDoneButton(){
         UploadDataTask uploadTask = new UploadDataTask();
-        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
         String wo_No = "Wo_No";
 //        uploadTask.execute(appDelfree.HOST + appDelfree.UPLOAD_PATH + date + appDelfree.getImage() +
 //                appDelfree.getDriver().getName() + appDelfree.getLatitude() + appDelfree.getLongitude());
@@ -153,9 +152,8 @@ public class FinishJobFragment extends Fragment {
                 Activity activity = (Activity) context;
                 FragmentManager fragmentManager = ((FragmentActivity) getContext()).getSupportFragmentManager();
                 if (appDelfree.isPicture()){
-                    DetailJobFragment detailJobFragment = new DetailJobFragment();
-                    ShowFragment(R.id.fl_container, historyFragment,fragmentManager);
-                    context.stopService(new Intent(context, AppDataService.class));
+                    HomeFragment homeFragment = new HomeFragment();
+                    ShowFragment(R.id.fl_container, homeFragment,fragmentManager);
                 } else {
                     Toast.makeText(getContext(), "You must take picture first", Toast.LENGTH_LONG).show();
                 }

@@ -59,14 +59,13 @@ public class AppDataService extends Service implements
     private long FASTEST_INTERVAL = 10000; /* 1 minutes */
     double lati = 0;
     double longi = 0;
-    String vehicleId;
     private LocationManager mlocationManager;
     private String provider;
     DbHelper dB;
     AppDelfree appDelfree;
     private long INTERVAL_SEND_DATA = 0;
     private FusedLocationProviderClient mFusedLocationClient;
-    String driverId, vehId, woId;
+    String driverId, vehicleId, woId;
     int i = 0;
 //    public static ArrayList<Tracking> tracks;
 
@@ -84,14 +83,16 @@ public class AppDataService extends Service implements
 
             if ((current-current%1000)%(1000*300)  == 0) { // record on every tenth seconds (0s, 10s, 20s, 30s...) 5 minutes = 300 seconds
                 Log.i("Batavree", "this is periodic");
-                Log.i("Batavree", dB.getAllTracking().toString());
+//                Log.i("Batavree", dB.getAllTracking().toString());
                 final ArrayList<Tracking> trackingList = dB.getAllTracking();
-                for (i = 0; i < trackingList.size(); i++) {
+                int trackingSize = trackingList.size();
+                for (i = 0; i < trackingSize; i++) {
+                    final Tracking tracking = trackingList.get(i);
                     AsyncHttpTask sendData = new AsyncHttpTask("woid=" + woId +
                         "&driverid=" + driverId +
-                        "&vehicleid=" + vehId +
-                        "&lang=" + trackingList.get(i).getLocation_lat() +
-                        "&long=" + trackingList.get(i).getLocation_long(), getApplicationContext());
+                        "&vehicleid=" + vehicleId +
+                        "&lang=" + tracking.getLocation_lat() +
+                        "&long=" + tracking.getLocation_long(), getApplicationContext());
                 sendData.execute(appDelfree.HOST + appDelfree.SEND_LOC, "POST");
                 sendData.setHttpResponseListener(new OnHttpResponseListener() {
                     @Override
@@ -99,8 +100,8 @@ public class AppDataService extends Service implements
                         try {
                             JSONObject resObj = new JSONObject(response);
                             if (resObj.getBoolean("r")){
-                                dB.deleteById(trackingList.get(i).getId());
                                 Toast.makeText(getApplication(), resObj.getString("m"), Toast.LENGTH_LONG).show();
+                                dB.deleteById(tracking.getId());
                                 Log.i("Batavree", "ini response send to server " + resObj);
                             }
                         } catch (JSONException jex){
@@ -115,7 +116,7 @@ public class AppDataService extends Service implements
 
     public void getData () {
         try {
-            vehId = appDelfree.getWorkOrders().getVehicle().getString("_id");
+            vehicleId = appDelfree.getWorkOrders().getVehicle().getString("_id");
             driverId = appDelfree.getDriver().getId();
             woId = appDelfree.getWorkOrders().getId();
         } catch (JSONException jes){
