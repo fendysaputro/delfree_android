@@ -17,7 +17,7 @@
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:textColor="@color/chooseNav"
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:textSize="20sp"
         android:padding="10dp"
         android:textStyle="bold"
@@ -39,7 +39,7 @@
         android:background="@color/cameraTransparent"/>
 
     <TextView
-        android:id="@+id/tvRouteSrc"
+        android:id="@+id/tvCharge"
         android:layout_below="@+id/tvStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,8 +51,8 @@
         />
 
     <TextView
-        android:id="@+id/tvRouteDest"
-        android:layout_below="@+id/tvRouteSrc"
+        android:id="@+id/tvVehicleNo"
+        android:layout_below="@+id/tvCharge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -64,7 +64,7 @@
 
     <Button
         android:id="@+id/buttonFinish"
-        android:layout_below="@+id/tvRouteDest"
+        android:layout_below="@+id/tvVehicleNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -75,7 +75,7 @@
         tools:layout_editor_absoluteX="147dp"
         tools:layout_editor_absoluteY="351dp"
         android:textAllCaps="false"
-        android:text="Unloading"
+        android:text="Selesai"
         android:textColor="@color/textColor" />
 
 </RelativeLayout>

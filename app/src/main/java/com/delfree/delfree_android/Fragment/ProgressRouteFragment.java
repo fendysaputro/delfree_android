@@ -101,17 +101,17 @@ public class ProgressRouteFragment extends Fragment {
 
     public void dialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        alertDialog.setTitle("Selesai Perjalanan");
-        alertDialog.setMessage("Apakah anda yakin mengakhiri perjalanan?");
+        alertDialog.setTitle("Menurunkan Muatan");
+        alertDialog.setMessage("Apakah anda yakin untuk menurunkan muatan?");
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
-                        FinishJobFragment finishJobFragment = new FinishJobFragment();
+//                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
+                        UnloadingFragment unloadingFragment = new UnloadingFragment();
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fl_container, finishJobFragment);
+                        fragmentTransaction.replace(R.id.fl_container, unloadingFragment);
                         fragmentTransaction.commit();
 
                     }
