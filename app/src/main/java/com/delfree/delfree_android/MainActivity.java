@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -15,9 +17,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.WrappedDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -64,20 +68,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//        getSupportActionBar().setLogo(R.drawable.textbatavree);
+//        Drawable logo = getResources().getDrawable(R.drawable.logobatavree_new);
+//        Bitmap bitmap = ((BitmapDrawable) logo).getBitmap();
+//        Drawable logoBatavree = new BitmapDrawable(getResources(),
+//                Bitmap.createBitmap(bitmap, 20, 20, 50, 50));
+//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        getSupportActionBar().setLogo(logo);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 //        getSupportActionBar().setDisplayShowTitleEnabled(false);
 //        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        TextView textView = new TextView(this);
-        textView.setText("Batavree");
-        textView.setTextSize(20);
-        textView.setTypeface(null, Typeface.BOLD);
-        textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(getResources().getColor(R.color.chooseNav));
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(textView);
+//        ImageView imageView = new ImageView(this);
+//        imageView.setImageDrawable(logo);
+//        imageView.setPadding(200,0,200,0);
+//        textView.setText("Batavree");
+//        textView.setTextSize(20);
+//        textView.setTypeface(null, Typeface.BOLD);
+//        textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+//        textView.setGravity(Gravity.CENTER);
+//        textView.setTextColor(getResources().getColor(R.color.chooseNav));
+//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        getSupportActionBar().setCustomView(textView);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        toolbar.setLogo(R.drawable.textbatavree);
+//        toolbar.setTitle("Batavree");
+//        toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
 
     }
 
@@ -173,4 +189,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 allowBackPressed=true;          }
         }, 500);
     }
+
+//        @Override
+//    public void onResume() {
+//        super.onResume();
+//        MainActivity.allowBackPressed = false;
+//        ((AppCompatActivity)this).getSupportActionBar().show();
+//    }
 }

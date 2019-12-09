@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -56,8 +59,11 @@ public class ProgressRouteFragment extends Fragment {
 
         appDelfree = (AppDelfree) getActivity().getApplication();
 
+        Drawable logo = getResources().getDrawable(R.drawable.logobatavree_new);
+
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("Batavree");
+        toolbar.setLogo(logo);
+//        toolbar.setTitle("Batavree");
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
 
         JSONArray detailWO = getWODetails();
@@ -128,10 +134,10 @@ public class ProgressRouteFragment extends Fragment {
         return;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        MainActivity.allowBackPressed = false;
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        MainActivity.allowBackPressed = false;
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+//    }
 }

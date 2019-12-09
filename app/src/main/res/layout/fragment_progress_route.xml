@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/littleBack"
+        android:layout_marginRight="200dp"
+        android:layout_marginTop="10dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -18,8 +20,8 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
+            android:layout_gravity="left"
+            android:gravity="left"
             android:textColor="@color/chooseNav"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -31,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:textSize="20sp"
         android:padding="10dp"
         android:textStyle="bold"

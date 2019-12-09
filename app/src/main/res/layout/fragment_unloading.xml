@@ -8,18 +8,22 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginRight="200dp"
+        android:layout_marginTop="10dp"
         android:background="@color/littleBack"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <TextView
+        <ImageView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="200dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="fill_horizontal"
             android:textColor="@color/chooseNav"
             android:textSize="18sp"
             android:textStyle="bold" />

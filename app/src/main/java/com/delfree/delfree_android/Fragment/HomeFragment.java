@@ -1,11 +1,13 @@
 package com.delfree.delfree_android.Fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +52,13 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         appDelfree = (AppDelfree) getActivity().getApplication();
+
+        Drawable logo = getResources().getDrawable(R.drawable.logobatavree_new);
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setLogo(logo);
+//        toolbar.setTitle("Batavree");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
 
         listJobs=(ListView) view.findViewById(R.id.list);
         list = new ArrayList<WorkOrders>();
@@ -105,6 +114,6 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         MainActivity.allowBackPressed = false;
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 }

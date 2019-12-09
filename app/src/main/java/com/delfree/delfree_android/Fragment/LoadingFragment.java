@@ -3,6 +3,9 @@ package com.delfree.delfree_android.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,10 +40,10 @@ public class LoadingFragment extends Fragment {
 
         appDelfree = (AppDelfree) getActivity().getApplication();
 
+        Drawable logo = getResources().getDrawable(R.drawable.logobatavree_new);
+
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setLogo(R.drawable.textbatavree);
-//        toolbar.setTitle("Batavree");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
+        toolbar.setLogo(logo);
 
         status = (TextView) view.findViewById(R.id.tvStatus);
         status.setText("Status : Sedang Muat Barang");

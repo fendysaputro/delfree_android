@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/homeFragmentBg"
     tools:context=".Fragment.HomeFragment">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/homeFragmentBg"
+        android:background="@color/littleBack"
+        android:layout_marginRight="200dp"
+        android:layout_marginTop="10dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -28,24 +29,29 @@
     </android.support.v7.widget.Toolbar>
 
     <TextView
+        android:id="@+id/wo"
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
         android:text="@string/job_list"
         android:textSize="20dp"
         android:gravity="left"
         android:paddingLeft="20dp"
+        android:background="@color/homeFragmentBg"
         android:layout_marginTop="10dp"
         android:textColor="@color/textColor" />
 
-    <TextView
-        android:id="@+id/checkUser"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/checkUser"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
 
     <LinearLayout
+        android:layout_below="@+id/wo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:background="@color/littleBack"
         android:orientation="vertical" >
 
@@ -60,4 +66,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</RelativeLayout>

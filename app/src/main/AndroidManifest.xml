@@ -15,7 +15,7 @@
     <application
         android:name=".AppDelfree"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/textbatavree"
         android:label="@string/title_header"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
