@@ -33,19 +33,16 @@
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
         android:text="@string/job_list"
+        android:textAllCaps="false"
         android:textSize="20dp"
-        android:gravity="left"
+        android:gravity="left|center_vertical"
         android:paddingLeft="20dp"
+        android:clickable="false"
         android:background="@color/homeFragmentBg"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:textColor="@color/textColor" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/checkUser"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
 
     <LinearLayout
         android:layout_below="@+id/wo"

@@ -57,7 +57,6 @@ public class HomeFragment extends Fragment {
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setLogo(logo);
-//        toolbar.setTitle("Batavree");
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
 
         listJobs=(ListView) view.findViewById(R.id.list);
