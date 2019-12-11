@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
+
+import org.json.JSONException;
 
 /**
  * created by phephen 2019
@@ -51,13 +54,17 @@ public class UnloadingFragment extends Fragment {
         toolbar.setLogo(logo);
 
         status = (TextView) view.findViewById(R.id.tvStatus);
-        status.setText("Status : Sedang Menurunkan Barang");
+        status.setText("Status : " + appDelfree.getWorkOrders().getStatus());
 
         charge = (TextView) view.findViewById(R.id.tvCharge);
         charge.setText("Nama Barang : Kayu 3 ton");
 
-        vehicleNo = (TextView) view.findViewById(R.id.tvVehicleNo);
-        vehicleNo.setText("Plat Nomor : B1115PNS");
+        try {
+            vehicleNo = (TextView) view.findViewById(R.id.tvVehicleNo);
+            vehicleNo.setText("Plat Nomor : " + appDelfree.getWorkOrders().getVehicle().getString("police_no"));
+        }catch (JSONException jsonEx){
+            Log.e("batavree", "error" + jsonEx.getMessage());
+        }
 
         btnFinish = (Button) view.findViewById(R.id.buttonFinish);
         btnFinish.setOnClickListener(new View.OnClickListener() {

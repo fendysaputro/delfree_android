@@ -71,13 +71,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:background="@color/basic"
+        android:background="@drawable/radio_border"
         android:enabled="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         tools:layout_editor_absoluteX="147dp"
         tools:layout_editor_absoluteY="351dp"
         android:textAllCaps="false"
         android:text="Unloading"
-        android:textColor="@color/textColor" />
+        android:textColor="@color/basic" />
 
 </RelativeLayout>

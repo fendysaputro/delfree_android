@@ -39,6 +39,8 @@ public class AppDelfree extends Application {
     public static String LOGIN_PATH = "driver/authenticate";
     public static String SEND_LOC = "log/vehicle";
     public static String PICTURE_PATH = "delfree/pictures/";
+    public static String LOADING_PATH = "log/goodsload";
+    public static String UNLOADING_PATH = "log/goodsunload";
     public static String WO = "wo";
 
 
@@ -129,6 +131,8 @@ public class AppDelfree extends Application {
     public void setWorkOrderDetails(WorkOrderDetails workOrderDetails) {
         this.workOrderDetails = workOrderDetails;
     }
+
+
 }
 
 

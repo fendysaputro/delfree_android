@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,8 @@ import android.widget.Toast;
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.Model.WorkOrderDetails;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
 
@@ -51,6 +54,9 @@ public class ProgressRouteFragment extends Fragment {
     Button btnFinish;
     TextView status, addressFrom, addressTo;
     private Context context;
+    String driverId, vehicleId, woId;
+    double latitude = 0;
+    double longitude = 0;
 
     @Nullable
     @Override
@@ -63,8 +69,17 @@ public class ProgressRouteFragment extends Fragment {
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setLogo(logo);
-//        toolbar.setTitle("Batavree");
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
+
+        try {
+            woId = appDelfree.getWorkOrders().getId();
+            driverId = appDelfree.getDriver().getId();
+            vehicleId = appDelfree.getWorkOrders().getVehicle().getString("_id");
+            latitude = appDelfree.getLatitude();
+            longitude = appDelfree.getLongitude();
+        } catch (JSONException jex){
+            Log.e("batavree", "error " + jex.getMessage());
+        }
 
         JSONArray detailWO = getWODetails();
         for (int i = 0; i < detailWO.length(); i++) {
@@ -112,8 +127,25 @@ public class ProgressRouteFragment extends Fragment {
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
-//                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
+                        AsyncHttpTask unloadTask = new AsyncHttpTask("woid=" + woId +
+                                "&driverid=" + driverId +
+                                "&vehicleid=" + vehicleId +
+                                "&lang=" + latitude +
+                                "&long=" + longitude, getContext());
+                        unloadTask.execute(appDelfree.HOST + appDelfree.UNLOADING_PATH, "POST");
+                        unloadTask.setHttpResponseListener(new OnHttpResponseListener() {
+                            @Override
+                            public void OnHttpResponse(String response) {
+                                try {
+                                    JSONObject resWo = new JSONObject(response);
+                                    if (resWo.getBoolean("r")){
+                                        Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (JSONException jss){
+                                    Log.e("batavree", jss.getMessage());
+                                }
+                            }
+                        });
                         UnloadingFragment unloadingFragment = new UnloadingFragment();
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

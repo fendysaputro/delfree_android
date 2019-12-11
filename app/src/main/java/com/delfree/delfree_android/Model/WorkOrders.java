@@ -19,6 +19,7 @@ public class WorkOrders implements Serializable {
     private JSONObject vehicle;
     private String refNo;
     private String shipmentNum;
+    private String status;
 
     public String getId() {
         return id;
@@ -82,5 +83,13 @@ public class WorkOrders implements Serializable {
 
     public void setShipmentNum(String shipmentNum) {
         this.shipmentNum = shipmentNum;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

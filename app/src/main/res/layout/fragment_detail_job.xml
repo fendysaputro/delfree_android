@@ -60,9 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:background="@color/littleBack"
+            android:background="@drawable/radio_border"
             android:text="Loading"
-            android:textColor="@color/textColor"
+            android:textColor="@color/basic"
             android:textAllCaps="false"
             android:textSize="18sp"
             />

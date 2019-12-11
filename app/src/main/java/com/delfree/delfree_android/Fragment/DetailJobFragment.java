@@ -30,6 +30,8 @@ import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.Model.WorkOrderDetails;
 import com.delfree.delfree_android.Model.WorkOrders;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
 
@@ -55,6 +57,9 @@ public class DetailJobFragment extends Fragment {
     private Context context;
     Intent mServiceIntent;
     ArrayList<WorkOrderDetails> listByWo = null;
+    String driverId, vehicleId, woId;
+    double latitude = 0;
+    double longitude = 0;
 
     @Nullable
     @Override
@@ -89,6 +94,16 @@ public class DetailJobFragment extends Fragment {
         listJobsById = (ListView) view.findViewById(R.id.list_jobs);
         listByWo = new ArrayList<WorkOrderDetails>();
 
+        try {
+            woId = appDelfree.getWorkOrders().getId();
+            driverId = appDelfree.getDriver().getId();
+            vehicleId = appDelfree.getWorkOrders().getVehicle().getString("_id");
+            latitude = appDelfree.getLatitude();
+            longitude = appDelfree.getLongitude();
+        } catch (JSONException jex){
+            Log.e("batavree", "error " + jex.getMessage());
+        }
+
         JSONArray detailWO = getWODetails();
         for (int i = 0; i < detailWO.length(); i++) {
             try {
@@ -121,6 +136,25 @@ public class DetailJobFragment extends Fragment {
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        AsyncHttpTask loadTask = new AsyncHttpTask("woid=" + woId +
+                                "&driverid=" + driverId +
+                                "&vehicleid=" + vehicleId +
+                                "&lang=" + latitude +
+                                "&long=" + longitude, getContext());
+                        loadTask.execute(appDelfree.HOST + appDelfree.LOADING_PATH, "POST");
+                        loadTask.setHttpResponseListener(new OnHttpResponseListener() {
+                            @Override
+                            public void OnHttpResponse(String response) {
+                                try {
+                                    JSONObject resWo = new JSONObject(response);
+                                    if (resWo.getBoolean("r")){
+                                        Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (JSONException jss){
+                                    Log.e("batavree", jss.getMessage());
+                                }
+                            }
+                        });
                         LoadingFragment loadingFragment = new LoadingFragment();
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
