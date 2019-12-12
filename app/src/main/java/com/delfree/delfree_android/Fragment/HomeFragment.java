@@ -117,8 +117,8 @@ public class HomeFragment extends Fragment {
                             woOrders.setShipmentNum(WO.getString("shipmentNum"));
                             woOrders.setStatus(WO.getString("status"));
                             list.add(woOrders);
-                            appDelfree.setWorkOrders(woOrders);
                         }
+                        appDelfree.setWorkOrders(list);
                         adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e){

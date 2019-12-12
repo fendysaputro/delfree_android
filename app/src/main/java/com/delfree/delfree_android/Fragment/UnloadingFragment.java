@@ -54,14 +54,14 @@ public class UnloadingFragment extends Fragment {
         toolbar.setLogo(logo);
 
         status = (TextView) view.findViewById(R.id.tvStatus);
-        status.setText("Status : " + appDelfree.getWorkOrders().getStatus());
+        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
 
         charge = (TextView) view.findViewById(R.id.tvCharge);
         charge.setText("Nama Barang : Kayu 3 ton");
 
         try {
             vehicleNo = (TextView) view.findViewById(R.id.tvVehicleNo);
-            vehicleNo.setText("Plat Nomor : " + appDelfree.getWorkOrders().getVehicle().getString("police_no"));
+            vehicleNo.setText("Plat Nomor : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getVehicle().getString("police_no"));
         }catch (JSONException jsonEx){
             Log.e("batavree", "error" + jsonEx.getMessage());
         }
@@ -112,5 +112,7 @@ public class UnloadingFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+        Log.i("batavree", "unloading " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
     }
 }

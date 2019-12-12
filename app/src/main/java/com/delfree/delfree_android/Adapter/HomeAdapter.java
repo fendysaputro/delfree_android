@@ -89,6 +89,7 @@ public class HomeAdapter extends ArrayAdapter {
         moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                appDelfree.setSelectedWo(position);
                 DetailJobFragment detailJobFragment = new DetailJobFragment();
                 Activity activity = (Activity) context;
                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();

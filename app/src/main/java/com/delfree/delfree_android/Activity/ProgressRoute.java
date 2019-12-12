@@ -103,7 +103,7 @@ public class ProgressRoute extends AppCompatActivity {
 
     public JSONArray getWODetails (){
 
-        return appDelfree.getWorkOrders().getWODetails();
+        return appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getWODetails();
     }
 
     public void dialog() {

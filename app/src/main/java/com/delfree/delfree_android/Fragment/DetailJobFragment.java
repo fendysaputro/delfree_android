@@ -80,8 +80,10 @@ public class DetailJobFragment extends Fragment {
             }
         });
 
+        WorkOrders selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+
         WONumber = (TextView) view.findViewById(R.id.detail_job);
-        WONumber.setText(appDelfree.getWorkOrders().getWONum());
+        WONumber.setText(selectedWorkOrder.getWONum());
 
         startLoading = (Button) view.findViewById(R.id.startLoadingBtn);
         startLoading.setOnClickListener(new View.OnClickListener() {
@@ -95,9 +97,9 @@ public class DetailJobFragment extends Fragment {
         listByWo = new ArrayList<WorkOrderDetails>();
 
         try {
-            woId = appDelfree.getWorkOrders().getId();
+            woId = selectedWorkOrder.getId();
             driverId = appDelfree.getDriver().getId();
-            vehicleId = appDelfree.getWorkOrders().getVehicle().getString("_id");
+            vehicleId = selectedWorkOrder.getVehicle().getString("_id");
             latitude = appDelfree.getLatitude();
             longitude = appDelfree.getLongitude();
         } catch (JSONException jex){
@@ -126,11 +128,11 @@ public class DetailJobFragment extends Fragment {
 
     public JSONArray getWODetails (){
 
-        return appDelfree.getWorkOrders().getWODetails();
+        return appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getWODetails();
     }
 
     public void dialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Muat Barang");
         alertDialog.setMessage("Apakah anda yakin memulai untuk muat barang?");
         alertDialog.setPositiveButton("YA",
@@ -149,6 +151,9 @@ public class DetailJobFragment extends Fragment {
                                     JSONObject resWo = new JSONObject(response);
                                     if (resWo.getBoolean("r")){
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+//                                        resWo.getJSONObject("d");
+                                        Log.i("batavree", "d " + resWo.getJSONObject("d").toString());
+                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());

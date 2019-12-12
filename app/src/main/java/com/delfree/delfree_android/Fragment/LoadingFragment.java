@@ -23,10 +23,14 @@ import android.widget.Toast;
 
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.MainActivity;
+import com.delfree.delfree_android.Model.WorkOrders;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class LoadingFragment extends Fragment {
@@ -35,6 +39,9 @@ public class LoadingFragment extends Fragment {
     TextView status, charge, vehicleNo;
     Button btnStart;
     private Context context;
+    String driverId, vehicleId, woId;
+    double latitude = 0;
+    double longitude = 0;
 
     @Nullable
     @Override
@@ -48,18 +55,30 @@ public class LoadingFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setLogo(logo);
 
+        WorkOrders selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+
         status = (TextView) view.findViewById(R.id.tvStatus);
-        status.setText("Status : " + appDelfree.getWorkOrders().getStatus());
+        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
 
         charge = (TextView) view.findViewById(R.id.tvCharge);
         charge.setText("Nama Barang : Kayu 3 ton");
 
         try {
-            vehicleNo = (TextView) view.findViewById(R.id.tvVehicleNo);
-            vehicleNo.setText("Plat Nomor : " + appDelfree.getWorkOrders().getVehicle().getString("police_no"));
-        }catch (JSONException jsonEx){
-            Log.e("batavree", "error" + jsonEx.getMessage());
+            woId = selectedWorkOrder.getId();
+            driverId = appDelfree.getDriver().getId();
+            vehicleId = selectedWorkOrder.getVehicle().getString("_id");
+            latitude = appDelfree.getLatitude();
+            longitude = appDelfree.getLongitude();
+        } catch (JSONException jex){
+            Log.e("batavree", "error " + jex.getMessage());
         }
+
+        try {
+            vehicleNo = (TextView) view.findViewById(R.id.tvVehicleNo);
+            vehicleNo.setText("Plat Nomor : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getVehicle().getString("police_no"));
+            }catch (JSONException jsonEx){
+                Log.e("batavree", "error" + jsonEx.getMessage());
+            }
 
         btnStart = (Button) view.findViewById(R.id.buttonStart);
         btnStart.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +98,28 @@ public class LoadingFragment extends Fragment {
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        AsyncHttpTask startTask = new AsyncHttpTask("woid=" + woId +
+                                "&driverid=" + driverId +
+                                "&vehicleid=" + vehicleId +
+                                "&lang=" + latitude +
+                                "&long=" + longitude, getContext());
+                        startTask.execute(appDelfree.HOST + appDelfree.START_PATH, "POST");
+                        startTask.setHttpResponseListener(new OnHttpResponseListener() {
+                            @Override
+                            public void OnHttpResponse(String response) {
+                                try {
+                                    JSONObject resWo = new JSONObject(response);
+                                    if (resWo.getBoolean("r")){
+                                        Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+//                                        resWo.getJSONObject("d");
+                                        Log.i("batavree", "d " + resWo.getJSONObject("d").toString());
+                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+                                    }
+                                } catch (JSONException jss){
+                                    Log.e("batavree", jss.getMessage());
+                                }
+                            }
+                        });
                         context = getContext();
                         Intent intent = new Intent(context, MainActivity.class);
                         context.startService(new Intent(context, AppDataService.class));
@@ -95,5 +136,11 @@ public class LoadingFragment extends Fragment {
         alertDialog.show();
 
         return;
+    }
+
+    public void onResume () {
+        super.onResume();
+        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+        Log.i("batavree", "loading " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
     }
 }

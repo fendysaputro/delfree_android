@@ -116,9 +116,9 @@ public class AppDataService extends Service implements
 
     public void getData () {
         try {
-            vehicleId = appDelfree.getWorkOrders().getVehicle().getString("_id");
+            vehicleId = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getVehicle().getString("_id");
             driverId = appDelfree.getDriver().getId();
-            woId = appDelfree.getWorkOrders().getId();
+            woId = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getId();
         } catch (JSONException jes){
             jes.getMessage();
         }

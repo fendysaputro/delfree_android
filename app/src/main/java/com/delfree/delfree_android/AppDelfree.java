@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import static android.media.MediaCodec.MetricsConstants.MODE;
 
@@ -33,7 +34,8 @@ public class AppDelfree extends Application {
     double longitude;
     String Wo_Number;
     String shipmentNumber;
-    WorkOrders workOrders;
+    ArrayList<WorkOrders> workOrders;
+    int selectedWo;
     WorkOrderDetails workOrderDetails;
     public static String HOST = "http://api.batavree.com/apis/v1/";
     public static String LOGIN_PATH = "driver/authenticate";
@@ -41,6 +43,7 @@ public class AppDelfree extends Application {
     public static String PICTURE_PATH = "delfree/pictures/";
     public static String LOADING_PATH = "log/goodsload";
     public static String UNLOADING_PATH = "log/goodsunload";
+    public static String START_PATH = "log/start";
     public static String WO = "wo";
 
 
@@ -116,11 +119,11 @@ public class AppDelfree extends Application {
         this.longitude = longitude;
     }
 
-    public WorkOrders getWorkOrders() {
+    public ArrayList<WorkOrders> getWorkOrders() {
         return workOrders;
     }
 
-    public void setWorkOrders(WorkOrders workOrders) {
+    public void setWorkOrders(ArrayList<WorkOrders> workOrders) {
         this.workOrders = workOrders;
     }
 
@@ -132,7 +135,13 @@ public class AppDelfree extends Application {
         this.workOrderDetails = workOrderDetails;
     }
 
+    public int getSelectedWo() {
+        return selectedWo;
+    }
 
+    public void setSelectedWo(int selectedWo) {
+        this.selectedWo = selectedWo;
+    }
 }
 
 

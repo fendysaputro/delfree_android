@@ -72,9 +72,9 @@ public class ProgressRouteFragment extends Fragment {
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
 
         try {
-            woId = appDelfree.getWorkOrders().getId();
+            woId = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getId();
             driverId = appDelfree.getDriver().getId();
-            vehicleId = appDelfree.getWorkOrders().getVehicle().getString("_id");
+            vehicleId = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getVehicle().getString("_id");
             latitude = appDelfree.getLatitude();
             longitude = appDelfree.getLongitude();
         } catch (JSONException jex){
@@ -91,7 +91,7 @@ public class ProgressRouteFragment extends Fragment {
                 appDelfree.setWorkOrderDetails(wod);
 
                 status = (TextView) view.findViewById(R.id.tvStatus);
-                status.setText("Status : On Progress");
+                status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
 
                 addressFrom = (TextView) view.findViewById(R.id.tvRouteSrc);
                 addressFrom.setText("Alamat dari : " + appDelfree.getWorkOrderDetails().getRoutes().getJSONObject(i).getJSONObject("src").getString("addr"));
@@ -117,7 +117,7 @@ public class ProgressRouteFragment extends Fragment {
 
     public JSONArray getWODetails (){
 
-        return appDelfree.getWorkOrders().getWODetails();
+        return appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getWODetails();
     }
 
     public void dialog() {
@@ -140,6 +140,7 @@ public class ProgressRouteFragment extends Fragment {
                                     JSONObject resWo = new JSONObject(response);
                                     if (resWo.getBoolean("r")){
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+                                        Log.i("batavree", "unloading barang " + resWo.getJSONObject("d").toString());
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());

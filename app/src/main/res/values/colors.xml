@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#FFAE00</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="littleBack">#F8F8F8</color>
@@ -14,4 +14,5 @@
     <color name="basic">#FFFFFF</color>
     <color name="lineColor">#787276</color>
     <color name="signButton">#FFAE00</color>
+    <color name="buttonNewColor">#7A7478</color>
 </resources>
