@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Delfree_Android</string>
     <string name="title_home">Home</string>
-    <string name="title_history">History</string>
+    <string name="title_history">Progress</string>
     <string name="title_profile">Profile</string>
     <string name="title_header">Batavree</string>
     <string name="job_list">Your job list</string>

@@ -44,6 +44,7 @@ public class AppDelfree extends Application {
     public static String LOADING_PATH = "log/goodsload";
     public static String UNLOADING_PATH = "log/goodsunload";
     public static String START_PATH = "log/start";
+    public static String FINISH_PATH = "log/finish";
     public static String WO = "wo";
 
 

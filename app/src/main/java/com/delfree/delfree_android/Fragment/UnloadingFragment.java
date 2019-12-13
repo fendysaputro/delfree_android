@@ -27,10 +27,14 @@ import android.widget.Toast;
 
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.MainActivity;
+import com.delfree.delfree_android.Model.WorkOrders;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * created by phephen 2019
@@ -40,6 +44,9 @@ public class UnloadingFragment extends Fragment {
     TextView status, charge, vehicleNo;
     Button btnFinish;
     private Context context;
+    String driverId, vehicleId, woId;
+    double latitude = 0;
+    double longitude = 0;
 
     @Nullable
     @Override
@@ -53,6 +60,8 @@ public class UnloadingFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setLogo(logo);
 
+        WorkOrders selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+
         status = (TextView) view.findViewById(R.id.tvStatus);
         status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
 
@@ -64,6 +73,16 @@ public class UnloadingFragment extends Fragment {
             vehicleNo.setText("Plat Nomor : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getVehicle().getString("police_no"));
         }catch (JSONException jsonEx){
             Log.e("batavree", "error" + jsonEx.getMessage());
+        }
+
+        try {
+            woId = selectedWorkOrder.getId();
+            driverId = appDelfree.getDriver().getId();
+            vehicleId = selectedWorkOrder.getVehicle().getString("_id");
+            latitude = appDelfree.getLatitude();
+            longitude = appDelfree.getLongitude();
+        } catch (JSONException jex){
+            Log.e("batavree", "error " + jex.getMessage());
         }
 
         btnFinish = (Button) view.findViewById(R.id.buttonFinish);
@@ -88,6 +107,31 @@ public class UnloadingFragment extends Fragment {
 //                        Intent intent = new Intent(context, MainActivity.class);
 //                        context.startService(new Intent(context, AppDataService.class));
 //                        context.startActivity(intent);
+
+                        AsyncHttpTask startTask = new AsyncHttpTask("woid=" + woId +
+                                "&driverid=" + driverId +
+                                "&vehicleid=" + vehicleId +
+                                "&lang=" + latitude +
+                                "&long=" + longitude, getContext());
+                        startTask.execute(appDelfree.HOST + appDelfree.FINISH_PATH, "POST");
+                        startTask.setHttpResponseListener(new OnHttpResponseListener() {
+                            @Override
+                            public void OnHttpResponse(String response) {
+                                try {
+                                    JSONObject resWo = new JSONObject(response);
+                                    if (resWo.getBoolean("r")){
+                                        Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+//                                        resWo.getJSONObject("d");
+                                        Log.i("batavree", "unloading fragment " + resWo.getJSONObject("d").toString());
+                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+                                        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+                                    }
+                                } catch (JSONException jss){
+                                    Log.e("batavree", jss.getMessage());
+                                }
+                            }
+                        });
+
                         getActivity().stopService(new Intent(getActivity(), AppDataService.class));
                         FinishJobFragment finishJobFragment = new FinishJobFragment();
                         FragmentManager fragmentManager = getFragmentManager();

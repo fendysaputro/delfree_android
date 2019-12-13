@@ -152,8 +152,9 @@ public class DetailJobFragment extends Fragment {
                                     if (resWo.getBoolean("r")){
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
 //                                        resWo.getJSONObject("d");
-                                        Log.i("batavree", "d " + resWo.getJSONObject("d").toString());
+                                        Log.i("batavree", "detailJobFragment " + resWo.getJSONObject("d").toString());
                                         appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+                                        Log.i("batavree", "status di detailjob " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());
@@ -182,6 +183,7 @@ public class DetailJobFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        MainActivity.allowBackPressed = true;
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 }

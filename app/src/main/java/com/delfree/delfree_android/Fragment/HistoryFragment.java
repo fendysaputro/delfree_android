@@ -55,11 +55,13 @@ public class HistoryFragment extends Fragment {
             }
         });
 
+        appDelfree = (AppDelfree) getActivity().getApplication();
         listJobsHistory=(ListView) view.findViewById(R.id.list);
         list = new ArrayList<WorkOrders>();
         adapter = new HistoryAdapter(getContext(), R.layout.custom_item_history_adapter, list);
         listJobsHistory.setAdapter(adapter);
 
+//        appDelfree.getWorkOrders();
         getDataWO("", list, adapter);
 
 //        HistoryAdapter historyAdapter = new HistoryAdapter(getActivity(), R.layout.custom_item_home_adapter, itemHistory);
@@ -95,8 +97,13 @@ public class HistoryFragment extends Fragment {
                             woOrders.setVehicle(WO.getJSONObject("vehicle"));
                             woOrders.setRefNo(WO.getString("refNo"));
                             woOrders.setShipmentNum(WO.getString("shipmentNum"));
+                            woOrders.setStatus(WO.getString("status"));
                             list.add(woOrders);
+                            appDelfree.getWorkOrders().clear();
+                            appDelfree.setWorkOrders(list);
                         }
+//
+
                         adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e){

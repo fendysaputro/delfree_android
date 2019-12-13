@@ -8,9 +8,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -57,8 +60,10 @@ public class LoadingFragment extends Fragment {
 
         WorkOrders selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
 
+        Log.i("batavree", "status di loading " + selectedWorkOrder.getStatus());
+
         status = (TextView) view.findViewById(R.id.tvStatus);
-        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+        status.setText("Status : " + selectedWorkOrder.getStatus());
 
         charge = (TextView) view.findViewById(R.id.tvCharge);
         charge.setText("Nama Barang : Kayu 3 ton");
@@ -75,7 +80,7 @@ public class LoadingFragment extends Fragment {
 
         try {
             vehicleNo = (TextView) view.findViewById(R.id.tvVehicleNo);
-            vehicleNo.setText("Plat Nomor : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getVehicle().getString("police_no"));
+            vehicleNo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
             }catch (JSONException jsonEx){
                 Log.e("batavree", "error" + jsonEx.getMessage());
             }
@@ -112,14 +117,20 @@ public class LoadingFragment extends Fragment {
                                     if (resWo.getBoolean("r")){
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
 //                                        resWo.getJSONObject("d");
-                                        Log.i("batavree", "d " + resWo.getJSONObject("d").toString());
+                                        Log.i("batavree", "loading fragment " + resWo.getJSONObject("d").toString());
                                         appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+                                        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());
                                 }
                             }
                         });
+//                        ProgressRouteFragment progressRouteFragment = new ProgressRouteFragment();
+//                        FragmentManager fragmentManager = getFragmentManager();
+//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.replace(R.id.fl_container, progressRouteFragment);
+//                        fragmentTransaction.commit();
                         context = getContext();
                         Intent intent = new Intent(context, MainActivity.class);
                         context.startService(new Intent(context, AppDataService.class));
@@ -138,9 +149,9 @@ public class LoadingFragment extends Fragment {
         return;
     }
 
-    public void onResume () {
-        super.onResume();
-        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
-        Log.i("batavree", "loading " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
-    }
+//    public void onResume () {
+//        super.onResume();
+//        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+//        Log.i("batavree", "loading " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+//    }
 }

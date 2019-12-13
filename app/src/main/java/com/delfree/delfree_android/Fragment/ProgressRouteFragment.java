@@ -141,6 +141,8 @@ public class ProgressRouteFragment extends Fragment {
                                     if (resWo.getBoolean("r")){
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
                                         Log.i("batavree", "unloading barang " + resWo.getJSONObject("d").toString());
+                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+                                        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());
@@ -167,10 +169,15 @@ public class ProgressRouteFragment extends Fragment {
         return;
     }
 
+//    public void getStatusData(){
+//        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+//    }
+//
 //    @Override
 //    public void onResume() {
 //        super.onResume();
-//        MainActivity.allowBackPressed = false;
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+////        MainActivity.allowBackPressed = false;
+////        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+//        getStatusData();
 //    }
 }

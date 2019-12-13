@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
 
     private void getData (String data, final ArrayList<WorkOrders> list, final HomeAdapter adapter){
         AsyncHttpTask woHttp = new AsyncHttpTask(data, getActivity());
-        woHttp.execute(appDelfree.HOST + appDelfree.WO, "GET");
+        woHttp.execute(appDelfree.HOST + appDelfree.WO + "?status=created", "GET");
         woHttp.setHttpResponseListener(new OnHttpResponseListener() {
             @Override
             public void OnHttpResponse(String response) {
