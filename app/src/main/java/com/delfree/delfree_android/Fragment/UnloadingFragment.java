@@ -41,12 +41,13 @@ import org.json.JSONObject;
  */
 public class UnloadingFragment extends Fragment {
     AppDelfree appDelfree;
-    TextView status, charge, vehicleNo;
+    TextView statusUnloading, charge, vehicleNo;
     Button btnFinish;
     private Context context;
     String driverId, vehicleId, woId;
     double latitude = 0;
     double longitude = 0;
+    WorkOrders selectedWorkOrder;
 
     @Nullable
     @Override
@@ -60,17 +61,17 @@ public class UnloadingFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setLogo(logo);
 
-        WorkOrders selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+        selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
 
-        status = (TextView) view.findViewById(R.id.tvStatus);
-        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+        statusUnloading = (TextView) view.findViewById(R.id.tvStatus);
+        statusUnloading.setText("Status : " + selectedWorkOrder.getStatus());
 
         charge = (TextView) view.findViewById(R.id.tvCharge);
         charge.setText("Nama Barang : Kayu 3 ton");
 
         try {
             vehicleNo = (TextView) view.findViewById(R.id.tvVehicleNo);
-            vehicleNo.setText("Plat Nomor : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getVehicle().getString("police_no"));
+            vehicleNo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
         }catch (JSONException jsonEx){
             Log.e("batavree", "error" + jsonEx.getMessage());
         }
@@ -103,11 +104,6 @@ public class UnloadingFragment extends Fragment {
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-//                        context = getContext();
-//                        Intent intent = new Intent(context, MainActivity.class);
-//                        context.startService(new Intent(context, AppDataService.class));
-//                        context.startActivity(intent);
-
                         AsyncHttpTask startTask = new AsyncHttpTask("woid=" + woId +
                                 "&driverid=" + driverId +
                                 "&vehicleid=" + vehicleId +
@@ -117,6 +113,8 @@ public class UnloadingFragment extends Fragment {
                         startTask.setHttpResponseListener(new OnHttpResponseListener() {
                             @Override
                             public void OnHttpResponse(String response) {
+                                Log.i("batavree", "unloading fragment response " + response);
+                                Toast.makeText(getActivity(), "uload fragment ", Toast.LENGTH_SHORT).show();
                                 try {
                                     JSONObject resWo = new JSONObject(response);
                                     if (resWo.getBoolean("r")){
@@ -124,7 +122,7 @@ public class UnloadingFragment extends Fragment {
 //                                        resWo.getJSONObject("d");
                                         Log.i("batavree", "unloading fragment " + resWo.getJSONObject("d").toString());
                                         appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
-                                        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+                                        statusUnloading.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());
@@ -152,11 +150,15 @@ public class UnloadingFragment extends Fragment {
         return;
     }
 
+    public void getDataStatus () {
+        statusUnloading.setText("Status : " + selectedWorkOrder.getStatus() );
+        Log.i("batavree", "unloading barang 3" + selectedWorkOrder.getStatus());
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
-        Log.i("batavree", "unloading " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+        getDataStatus();
     }
 }

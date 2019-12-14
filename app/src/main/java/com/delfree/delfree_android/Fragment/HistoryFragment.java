@@ -102,8 +102,6 @@ public class HistoryFragment extends Fragment {
                             appDelfree.getWorkOrders().clear();
                             appDelfree.setWorkOrders(list);
                         }
-//
-
                         adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e){

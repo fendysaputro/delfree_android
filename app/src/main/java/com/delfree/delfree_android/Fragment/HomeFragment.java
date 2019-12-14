@@ -68,8 +68,8 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
         requestPermission();
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         appDelfree = (AppDelfree) getActivity().getApplication();
 
         Drawable logo = getResources().getDrawable(R.drawable.logobatavree_new);
@@ -94,7 +94,8 @@ public class HomeFragment extends Fragment {
 
     private void getData (String data, final ArrayList<WorkOrders> list, final HomeAdapter adapter){
         AsyncHttpTask woHttp = new AsyncHttpTask(data, getActivity());
-        woHttp.execute(appDelfree.HOST + appDelfree.WO + "?status=created", "GET");
+        woHttp.execute(appDelfree.HOST + appDelfree.WO, "GET");
+//        woHttp.execute(appDelfree.HOST + appDelfree.WO + "?status=created", "GET");
         woHttp.setHttpResponseListener(new OnHttpResponseListener() {
             @Override
             public void OnHttpResponse(String response) {

@@ -18,11 +18,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
 import com.delfree.delfree_android.Fragment.LoadingFragment;
 import com.delfree.delfree_android.Model.WorkOrders;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
 import com.karumi.dexter.Dexter;
@@ -33,6 +36,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -51,6 +55,10 @@ public class HomeAdapter extends ArrayAdapter {
     public boolean mTracking = false;
     Activity activity;
     AppDelfree appDelfree;
+    String driverId, vehicleId, woId;
+    double latitude = 0;
+    double longitude = 0;
+//    WorkOrders selectedWorkOrder;
 
     public HomeAdapter(Context context, int textViewResourceId, ArrayList<WorkOrders> myListJobs) {
         super(context, textViewResourceId, myListJobs);
@@ -94,6 +102,37 @@ public class HomeAdapter extends ArrayAdapter {
                 Activity activity = (Activity) context;
                 FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
                 ShowFragment(R.id.fl_container, detailJobFragment,fragmentManager);
+                try {
+                    woId = myListJobs.get(appDelfree.getSelectedWo()).getId();
+                    driverId = myListJobs.get(appDelfree.getSelectedWo()).getDriver().getString("_id");
+                    vehicleId = myListJobs.get(appDelfree.getSelectedWo()).getVehicle().getString("_id");
+                    latitude = appDelfree.getLatitude();
+                    longitude = appDelfree.getLongitude();
+                } catch (JSONException jex){
+                    Log.e("batavree", "error " + jex.getMessage());
+                }
+                AsyncHttpTask loadTask = new AsyncHttpTask("woid=" + woId +
+                        "&driverid=" + driverId +
+                        "&vehicleid=" + vehicleId +
+                        "&lang=" + latitude +
+                        "&long=" + longitude, getContext());
+                loadTask.execute(appDelfree.HOST + appDelfree.LOADING_PATH, "POST");
+                loadTask.setHttpResponseListener(new OnHttpResponseListener() {
+                    @Override
+                    public void OnHttpResponse(String response) {
+                        try {
+                            JSONObject resWo = new JSONObject(response);
+                            if (resWo.getBoolean("r")){
+                                Toast.makeText(getContext(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+//                                        resWo.getJSONObject("d");
+                                Log.i("batavree", "detailJobFragment " + resWo.getJSONObject("d").toString());
+                                myListJobs.get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+                            }
+                        } catch (JSONException jss){
+                            Log.e("batavree", jss.getMessage());
+                        }
+                    }
+                });
             }
         });
 

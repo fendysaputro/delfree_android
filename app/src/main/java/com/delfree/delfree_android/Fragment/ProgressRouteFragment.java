@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.MainActivity;
 import com.delfree.delfree_android.Model.WorkOrderDetails;
+import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.Network.AsyncHttpTask;
 import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
@@ -52,11 +53,12 @@ public class ProgressRouteFragment extends Fragment {
     private ListView progressList;
     ArrayList<WorkOrderDetails> list = null;
     Button btnFinish;
-    TextView status, addressFrom, addressTo;
+    TextView statusProgress, addressFrom, addressTo;
     private Context context;
     String driverId, vehicleId, woId;
     double latitude = 0;
     double longitude = 0;
+    WorkOrders selectedWorkOrder;
 
     @Nullable
     @Override
@@ -71,10 +73,25 @@ public class ProgressRouteFragment extends Fragment {
         toolbar.setLogo(logo);
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
 
+        selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+
+        statusProgress = (TextView) view.findViewById(R.id.tvStatus);
+        statusProgress.setText("Status : " + selectedWorkOrder.getStatus());
+
+//        addressFrom = (TextView) view.findViewById(R.id.tvRouteSrc);
+//        addressFrom.setText("Nama Barang : Kayu 3 ton");
+//
+//        try {
+//            addressTo = (TextView) view.findViewById(R.id.tvRouteDest);
+//            addressTo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
+//        }catch (JSONException jsonEx){
+//            Log.e("batavree", "error" + jsonEx.getMessage());
+//        }
+
         try {
-            woId = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getId();
+            woId = selectedWorkOrder.getId();
             driverId = appDelfree.getDriver().getId();
-            vehicleId = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getVehicle().getString("_id");
+            vehicleId = selectedWorkOrder.getVehicle().getString("_id");
             latitude = appDelfree.getLatitude();
             longitude = appDelfree.getLongitude();
         } catch (JSONException jex){
@@ -89,9 +106,6 @@ public class ProgressRouteFragment extends Fragment {
                 wod.setRoutes(WoObj.getJSONArray("routes"));
                 wod.setWONum(WoObj.getString("WONum"));
                 appDelfree.setWorkOrderDetails(wod);
-
-                status = (TextView) view.findViewById(R.id.tvStatus);
-                status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
 
                 addressFrom = (TextView) view.findViewById(R.id.tvRouteSrc);
                 addressFrom.setText("Alamat dari : " + appDelfree.getWorkOrderDetails().getRoutes().getJSONObject(i).getJSONObject("src").getString("addr"));
@@ -108,7 +122,11 @@ public class ProgressRouteFragment extends Fragment {
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog();
+                if (btnFinish.getText().equals(" Bongkar Barang ")){
+                    dialogBongkar();
+                } else {
+                    dialogFinish();
+                }
             }
         });
 
@@ -117,10 +135,10 @@ public class ProgressRouteFragment extends Fragment {
 
     public JSONArray getWODetails (){
 
-        return appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getWODetails();
+        return selectedWorkOrder.getWODetails();
     }
 
-    public void dialog() {
+    public void dialogBongkar() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle("Menurunkan Muatan");
         alertDialog.setMessage("Apakah anda yakin untuk menurunkan muatan?");
@@ -140,19 +158,68 @@ public class ProgressRouteFragment extends Fragment {
                                     JSONObject resWo = new JSONObject(response);
                                     if (resWo.getBoolean("r")){
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
-                                        Log.i("batavree", "unloading barang " + resWo.getJSONObject("d").toString());
-                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
-                                        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+                                        selectedWorkOrder.setStatus(resWo.getJSONObject("d").getString("status"));
+                                        statusProgress.setText("Status : " + selectedWorkOrder.getStatus());
+                                        addressFrom.setText("Nama Barang : Kayu 3 ton");
+                                        try {
+                                            addressTo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
+                                        }catch (JSONException jsonEx){
+                                            Log.e("batavree", "error" + jsonEx.getMessage());
+                                        }
+                                        btnFinish.setText("Selesai");
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());
                                 }
                             }
                         });
-                        UnloadingFragment unloadingFragment = new UnloadingFragment();
+                    }
+                });
+        alertDialog.setNegativeButton("TIDAK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+
+        return;
+    }
+
+    public void dialogFinish() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Selesai Perjalanan");
+        alertDialog.setMessage("Apakah anda yakin mengakhiri perjalanan?");
+        alertDialog.setPositiveButton("YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        AsyncHttpTask toUnloadTask = new AsyncHttpTask("woid=" + woId +
+                                "&driverid=" + driverId +
+                                "&vehicleid=" + vehicleId +
+                                "&lang=" + latitude +
+                                "&long=" + longitude, getContext());
+                        toUnloadTask.execute(appDelfree.HOST + appDelfree.FINISH_PATH, "POST");
+                        toUnloadTask.setHttpResponseListener(new OnHttpResponseListener() {
+                            @Override
+                            public void OnHttpResponse(String result) {
+                                Log.i("batavree", "ini result " + result);
+                                try {
+                                    JSONObject resUnload = new JSONObject(result);
+                                    if (resUnload.getBoolean("r")){
+                                        Toast.makeText(getActivity(), resUnload.getString("m"), Toast.LENGTH_LONG).show();
+                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resUnload.getJSONObject("d").getString("status"));
+                                    }
+                                } catch (JSONException jss){
+                                    Log.e("batavree", jss.getMessage());
+                                }
+                            }
+                        });
+                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
+                        FinishJobFragment finishJobFragment = new FinishJobFragment();
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fl_container, unloadingFragment);
+                        fragmentTransaction.replace(R.id.fl_container, finishJobFragment);
                         fragmentTransaction.commit();
 
                     }
@@ -169,15 +236,11 @@ public class ProgressRouteFragment extends Fragment {
         return;
     }
 
-//    public void getStatusData(){
-//        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-////        MainActivity.allowBackPressed = false;
-////        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-//        getStatusData();
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity.allowBackPressed = false;
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        statusProgress.setText("Status : " + selectedWorkOrder.getStatus());
+    }
 }
