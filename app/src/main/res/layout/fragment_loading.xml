@@ -1,85 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.ProgressRouteFragment">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="match_parent"
         android:background="@color/littleBack"
-        android:layout_marginRight="200dp"
-        android:layout_marginTop="10dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".Fragment.ProgressRouteFragment">
 
-        <ImageView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/littleBack"
             android:layout_marginRight="200dp"
             android:layout_marginTop="10dp"
-            android:layout_gravity="fill_horizontal"
-            android:gravity="fill_horizontal"
-            android:textColor="@color/chooseNav"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    </android.support.v7.widget.Toolbar>
+            <ImageView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="200dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="fill_horizontal"
+                android:gravity="fill_horizontal"
+                android:textColor="@color/chooseNav"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="70dp"
-        android:textSize="20sp"
-        android:padding="10dp"
-        android:textStyle="bold"
-        android:textColor="@color/textColor"
-        android:background="@color/cameraTransparent"/>
+        </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/tvCharge"
-        android:layout_below="@+id/tvStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="@color/cameraTransparent"
-        android:textColor="@color/textColor"
-        android:layout_marginTop="0dp"
-        android:textSize="15sp"
-        />
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="70dp"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/textColor"
+            android:background="@color/cameraTransparent"/>
 
-    <TextView
-        android:id="@+id/tvVehicleNo"
-        android:layout_below="@+id/tvCharge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="@color/cameraTransparent"
-        android:textColor="@color/textColor"
-        android:layout_marginTop="0dp"
-        android:textSize="15sp"
-        />
+        <TextView
+            android:id="@+id/tvCharge"
+            android:layout_below="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@color/cameraTransparent"
+            android:textColor="@color/textColor"
+            android:layout_marginTop="0dp"
+            android:textSize="15sp"
+            />
 
-    <Button
-        android:id="@+id/buttonStart"
-        android:layout_below="@+id/tvVehicleNo"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/radio_border"
-        android:enabled="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="351dp"
-        android:textAllCaps="false"
-        android:text="Mulai Perjalanan"
-        android:textColor="@color/basic" />
+        <TextView
+            android:id="@+id/tvVehicleNo"
+            android:layout_below="@+id/tvCharge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@color/cameraTransparent"
+            android:textColor="@color/textColor"
+            android:layout_marginTop="0dp"
+            android:textSize="15sp"
+            />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/buttonStart"
+            android:layout_below="@+id/tvVehicleNo"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/radio_border"
+            android:enabled="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            tools:layout_editor_absoluteX="147dp"
+            tools:layout_editor_absoluteY="351dp"
+            android:textAllCaps="false"
+            android:text="Mulai Perjalanan"
+            android:textColor="@color/basic" />
+
+    </RelativeLayout>
+
+</ScrollView>

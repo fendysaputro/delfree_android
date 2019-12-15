@@ -1,102 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/cameraTransparent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.ProfileFragment">
+<ScrollView
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:fillViewport="false"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/littleBack"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        android:layout_height="match_parent"
+        android:background="@color/cameraTransparent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".Fragment.ProfileFragment">
+
+        <!-- TODO: Update blank fragment layout -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/littleBack"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:gravity="left"
+                android:textColor="@color/chooseNav"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </android.support.v7.widget.Toolbar>
 
         <TextView
-            android:id="@+id/toolbar_title"
+            android:id="@+id/profile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/profile_user"
+            android:background="@color/homeFragmentBg"
+            android:layout_gravity="left"
+            android:textSize="20dp"
+            android:gravity="left|center"
+            android:paddingLeft="20dp"
+            android:paddingRight="0dp"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/textColor" />
+
+        <LinearLayout
+            android:id="@+id/LlProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:gravity="left"
-            android:textColor="@color/chooseNav"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center_horizontal|center" >
 
-    </android.support.v7.widget.Toolbar>
+            <ImageView
+                android:id="@+id/profile_pict"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/profile" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/profile"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/profile_user"
-        android:background="@color/homeFragmentBg"
-        android:layout_gravity="left"
-        android:textSize="20dp"
-        android:gravity="left|center"
-        android:paddingLeft="20dp"
-        android:paddingRight="0dp"
-        android:layout_marginTop="50dp"
-        android:textColor="@color/textColor" />
-
-    <LinearLayout
-        android:id="@+id/LlProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_gravity="center_horizontal|center" >
-
-        <ImageView
-            android:id="@+id/profile_pict"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/profile" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/iLProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:background="@color/littleBack" >
-
-        <TextView
-            android:id="@+id/driver_name"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/iLProfile"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="left"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="20dp"
-            android:text="@string/driver_name"
-            android:textColor="@color/textColor"
-            android:textSize="20sp" />
+            android:layout_marginTop="400dp"
+            android:background="@color/littleBack" >
 
-        <TextView
-            android:id="@+id/sim_no"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-            android:gravity="left"
-            android:paddingLeft="20dp"
-            android:text="@string/sim_no"
-            android:textColor="@color/textColor"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/driver_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:text="@string/driver_name"
+                android:textColor="@color/textColor"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:gravity="left"
-            android:paddingLeft="20dp"
-            android:text="@string/driver_address"
-            android:textColor="@color/textColor"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/sim_no"
+                android:layout_below="@+id/driver_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="left"
+                android:paddingLeft="20dp"
+                android:text="@string/sim_no"
+                android:textColor="@color/textColor"
+                android:textSize="20sp" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/address"
+                android:layout_below="@+id/sim_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="left"
+                android:paddingLeft="20dp"
+                android:paddingBottom="70dp"
+                android:text="@string/driver_address"
+                android:textColor="@color/textColor"
+                android:textSize="20sp" />
 
-</FrameLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+
+</ScrollView>
