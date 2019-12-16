@@ -66,7 +66,7 @@ public class DetailJobFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_job, container, false);
 
-        appDelfree = (AppDelfree) getActivity().getApplication();
+        appDelfree = (AppDelfree) getActivity().getApplicationContext();
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("Back");

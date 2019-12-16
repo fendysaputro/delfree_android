@@ -58,6 +58,7 @@ public class HomeAdapter extends ArrayAdapter {
     String driverId, vehicleId, woId;
     double latitude = 0;
     double longitude = 0;
+    TextView textView;
 //    WorkOrders selectedWorkOrder;
 
     public HomeAdapter(Context context, int textViewResourceId, ArrayList<WorkOrders> myListJobs) {
@@ -65,6 +66,7 @@ public class HomeAdapter extends ArrayAdapter {
 
         this.myListJobs = myListJobs;
         this.context = context;
+        appDelfree = (AppDelfree) this.context.getApplicationContext();
     }
 
 
@@ -75,11 +77,9 @@ public class HomeAdapter extends ArrayAdapter {
 
         appDataService = new AppDataService();
         mServiceIntent = new Intent(context, appDataService.getClass());
-
-        appDelfree = new AppDelfree();
         mServiceIntent = new Intent(context, appDelfree.getClass());
 
-        TextView textView = (TextView) view.findViewById(R.id.tv);
+        textView = (TextView) view.findViewById(R.id.tv);
         textView.setText(myListJobs.get(position).getWONum());
 
         try {
@@ -123,9 +123,7 @@ public class HomeAdapter extends ArrayAdapter {
                         try {
                             JSONObject resWo = new JSONObject(response);
                             if (resWo.getBoolean("r")){
-                                Toast.makeText(getContext(), resWo.getString("m"), Toast.LENGTH_LONG).show();
-//                                        resWo.getJSONObject("d");
-                                Log.i("batavree", "detailJobFragment " + resWo.getJSONObject("d").toString());
+//                                Toast.makeText(getContext(), resWo.getString("m"), Toast.LENGTH_LONG).show();
                                 myListJobs.get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
                             }
                         } catch (JSONException jss){
