@@ -19,8 +19,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
@@ -84,6 +88,29 @@ public class DetailJobFragment extends Fragment {
 
         WONumber = (TextView) view.findViewById(R.id.detail_job);
         WONumber.setText(selectedWorkOrder.getWONum());
+
+        Spinner spinner = (Spinner) view.findViewById(R.id.spinnerJobs);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String statusLoad = parent.getItemAtPosition(position).toString();
+                Log.i("batavree", "status position " + statusLoad);
+//                appMms.setOpenTicket(statusLoad);
+                startLoading.setText(statusLoad);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        final List<String> loadStatus = new ArrayList<>();
+        loadStatus.add(" Muat Barang ");
+        loadStatus.add(" Menunggu Antrian ");
+
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, loadStatus);
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(statusAdapter);
 
         startLoading = (Button) view.findViewById(R.id.startLoadingBtn);
         startLoading.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +178,6 @@ public class DetailJobFragment extends Fragment {
                                     JSONObject resWo = new JSONObject(response);
                                     if (resWo.getBoolean("r")){
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
-//                                        resWo.getJSONObject("d");
                                         Log.i("batavree", "detailJobFragment " + resWo.getJSONObject("d").toString());
                                         appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
                                         Log.i("batavree", "status di detailjob " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
