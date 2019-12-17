@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/homeFragmentBg"
+    android:background="@color/littleBack"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.DetailJobFragment">
 
@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/littleBack"
+        android:layout_marginRight="200dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -30,12 +31,13 @@
     <TextView
         android:id="@+id/detail_job"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:textSize="20dp"
         android:layout_gravity="center_horizontal"
-        android:gravity="left"
+        android:gravity="left|center_vertical"
         android:paddingLeft="20dp"
         android:layout_marginTop="70dp"
+        android:background="@color/homeFragmentBg"
         android:textColor="@color/textColor" />
 
     <TextView
