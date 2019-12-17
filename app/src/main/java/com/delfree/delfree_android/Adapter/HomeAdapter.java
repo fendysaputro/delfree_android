@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -11,6 +12,8 @@ import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
 import com.delfree.delfree_android.Fragment.LoadingFragment;
+import com.delfree.delfree_android.Fragment.StartToPickUpFragment;
 import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.Network.AsyncHttpTask;
 import com.delfree.delfree_android.Network.OnHttpResponseListener;
@@ -98,42 +102,94 @@ public class HomeAdapter extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 appDelfree.setSelectedWo(position);
-                DetailJobFragment detailJobFragment = new DetailJobFragment();
-                Activity activity = (Activity) context;
-                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                ShowFragment(R.id.fl_container, detailJobFragment,fragmentManager);
-                try {
-                    woId = myListJobs.get(appDelfree.getSelectedWo()).getId();
-                    driverId = myListJobs.get(appDelfree.getSelectedWo()).getDriver().getString("_id");
-                    vehicleId = myListJobs.get(appDelfree.getSelectedWo()).getVehicle().getString("_id");
-                    latitude = appDelfree.getLatitude();
-                    longitude = appDelfree.getLongitude();
-                } catch (JSONException jex){
-                    Log.e("batavree", "error " + jex.getMessage());
-                }
-                AsyncHttpTask loadTask = new AsyncHttpTask("woid=" + woId +
-                        "&driverid=" + driverId +
-                        "&vehicleid=" + vehicleId +
-                        "&lang=" + latitude +
-                        "&long=" + longitude, getContext());
-                loadTask.execute(appDelfree.HOST + appDelfree.LOADING_PATH, "POST");
-                loadTask.setHttpResponseListener(new OnHttpResponseListener() {
-                    @Override
-                    public void OnHttpResponse(String response) {
-                        try {
-                            JSONObject resWo = new JSONObject(response);
-                            if (resWo.getBoolean("r")){
-//                                Toast.makeText(getContext(), resWo.getString("m"), Toast.LENGTH_LONG).show();
-                                myListJobs.get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
-                            }
-                        } catch (JSONException jss){
-                            Log.e("batavree", jss.getMessage());
-                        }
-                    }
-                });
+                dialog();
+//                DetailJobFragment detailJobFragment = new DetailJobFragment();
+//                Activity activity = (Activity) context;
+//                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+//                ShowFragment(R.id.fl_container, detailJobFragment,fragmentManager);
+//                StartToPickUpFragment startToPickUpFragment = new StartToPickUpFragment();
+//                Activity activity = (Activity) context;
+//                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+//                ShowFragment(R.id.fl_container, startToPickUpFragment,fragmentManager);
+//                try {
+//                    woId = myListJobs.get(appDelfree.getSelectedWo()).getId();
+//                    driverId = myListJobs.get(appDelfree.getSelectedWo()).getDriver().getString("_id");
+//                    vehicleId = myListJobs.get(appDelfree.getSelectedWo()).getVehicle().getString("_id");
+//                    latitude = appDelfree.getLatitude();
+//                    longitude = appDelfree.getLongitude();
+//                } catch (JSONException jex){
+//                    Log.e("batavree", "error " + jex.getMessage());
+//                }
+//                AsyncHttpTask loadTask = new AsyncHttpTask("woid=" + woId +
+//                        "&driverid=" + driverId +
+//                        "&vehicleid=" + vehicleId +
+//                        "&lang=" + latitude +
+//                        "&long=" + longitude, getContext());
+//                loadTask.execute(appDelfree.HOST + appDelfree.LOADING_PATH, "POST");
+//                loadTask.setHttpResponseListener(new OnHttpResponseListener() {
+//                    @Override
+//                    public void OnHttpResponse(String response) {
+//                        try {
+//                            JSONObject resWo = new JSONObject(response);
+//                            if (resWo.getBoolean("r")){
+////                                Toast.makeText(getContext(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+//                                myListJobs.get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+//                            }
+//                        } catch (JSONException jss){
+//                            Log.e("batavree", jss.getMessage());
+//                        }
+//                    }
+//                });
             }
         });
 
         return view;
+    }
+
+    public void dialog() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Menuju Pick Up Point");
+        alertDialog.setMessage("Apakah anda yakin menuju pick up point?");
+        alertDialog.setPositiveButton("YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+//                        AsyncHttpTask loadTask = new AsyncHttpTask("woid=" + woId +
+//                                "&driverid=" + driverId +
+//                                "&vehicleid=" + vehicleId +
+//                                "&lang=" + latitude +
+//                                "&long=" + longitude, getContext());
+//                        loadTask.execute(appDelfree.HOST + appDelfree.LOADING_PATH, "POST");
+//                        loadTask.setHttpResponseListener(new OnHttpResponseListener() {
+//                            @Override
+//                            public void OnHttpResponse(String response) {
+//                                try {
+//                                    JSONObject resWo = new JSONObject(response);
+//                                    if (resWo.getBoolean("r")){
+//                                        Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+//                                        Log.i("batavree", "detailJobFragment " + resWo.getJSONObject("d").toString());
+//                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+//                                        Log.i("batavree", "status di detailjob " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+//                                    }
+//                                } catch (JSONException jss){
+//                                    Log.e("batavree", jss.getMessage());
+//                                }
+//                            }
+//                        });
+                        StartToPickUpFragment startToPickUpFragment = new StartToPickUpFragment();
+                        Activity activity = (Activity) context;
+                        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                        ShowFragment(R.id.fl_container, startToPickUpFragment,fragmentManager);
+                    }
+                });
+        alertDialog.setNegativeButton("TIDAK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+
+        return;
     }
 }
