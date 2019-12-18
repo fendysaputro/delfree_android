@@ -176,11 +176,12 @@ public class StartToPickUpFragment extends Fragment {
                                         btnStart.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-                                                TakePhotoAfterLoading takePhotoAfterLoading= new TakePhotoAfterLoading();
-                                                FragmentManager fragmentManager = getFragmentManager();
-                                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                                fragmentTransaction.replace(R.id.fl_container, takePhotoAfterLoading);
-                                                fragmentTransaction.commit();
+//                                                TakePhotoAfterLoading takePhotoAfterLoading= new TakePhotoAfterLoading();
+//                                                FragmentManager fragmentManager = getFragmentManager();
+//                                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                                                fragmentTransaction.replace(R.id.fl_container, takePhotoAfterLoading);
+//                                                fragmentTransaction.commit();
+                                                dialogTakePhoto();
                                             }
                                         });
                                     }
@@ -242,6 +243,77 @@ public class StartToPickUpFragment extends Fragment {
                                             }
                                         });
                                     }
+//                                } catch (JSONException jss){
+//                                    Log.e("batavree", jss.getMessage());
+//                                }
+//                            }
+//                        });
+//                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
+//                        FinishJobFragment finishJobFragment = new FinishJobFragment();
+//                        FragmentManager fragmentManager = getFragmentManager();
+//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.replace(R.id.fl_container, finishJobFragment);
+//                        fragmentTransaction.commit();
+
+//                    }
+                });
+        alertDialog.setNegativeButton("TIDAK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+
+        return;
+    }
+
+
+    public void dialogTakePhoto() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Ambil Gambar");
+        alertDialog.setMessage("Ambil gambar untuk memulai perjalanan");
+        alertDialog.setPositiveButton("YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        TakePhotoAfterLoading takePhotoAfterLoading= new TakePhotoAfterLoading();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fl_container, takePhotoAfterLoading);
+                        fragmentTransaction.commit();
+//                        AsyncHttpTask toUnloadTask = new AsyncHttpTask("woid=" + woId +
+//                                "&driverid=" + driverId +
+//                                "&vehicleid=" + vehicleId +
+//                                "&lang=" + latitude +
+//                                "&long=" + longitude, getContext());
+//                        toUnloadTask.execute(appDelfree.HOST + appDelfree.FINISH_PATH, "POST");
+//                        toUnloadTask.setHttpResponseListener(new OnHttpResponseListener() {
+//                            @Override
+//                            public void OnHttpResponse(String result) {
+//                                Log.i("batavree", "ini result " + result);
+//                                try {
+//                                    JSONObject resUnload = new JSONObject(result);
+//                                    if (resUnload.getBoolean("r")){
+//                                        Toast.makeText(getActivity(), resUnload.getString("m"), Toast.LENGTH_LONG).show();
+//                                        selectedWorkOrder.setStatus(resUnload.getJSONObject("d").getString("status"));
+//                                        status.setText("Status : " + selectedWorkOrder.getStatus());
+//                        status.setText("Status : Menunggu Antrian");
+//                        charge.setText("Nama Barang : Kayu 3 ton");
+//                        try {
+//                            vehicleNo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
+//                        }catch (JSONException jsonEx){
+//                            Log.e("batavree", "error" + jsonEx.getMessage());
+//                        }
+//                        spinner.setVisibility(View.INVISIBLE);
+//                        btnStart.setText(" Loading ");
+//                        btnStart.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                dialogLoading();
+//                            }
+//                        });
+                    }
 //                                } catch (JSONException jss){
 //                                    Log.e("batavree", jss.getMessage());
 //                                }
