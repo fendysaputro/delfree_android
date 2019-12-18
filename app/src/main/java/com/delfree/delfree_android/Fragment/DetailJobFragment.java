@@ -89,29 +89,6 @@ public class DetailJobFragment extends Fragment {
         WONumber = (TextView) view.findViewById(R.id.detail_job);
         WONumber.setText(selectedWorkOrder.getWONum());
 
-        Spinner spinner = (Spinner) view.findViewById(R.id.spinnerJobs);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String statusLoad = parent.getItemAtPosition(position).toString();
-                Log.i("batavree", "status position " + statusLoad);
-//                appMms.setOpenTicket(statusLoad);
-                startLoading.setText(statusLoad);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-        final List<String> loadStatus = new ArrayList<>();
-        loadStatus.add(" Muat Barang ");
-        loadStatus.add(" Menunggu Antrian ");
-
-        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, loadStatus);
-        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(statusAdapter);
-
         startLoading = (Button) view.findViewById(R.id.startLoadingBtn);
         startLoading.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,37 +137,37 @@ public class DetailJobFragment extends Fragment {
 
     public void dialog() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Muat Barang");
-        alertDialog.setMessage("Apakah anda yakin memulai untuk muat barang?");
+        alertDialog.setTitle("Menuju Pick up point");
+        alertDialog.setMessage("Silahkan menuju pick up point");
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        AsyncHttpTask loadTask = new AsyncHttpTask("woid=" + woId +
-                                "&driverid=" + driverId +
-                                "&vehicleid=" + vehicleId +
-                                "&lang=" + latitude +
-                                "&long=" + longitude, getContext());
-                        loadTask.execute(appDelfree.HOST + appDelfree.LOADING_PATH, "POST");
-                        loadTask.setHttpResponseListener(new OnHttpResponseListener() {
-                            @Override
-                            public void OnHttpResponse(String response) {
-                                try {
-                                    JSONObject resWo = new JSONObject(response);
-                                    if (resWo.getBoolean("r")){
-                                        Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
-                                        Log.i("batavree", "detailJobFragment " + resWo.getJSONObject("d").toString());
-                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
-                                        Log.i("batavree", "status di detailjob " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
-                                    }
-                                } catch (JSONException jss){
-                                    Log.e("batavree", jss.getMessage());
-                                }
-                            }
-                        });
-                        LoadingFragment loadingFragment = new LoadingFragment();
+//                        AsyncHttpTask loadTask = new AsyncHttpTask("woid=" + woId +
+//                                "&driverid=" + driverId +
+//                                "&vehicleid=" + vehicleId +
+//                                "&lang=" + latitude +
+//                                "&long=" + longitude, getContext());
+//                        loadTask.execute(appDelfree.HOST + appDelfree.LOADING_PATH, "POST");
+//                        loadTask.setHttpResponseListener(new OnHttpResponseListener() {
+//                            @Override
+//                            public void OnHttpResponse(String response) {
+//                                try {
+//                                    JSONObject resWo = new JSONObject(response);
+//                                    if (resWo.getBoolean("r")){
+//                                        Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+//                                        Log.i("batavree", "detailJobFragment " + resWo.getJSONObject("d").toString());
+//                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+//                                        Log.i("batavree", "status di detailjob " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+//                                    }
+//                                } catch (JSONException jss){
+//                                    Log.e("batavree", jss.getMessage());
+//                                }
+//                            }
+//                        });
+                        StartToPickUpFragment startToPickUpFragment = new StartToPickUpFragment();
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fl_container, loadingFragment);
+                        fragmentTransaction.replace(R.id.fl_container, startToPickUpFragment);
                         fragmentTransaction.commit();
                     }
                 });

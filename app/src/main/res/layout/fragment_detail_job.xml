@@ -58,15 +58,6 @@
                 android:background="@color/cameraTransparent">
             </ListView>
 
-            <Spinner
-                android:id="@+id/spinnerJobs"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                >
-            </Spinner>
-
             <Button
                 android:id="@+id/startLoadingBtn"
                 android:layout_width="wrap_content"
@@ -75,7 +66,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/radio_border"
-                android:text=" Muat Barang "
+                android:text=" Menuju Pick Up Point "
                 android:textColor="@color/basic"
                 android:textAllCaps="false"
                 android:textSize="18sp"

@@ -148,8 +148,8 @@ public class HomeAdapter extends ArrayAdapter {
 
     public void dialog() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Menuju Pick Up Point");
-        alertDialog.setMessage("Apakah anda yakin menuju pick up point?");
+        alertDialog.setTitle("Lihat detail rute");
+        alertDialog.setMessage("Silahkan cek rute detail");
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -175,10 +175,10 @@ public class HomeAdapter extends ArrayAdapter {
 //                                }
 //                            }
 //                        });
-                        StartToPickUpFragment startToPickUpFragment = new StartToPickUpFragment();
+                        DetailJobFragment detailJobFragment = new DetailJobFragment();
                         Activity activity = (Activity) context;
                         FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                        ShowFragment(R.id.fl_container, startToPickUpFragment,fragmentManager);
+                        ShowFragment(R.id.fl_container, detailJobFragment,fragmentManager);
                     }
                 });
         alertDialog.setNegativeButton("TIDAK",
