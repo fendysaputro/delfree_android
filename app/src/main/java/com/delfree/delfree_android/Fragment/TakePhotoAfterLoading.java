@@ -41,6 +41,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
 /**
@@ -143,7 +145,7 @@ public class TakePhotoAfterLoading extends Fragment {
         if (appDelfree.isPicture()){
             dialog();
         } else {
-            Toast.makeText(getContext(), "You must take picture first", Toast.LENGTH_LONG).show();
+            Toasty.warning(getContext(), "Silahkan ambil foto lebih dulu untuk mulai jalan", Toast.LENGTH_SHORT, true).show();
         }
     }
 //        });
