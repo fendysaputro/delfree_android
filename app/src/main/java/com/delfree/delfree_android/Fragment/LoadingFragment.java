@@ -40,6 +40,7 @@ public class LoadingFragment extends Fragment {
 
     AppDelfree appDelfree;
     TextView status, charge, vehicleNo;
+    TextView WONumber;
     Button btnStart;
     private Context context;
     String driverId, vehicleId, woId;
@@ -59,6 +60,9 @@ public class LoadingFragment extends Fragment {
         toolbar.setLogo(logo);
 
         WorkOrders selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+
+        WONumber = (TextView) view.findViewById(R.id.wo_number);
+        WONumber.setText(selectedWorkOrder.getWONum());
 
         Log.i("batavree", "status di loading " + selectedWorkOrder.getStatus());
 
@@ -98,8 +102,8 @@ public class LoadingFragment extends Fragment {
 
     public void dialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle("Mulai Perjalanan");
-        alertDialog.setMessage("Apakah anda yakin memulai perjalanan?");
+        alertDialog.setTitle("Ambil Gambar");
+        alertDialog.setMessage("Ambil gambar untuk memulai perjalanan");
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -126,15 +130,20 @@ public class LoadingFragment extends Fragment {
                                 }
                             }
                         });
+                        TakePhotoAfterLoading takePhotoAfterLoading= new TakePhotoAfterLoading();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fl_container, takePhotoAfterLoading);
+                        fragmentTransaction.commit();
 //                        ProgressRouteFragment progressRouteFragment = new ProgressRouteFragment();
 //                        FragmentManager fragmentManager = getFragmentManager();
 //                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //                        fragmentTransaction.replace(R.id.fl_container, progressRouteFragment);
 //                        fragmentTransaction.commit();
-                        context = getContext();
-                        Intent intent = new Intent(context, MainActivity.class);
-                        context.startService(new Intent(context, AppDataService.class));
-                        context.startActivity(intent);
+//                        context = getContext();
+//                        Intent intent = new Intent(context, MainActivity.class);
+//                        context.startService(new Intent(context, AppDataService.class));
+//                        context.startActivity(intent);
                     }
                 });
         alertDialog.setNegativeButton("TIDAK",

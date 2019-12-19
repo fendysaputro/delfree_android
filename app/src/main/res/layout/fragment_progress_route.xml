@@ -30,11 +30,24 @@
     </android.support.v7.widget.Toolbar>
 
     <TextView
+        android:id="@+id/wo_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:background="@color/homeFragmentBg"
+        android:textColor="@color/textColor" />
+
+    <TextView
         android:id="@+id/tvStatus"
+        android:layout_below="@+id/wo_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="10dp"
         android:textSize="20sp"
         android:padding="10dp"
         android:textStyle="bold"
@@ -65,9 +78,21 @@
         android:textSize="15sp"
         />
 
+    <Spinner
+        android:id="@+id/spinnerJobs"
+        android:layout_below="@+id/tvRouteDest"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/cameraTransparent"
+        android:layout_marginLeft="0dp"
+        android:padding="10dp"
+        android:layout_marginTop="0dp"
+        >
+    </Spinner>
+
     <Button
         android:id="@+id/buttonFinish"
-        android:layout_below="@+id/tvRouteDest"
+        android:layout_below="@+id/spinnerJobs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

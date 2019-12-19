@@ -24,9 +24,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,8 +46,10 @@ import com.delfree.delfree_android.Service.AppDataService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.delfree.delfree_android.MainActivity.ShowFragment;
 
@@ -53,12 +58,13 @@ public class ProgressRouteFragment extends Fragment {
     private ListView progressList;
     ArrayList<WorkOrderDetails> list = null;
     Button btnFinish;
-    TextView statusProgress, addressFrom, addressTo;
+    TextView statusProgress, addressFrom, addressTo, woNumber;
     private Context context;
     String driverId, vehicleId, woId;
     double latitude = 0;
     double longitude = 0;
     WorkOrders selectedWorkOrder;
+    Spinner spinner;
 
     @Nullable
     @Override
@@ -74,6 +80,9 @@ public class ProgressRouteFragment extends Fragment {
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
 
         selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+
+        woNumber = (TextView) view.findViewById(R.id.wo_number);
+        woNumber.setText(selectedWorkOrder.getWONum());
 
         statusProgress = (TextView) view.findViewById(R.id.tvStatus);
         statusProgress.setText("Status : " + selectedWorkOrder.getStatus());
@@ -117,6 +126,29 @@ public class ProgressRouteFragment extends Fragment {
                 ex.printStackTrace();
             }
         }
+
+        spinner = (Spinner) view.findViewById(R.id.spinnerJobs);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String statusLoad = parent.getItemAtPosition(position).toString();
+                Log.i("batavree", "status position " + statusLoad);
+//                status.setText("Status : " + statusLoad);
+                btnFinish.setText(statusLoad);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        final List<String> loadStatus = new ArrayList<>();
+        loadStatus.add(" Bongkar Barang ");
+        loadStatus.add(" Menunggu Antrian ");
+
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, loadStatus);
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(statusAdapter);
 
         btnFinish = (Button) view.findViewById(R.id.buttonFinish);
         btnFinish.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +198,7 @@ public class ProgressRouteFragment extends Fragment {
                                         }catch (JSONException jsonEx){
                                             Log.e("batavree", "error" + jsonEx.getMessage());
                                         }
+                                        spinner.setVisibility(View.INVISIBLE);
                                         btnFinish.setText("Selesai");
                                     }
                                 } catch (JSONException jss){
