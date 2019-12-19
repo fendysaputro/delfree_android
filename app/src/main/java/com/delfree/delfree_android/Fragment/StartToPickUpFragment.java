@@ -65,25 +65,13 @@ public class StartToPickUpFragment extends Fragment {
         toolbar.setLogo(logo);
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
 
-//        Toolbar toolbar = view.findViewById(R.id.toolbar);
-//        toolbar.setTitle("Back");
-//        toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
-//        toolbar.setNavigationIcon(R.drawable.back);
-
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getActivity().onBackPressed();
-//            }
-//        });
-
         selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
 
         WONumber = (TextView) view.findViewById(R.id.detail_job);
         WONumber.setText(selectedWorkOrder.getWONum());
 
         status = (TextView) view.findViewById(R.id.tvStatus);
-        status.setText("Status : Menuju Pick up");
+        status.setText("Status : menuju pick up");
 
         charge = (TextView) view.findViewById(R.id.tvCharge);
         charge.setText("Nama Barang : Kayu 3 ton");
@@ -111,6 +99,7 @@ public class StartToPickUpFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String statusLoad = parent.getItemAtPosition(position).toString();
                 Log.i("batavree", "status position " + statusLoad);
+//                status.setText("Status : " + statusLoad);
                 btnStart.setText(statusLoad);
             }
 
@@ -131,7 +120,6 @@ public class StartToPickUpFragment extends Fragment {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                dialog();
                 if (btnStart.getText().equals(" Muat Barang ")){
                     dialogLoading();
                 } else {
@@ -176,11 +164,6 @@ public class StartToPickUpFragment extends Fragment {
                                         btnStart.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-//                                                TakePhotoAfterLoading takePhotoAfterLoading= new TakePhotoAfterLoading();
-//                                                FragmentManager fragmentManager = getFragmentManager();
-//                                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                                                fragmentTransaction.replace(R.id.fl_container, takePhotoAfterLoading);
-//                                                fragmentTransaction.commit();
                                                 dialogTakePhoto();
                                             }
                                         });
@@ -227,7 +210,7 @@ public class StartToPickUpFragment extends Fragment {
 //                                        Toast.makeText(getActivity(), resUnload.getString("m"), Toast.LENGTH_LONG).show();
 //                                        selectedWorkOrder.setStatus(resUnload.getJSONObject("d").getString("status"));
 //                                        status.setText("Status : " + selectedWorkOrder.getStatus());
-                                        status.setText("Status : Menunggu Antrian");
+                                        status.setText("Status : menunggu antrian");
                                         charge.setText("Nama Barang : Kayu 3 ton");
                                         try {
                                             vehicleNo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
@@ -271,48 +254,40 @@ public class StartToPickUpFragment extends Fragment {
 
 
     public void dialogTakePhoto() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Ambil Gambar");
         alertDialog.setMessage("Ambil gambar untuk memulai perjalanan");
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        AsyncHttpTask startTask = new AsyncHttpTask("woid=" + woId +
+                                "&driverid=" + driverId +
+                                "&vehicleid=" + vehicleId +
+                                "&lang=" + latitude +
+                                "&long=" + longitude, getContext());
+                        startTask.execute(appDelfree.HOST + appDelfree.START_PATH, "POST");
+                        startTask.setHttpResponseListener(new OnHttpResponseListener() {
+                            @Override
+                            public void OnHttpResponse(String response) {
+                                Log.i("batavree", "loading response " + response);
+                                try {
+                                    JSONObject resStart = new JSONObject(response);
+                                    if (resStart.getBoolean("r")){
+                                        Log.i("batavree", "loading fragment " + resStart.getJSONObject("d").toString());
+                                        selectedWorkOrder.setStatus(resStart.getJSONObject("d").getString("status"));
+                                        Log.i("batavree", "take photo " + selectedWorkOrder.getStatus());
+//                                        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+                                    }
+                                } catch (JSONException jss){
+                                    Log.e("batavree", jss.getMessage());
+                                }
+                            }
+                        });
                         TakePhotoAfterLoading takePhotoAfterLoading= new TakePhotoAfterLoading();
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.fl_container, takePhotoAfterLoading);
                         fragmentTransaction.commit();
-//                        AsyncHttpTask toUnloadTask = new AsyncHttpTask("woid=" + woId +
-//                                "&driverid=" + driverId +
-//                                "&vehicleid=" + vehicleId +
-//                                "&lang=" + latitude +
-//                                "&long=" + longitude, getContext());
-//                        toUnloadTask.execute(appDelfree.HOST + appDelfree.FINISH_PATH, "POST");
-//                        toUnloadTask.setHttpResponseListener(new OnHttpResponseListener() {
-//                            @Override
-//                            public void OnHttpResponse(String result) {
-//                                Log.i("batavree", "ini result " + result);
-//                                try {
-//                                    JSONObject resUnload = new JSONObject(result);
-//                                    if (resUnload.getBoolean("r")){
-//                                        Toast.makeText(getActivity(), resUnload.getString("m"), Toast.LENGTH_LONG).show();
-//                                        selectedWorkOrder.setStatus(resUnload.getJSONObject("d").getString("status"));
-//                                        status.setText("Status : " + selectedWorkOrder.getStatus());
-//                        status.setText("Status : Menunggu Antrian");
-//                        charge.setText("Nama Barang : Kayu 3 ton");
-//                        try {
-//                            vehicleNo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
-//                        }catch (JSONException jsonEx){
-//                            Log.e("batavree", "error" + jsonEx.getMessage());
-//                        }
-//                        spinner.setVisibility(View.INVISIBLE);
-//                        btnStart.setText(" Loading ");
-//                        btnStart.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                dialogLoading();
-//                            }
-//                        });
                     }
 //                                } catch (JSONException jss){
 //                                    Log.e("batavree", jss.getMessage());

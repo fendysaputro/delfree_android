@@ -58,6 +58,9 @@ public class TakePhotoAfterLoading extends Fragment {
     Intent mServiceIntent;
     File photoFile = null;
     String fileName = "";
+    String driverId, vehicleId, woId;
+    double latitude = 0;
+    double longitude = 0;
 
     public TakePhotoAfterLoading() {
         // Required empty public constructor
@@ -187,7 +190,8 @@ public class TakePhotoAfterLoading extends Fragment {
 ////                                        resWo.getJSONObject("d");
 //                                        Log.i("batavree", "loading fragment " + resWo.getJSONObject("d").toString());
 //                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
-//                                        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+//                                        Log.i("batavree", "take photo " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+////                                        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
 //                                    }
 //                                } catch (JSONException jss){
 //                                    Log.e("batavree", jss.getMessage());

@@ -17,6 +17,7 @@ import com.delfree.delfree_android.AppDelfree;
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
 import com.delfree.delfree_android.Fragment.LoadingFragment;
 import com.delfree.delfree_android.Fragment.ProgressRouteFragment;
+import com.delfree.delfree_android.Fragment.StartToPickUpFragment;
 import com.delfree.delfree_android.Fragment.UnloadingFragment;
 import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.R;
@@ -92,6 +93,11 @@ public class HistoryAdapter extends ArrayAdapter {
                     Activity activity = (Activity) context;
                     FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
                     ShowFragment(R.id.fl_container, progressRouteFragment, fragmentManager);
+                } else if (myJobsHistory.get(position).getStatus().equals("menuju pick up")){
+                    StartToPickUpFragment startToPickUpFragment = new StartToPickUpFragment();
+                    Activity activity = (Activity) context;
+                    FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                    ShowFragment(R.id.fl_container, startToPickUpFragment, fragmentManager);
                 }
             }
         });
