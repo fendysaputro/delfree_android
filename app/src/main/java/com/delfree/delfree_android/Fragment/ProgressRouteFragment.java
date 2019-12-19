@@ -157,7 +157,7 @@ public class ProgressRouteFragment extends Fragment {
                 if (btnFinish.getText().equals(" Bongkar Barang ")){
                     dialogBongkar();
                 } else {
-                    dialogFinish();
+                    dialogWaitUnloading();
                 }
             }
         });
@@ -200,6 +200,12 @@ public class ProgressRouteFragment extends Fragment {
                                         }
                                         spinner.setVisibility(View.INVISIBLE);
                                         btnFinish.setText("Selesai");
+                                        btnFinish.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                dialogFinish();
+                                            }
+                                        });
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());
@@ -256,6 +262,72 @@ public class ProgressRouteFragment extends Fragment {
                         fragmentTransaction.commit();
 
                     }
+                });
+        alertDialog.setNegativeButton("TIDAK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+
+        return;
+    }
+
+
+    public void dialogWaitUnloading() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Menunggu Antrian");
+        alertDialog.setMessage("Silahkan tunggu antrian");
+        alertDialog.setPositiveButton("YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+//                        AsyncHttpTask toUnloadTask = new AsyncHttpTask("woid=" + woId +
+//                                "&driverid=" + driverId +
+//                                "&vehicleid=" + vehicleId +
+//                                "&lang=" + latitude +
+//                                "&long=" + longitude, getContext());
+//                        toUnloadTask.execute(appDelfree.HOST + appDelfree.FINISH_PATH, "POST");
+//                        toUnloadTask.setHttpResponseListener(new OnHttpResponseListener() {
+//                            @Override
+//                            public void OnHttpResponse(String result) {
+//                                Log.i("batavree", "ini result " + result);
+//                                try {
+//                                    JSONObject resUnload = new JSONObject(result);
+//                                    if (resUnload.getBoolean("r")){
+//                                        Toast.makeText(getActivity(), resUnload.getString("m"), Toast.LENGTH_LONG).show();
+//                                        selectedWorkOrder.setStatus(resUnload.getJSONObject("d").getString("status"));
+//                                        status.setText("Status : " + selectedWorkOrder.getStatus());
+                        statusProgress.setText("Status : menunggu antrian");
+                        addressFrom.setText("Nama Barang : Kayu 3 ton");
+                        try {
+                            addressTo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
+                        }catch (JSONException jsonEx){
+                            Log.e("batavree", "error" + jsonEx.getMessage());
+                        }
+                        spinner.setVisibility(View.INVISIBLE);
+                        btnFinish.setText(" UnLoading ");
+                        btnFinish.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialogBongkar();
+                            }
+                        });
+                    }
+//                                } catch (JSONException jss){
+//                                    Log.e("batavree", jss.getMessage());
+//                                }
+//                            }
+//                        });
+//                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
+//                        FinishJobFragment finishJobFragment = new FinishJobFragment();
+//                        FragmentManager fragmentManager = getFragmentManager();
+//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.replace(R.id.fl_container, finishJobFragment);
+//                        fragmentTransaction.commit();
+
+//                    }
                 });
         alertDialog.setNegativeButton("TIDAK",
                 new DialogInterface.OnClickListener() {
