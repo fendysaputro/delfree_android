@@ -65,7 +65,7 @@ public class StartToPickUpFragment extends Fragment {
         toolbar.setLogo(logo);
         toolbar.setTitleTextColor(getResources().getColor(R.color.chooseNav));
 
-        selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+        selectedWorkOrder = appDelfree.getSelectedWo();
 
         WONumber = (TextView) view.findViewById(R.id.detail_job);
         WONumber.setText(selectedWorkOrder.getWONum());

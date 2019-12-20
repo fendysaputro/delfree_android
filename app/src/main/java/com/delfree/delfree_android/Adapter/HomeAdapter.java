@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.delfree.delfree_android.AppDelfree;
+import com.delfree.delfree_android.Fragment.BaseFragment;
 import com.delfree.delfree_android.Fragment.DetailJobFragment;
 import com.delfree.delfree_android.Fragment.LoadingFragment;
 import com.delfree.delfree_android.Fragment.StartToPickUpFragment;
@@ -101,7 +102,8 @@ public class HomeAdapter extends ArrayAdapter {
         moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                appDelfree.setSelectedWo(position);
+                WorkOrders wo = myListJobs.get(position);
+                appDelfree.setSelectedWo(wo);
                 dialog();
 //                DetailJobFragment detailJobFragment = new DetailJobFragment();
 //                Activity activity = (Activity) context;
@@ -149,7 +151,7 @@ public class HomeAdapter extends ArrayAdapter {
     public void dialog() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Lihat detail rute");
-        alertDialog.setMessage("Silahkan cek rute detail");
+        alertDialog.setMessage("Silahkan cek rute detail dan menuju pick up point");
         alertDialog.setPositiveButton("YA",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -175,10 +177,10 @@ public class HomeAdapter extends ArrayAdapter {
 //                                }
 //                            }
 //                        });
-                        DetailJobFragment detailJobFragment = new DetailJobFragment();
+                        BaseFragment baseFragment = new BaseFragment();
                         Activity activity = (Activity) context;
                         FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                        ShowFragment(R.id.fl_container, detailJobFragment,fragmentManager);
+                        ShowFragment(R.id.fl_container, baseFragment,fragmentManager);
                     }
                 });
         alertDialog.setNegativeButton("TIDAK",

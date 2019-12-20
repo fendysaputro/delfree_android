@@ -59,7 +59,7 @@ public class LoadingFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setLogo(logo);
 
-        WorkOrders selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+        WorkOrders selectedWorkOrder = appDelfree.getSelectedWo();
 
         WONumber = (TextView) view.findViewById(R.id.wo_number);
         WONumber.setText(selectedWorkOrder.getWONum());
@@ -122,8 +122,9 @@ public class LoadingFragment extends Fragment {
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
 //                                        resWo.getJSONObject("d");
                                         Log.i("batavree", "loading fragment " + resWo.getJSONObject("d").toString());
-                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
-                                        status.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+//                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
+                                        appDelfree.getSelectedWo().setStatus(resWo.getJSONObject("d").getString("status"));
+                                        status.setText("Status : " + appDelfree.getSelectedWo().getStatus());
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());

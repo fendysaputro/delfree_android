@@ -35,7 +35,7 @@ public class AppDelfree extends Application {
     String Wo_Number;
     String shipmentNumber;
     ArrayList<WorkOrders> workOrders;
-    int selectedWo;
+    WorkOrders selectedWo;
     WorkOrderDetails workOrderDetails;
     public static String HOST = "http://api.batavree.com/apis/v1/";
     public static String LOGIN_PATH = "driver/authenticate";
@@ -136,11 +136,11 @@ public class AppDelfree extends Application {
         this.workOrderDetails = workOrderDetails;
     }
 
-    public int getSelectedWo() {
+    public WorkOrders getSelectedWo() {
         return selectedWo;
     }
 
-    public void setSelectedWo(int selectedWo) {
+    public void setSelectedWo(WorkOrders selectedWo) {
         this.selectedWo = selectedWo;
     }
 }

@@ -84,7 +84,7 @@ public class DetailJobFragment extends Fragment {
             }
         });
 
-        WorkOrders selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+        WorkOrders selectedWorkOrder = appDelfree.getSelectedWo();
 
         WONumber = (TextView) view.findViewById(R.id.detail_job);
         WONumber.setText(selectedWorkOrder.getWONum());
@@ -132,7 +132,7 @@ public class DetailJobFragment extends Fragment {
 
     public JSONArray getWODetails (){
 
-        return appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getWODetails();
+        return appDelfree.getSelectedWo().getWODetails();
     }
 
     public void dialog() {

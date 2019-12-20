@@ -61,7 +61,7 @@ public class UnloadingFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setLogo(logo);
 
-        selectedWorkOrder = appDelfree.getWorkOrders().get(appDelfree.getSelectedWo());
+        selectedWorkOrder = appDelfree.getSelectedWo();
 
         statusUnloading = (TextView) view.findViewById(R.id.tvStatus);
         statusUnloading.setText("Status : " + selectedWorkOrder.getStatus());
@@ -121,8 +121,8 @@ public class UnloadingFragment extends Fragment {
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
 //                                        resWo.getJSONObject("d");
                                         Log.i("batavree", "unloading fragment " + resWo.getJSONObject("d").toString());
-                                        appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).setStatus(resWo.getJSONObject("d").getString("status"));
-                                        statusUnloading.setText("Status : " + appDelfree.getWorkOrders().get(appDelfree.getSelectedWo()).getStatus());
+                                        appDelfree.getSelectedWo().setStatus(resWo.getJSONObject("d").getString("status"));
+                                        statusUnloading.setText("Status : " + appDelfree.getSelectedWo().getStatus());
                                     }
                                 } catch (JSONException jss){
                                     Log.e("batavree", jss.getMessage());
