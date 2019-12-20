@@ -42,6 +42,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 /**
  * created by phephen2019
  */
@@ -49,7 +51,7 @@ import java.util.List;
 public class BaseFragment extends Fragment {
     private ListView listJobsById;
     TextView WONumber, status, charge, vehicleNo;
-    Button startLoading;
+    Button btnStatus;
     AppDelfree appDelfree;
     private Context context;
     Intent mServiceIntent;
@@ -59,6 +61,7 @@ public class BaseFragment extends Fragment {
     double longitude = 0;
     Spinner spinner;
     WorkOrders selectedWorkOrder;
+    String checkStatus;
 
     @Nullable
     @Override
@@ -68,7 +71,6 @@ public class BaseFragment extends Fragment {
         appDelfree = (AppDelfree) getActivity().getApplicationContext();
 
         Drawable logo = getResources().getDrawable(R.drawable.logobatavree_new);
-
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setLogo(logo);
 
@@ -85,6 +87,9 @@ public class BaseFragment extends Fragment {
 
         charge = (TextView) view.findViewById(R.id.tvCharge);
         charge.setText("Nama Barang : Kayu 3 ton");
+
+        checkStatus = selectedWorkOrder.getStatus();
+        btnStatus = (Button) view.findViewById(R.id.startLoadingBtn);
 
         try {
             woId = selectedWorkOrder.getId();
@@ -120,40 +125,115 @@ public class BaseFragment extends Fragment {
         WorkOrderDetailAdapter workOrderDetailAdapter = new WorkOrderDetailAdapter(getContext(), R.layout.custom_item_detailjob_adapter, listByWo);
         listJobsById.setAdapter(workOrderDetailAdapter);
 
-        spinner = (Spinner) view.findViewById(R.id.spinnerJobs);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String statusLoad = parent.getItemAtPosition(position).toString();
-                Log.i("batavree", "status position " + statusLoad);
+        switch (checkStatus) {
+            case "on loading":
+                status.setText("Status : " + checkStatus);
+                btnStatus.setText(" Muat Barang ");
+                spinner = (Spinner) view.findViewById(R.id.spinnerJobs);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String statusLoad = parent.getItemAtPosition(position).toString();
+                        Log.i("batavree", "status position " + statusLoad);
 //                status.setText("Status : " + statusLoad);
-                startLoading.setText(statusLoad);
-            }
+                        btnStatus.setText(statusLoad);
+                    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
-        final List<String> loadStatus = new ArrayList<>();
-        loadStatus.add(" Muat Barang ");
-        loadStatus.add(" Menunggu Antrian ");
+                    }
+                });
+                final List<String> loadStatus = new ArrayList<>();
+                loadStatus.add(" Muat Barang ");
+                loadStatus.add(" Menunggu Antrian ");
 
-        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, loadStatus);
-        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(statusAdapter);
+                ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, loadStatus);
+                statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(statusAdapter);
+                btnStatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogLoading();
+                    }
+                });
+                break;
+            case "on unloading":
+                status.setText("Status : " + checkStatus);
+                btnStatus.setText(" Selesai ");
+                btnStatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogLoading();
+                    }
+                });
+                break;
+            case "on progress":
+                status.setText("Status : " + checkStatus);
+                btnStatus.setText(" Selesai ");
+                btnStatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogTakePhoto();
+                    }
+                });
+                break;
+                default:
+                    Toast.makeText(getContext(), checkStatus, Toast.LENGTH_SHORT).show();
+        }
+//                btnStatus.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        if (btnStatus.getText().equals(" Muat Barang ")){
+////                            dialogLoading();
+//                        } else {
+//                            dialogWaitLoading();
+//                        }
+//                    }
+//
+//        }
 
-        startLoading = (Button) view.findViewById(R.id.startLoadingBtn);
-        startLoading.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (startLoading.getText().equals(" Muat Barang ")){
-                    dialogLoading();
-                } else {
-                    dialogWaitLoading();
-                }
-            }
-        });
+//        if (selectedWorkOrder.getStatus().equals("on loading")){
+//            startLoading = (Button) view.findViewById(R.id.startLoadingBtn);
+//            startLoading.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                public void onClick(View view) {
+//                    if (startLoading.getText().equals(" Muat Barang ")){
+//                        dialogLoading();
+//                    } else {
+//                        dialogWaitLoading();
+//                    }
+//                }
+//            });
+//        } else {
+//            startLoading.setText(" Testing ");
+//            startLoading.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Log.i("batavree", "ini menuju pick up");
+//                }
+//            });
+//        }
+
+//            btnStatus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (startLoading.getText().equals(" Muat Barang ")){
+//                    dialogLoading();
+//                } else {
+//                    dialogWaitLoading();
+//                }
+//                if (selectedWorkOrder.getStatus().equals("on loading")){
+//                    startLoading.setText(" Ambil Foto ");
+//                    startLoading.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            dialogTakePhoto();
+//                        }
+//                    });
+//                }
+//            }
+//        });
 
         return view;
     }
@@ -183,8 +263,9 @@ public class BaseFragment extends Fragment {
                                     JSONObject resWo = new JSONObject(response);
                                     if (resWo.getBoolean("r")){
                                         Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+                                        Log.i("batavree", "baseFragment " + resWo.getJSONObject("d").toString());
                                         selectedWorkOrder.setStatus(resWo.getJSONObject("d").getString("status"));
-                                        status.setText("Status : " + selectedWorkOrder.getStatus());
+                                        status.setText("Status : " + resWo.getJSONObject("d").getString("status"));
                                         charge.setText("Nama Barang : Kayu 3 ton");
                                         try {
                                             vehicleNo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
@@ -192,8 +273,8 @@ public class BaseFragment extends Fragment {
                                             Log.e("batavree", "error" + jsonEx.getMessage());
                                         }
                                         spinner.setVisibility(View.INVISIBLE);
-                                        startLoading.setText(" Ambil Foto ");
-                                        startLoading.setOnClickListener(new View.OnClickListener() {
+                                        btnStatus.setText(" Ambil Foto ");
+                                        btnStatus.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 dialogTakePhoto();
@@ -250,8 +331,8 @@ public class BaseFragment extends Fragment {
                             Log.e("batavree", "error" + jsonEx.getMessage());
                         }
                         spinner.setVisibility(View.INVISIBLE);
-                        startLoading.setText(" Muat Barang ");
-                        startLoading.setOnClickListener(new View.OnClickListener() {
+                        btnStatus.setText(" Muat Barang ");
+                        btnStatus.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 dialogLoading();
@@ -321,19 +402,6 @@ public class BaseFragment extends Fragment {
                         fragmentTransaction.replace(R.id.fl_container, takePhotoAfterLoading);
                         fragmentTransaction.commit();
                     }
-//                                } catch (JSONException jss){
-//                                    Log.e("batavree", jss.getMessage());
-//                                }
-//                            }
-//                        });
-//                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
-//                        FinishJobFragment finishJobFragment = new FinishJobFragment();
-//                        FragmentManager fragmentManager = getFragmentManager();
-//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                        fragmentTransaction.replace(R.id.fl_container, finishJobFragment);
-//                        fragmentTransaction.commit();
-
-//                    }
                 });
         alertDialog.setNegativeButton("TIDAK",
                 new DialogInterface.OnClickListener() {
