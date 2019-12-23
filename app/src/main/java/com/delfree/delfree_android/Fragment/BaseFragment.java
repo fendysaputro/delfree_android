@@ -203,7 +203,7 @@ public class BaseFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         if (btnStatus.getText().equals(" Bongkar Barang ")){
-                            dialogFinish();
+                            dialogUnloading();
                         } else {
                             dialogWaitUnloading();
                         }
@@ -447,6 +447,62 @@ public class BaseFragment extends Fragment {
         return;
     }
 
+    public void dialogUnloading () {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Bongkar Muatan");
+        alertDialog.setMessage("Apakah anda yakin Menurunkan Barang?");
+        alertDialog.setPositiveButton("YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        AsyncHttpTask unloadTask = new AsyncHttpTask("woid=" + woId +
+                                "&driverid=" + driverId +
+                                "&vehicleid=" + vehicleId +
+                                "&lang=" + latitude +
+                                "&long=" + longitude, getContext());
+                        unloadTask.execute(appDelfree.HOST + appDelfree.UNLOADING_PATH, "POST");
+                        unloadTask.setHttpResponseListener(new OnHttpResponseListener() {
+                            @Override
+                            public void OnHttpResponse(String response) {
+                                try {
+                                    JSONObject resWo = new JSONObject(response);
+                                    if (resWo.getBoolean("r")){
+                                        Toast.makeText(getActivity(), resWo.getString("m"), Toast.LENGTH_LONG).show();
+                                        selectedWorkOrder.setStatus(resWo.getJSONObject("d").getString("status"));
+                                        status.setText("Status : " + resWo.getJSONObject("d").getString("status"));
+                                        charge.setText("Nama Barang : Kayu 3 ton");
+                                        try {
+                                            vehicleNo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
+                                        }catch (JSONException jsonEx){
+                                            Log.e("batavree", "error" + jsonEx.getMessage());
+                                        }
+                                        spinnerProgress.setVisibility(View.INVISIBLE);
+                                        btnStatus.setText(" UnLoading ");
+                                        btnStatus.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                dialogFinish();
+                                            }
+                                        });
+                                    }
+                                } catch (JSONException jss){
+                                    Log.e("batavree", jss.getMessage());
+                                }
+                            }
+                        });
+                    }
+                });
+        alertDialog.setNegativeButton("TIDAK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+
+        return;
+    }
+
     public void dialogWaitUnloading() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle("Menunggu Antrian");
@@ -478,7 +534,7 @@ public class BaseFragment extends Fragment {
                             Log.e("batavree", "error" + jsonEx.getMessage());
                         }
                         spinnerProgress.setVisibility(View.INVISIBLE);
-                        btnStatus.setText(" UnLoading ");
+                        btnStatus.setText(" Bongkar Barang ");
                         btnStatus.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
