@@ -34,6 +34,7 @@ import com.delfree.delfree_android.Model.WorkOrders;
 import com.delfree.delfree_android.Network.AsyncHttpTask;
 import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
+import com.delfree.delfree_android.Service.AppDataService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,6 +61,7 @@ public class BaseFragment extends Fragment {
     double latitude = 0;
     double longitude = 0;
     Spinner spinner;
+    Spinner spinnerProgress;
     WorkOrders selectedWorkOrder;
     String checkStatus;
 
@@ -154,7 +156,11 @@ public class BaseFragment extends Fragment {
                 btnStatus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialogLoading();
+                        if (btnStatus.getText().equals(" Muat Barang ")){
+                            dialogLoading();
+                        } else {
+                            dialogWaitLoading();
+                        }
                     }
                 });
                 break;
@@ -171,10 +177,36 @@ public class BaseFragment extends Fragment {
             case "on progress":
                 status.setText("Status : " + checkStatus);
                 btnStatus.setText(" Selesai ");
+                spinnerProgress = (Spinner) view.findViewById(R.id.spinnerJobs);
+                spinnerProgress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String statusLoad = parent.getItemAtPosition(position).toString();
+                        Log.i("batavree", "status position " + statusLoad);
+//                status.setText("Status : " + statusLoad);
+                        btnStatus.setText(statusLoad);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+                final List<String> loadNewStatus = new ArrayList<>();
+                loadNewStatus.add(" Bongkar Barang ");
+                loadNewStatus.add(" Menunggu Antrian ");
+
+                ArrayAdapter<String> statusProgressAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, loadNewStatus);
+                statusProgressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerProgress.setAdapter(statusProgressAdapter);
                 btnStatus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialogTakePhoto();
+                        if (btnStatus.getText().equals(" Bongkar Barang ")){
+                            dialogFinish();
+                        } else {
+                            dialogWaitUnloading();
+                        }
                     }
                 });
                 break;
@@ -401,6 +433,120 @@ public class BaseFragment extends Fragment {
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.fl_container, takePhotoAfterLoading);
                         fragmentTransaction.commit();
+                    }
+                });
+        alertDialog.setNegativeButton("TIDAK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+
+        return;
+    }
+
+    public void dialogWaitUnloading() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Menunggu Antrian");
+        alertDialog.setMessage("Silahkan tunggu antrian");
+        alertDialog.setPositiveButton("YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+//                        AsyncHttpTask toUnloadTask = new AsyncHttpTask("woid=" + woId +
+//                                "&driverid=" + driverId +
+//                                "&vehicleid=" + vehicleId +
+//                                "&lang=" + latitude +
+//                                "&long=" + longitude, getContext());
+//                        toUnloadTask.execute(appDelfree.HOST + appDelfree.FINISH_PATH, "POST");
+//                        toUnloadTask.setHttpResponseListener(new OnHttpResponseListener() {
+//                            @Override
+//                            public void OnHttpResponse(String result) {
+//                                Log.i("batavree", "ini result " + result);
+//                                try {
+//                                    JSONObject resUnload = new JSONObject(result);
+//                                    if (resUnload.getBoolean("r")){
+//                                        Toast.makeText(getActivity(), resUnload.getString("m"), Toast.LENGTH_LONG).show();
+//                                        selectedWorkOrder.setStatus(resUnload.getJSONObject("d").getString("status"));
+//                                        status.setText("Status : " + selectedWorkOrder.getStatus());
+                        status.setText("Status : menunggu antrian");
+                        charge.setText("Nama Barang : Kayu 3 ton");
+                        try {
+                            vehicleNo.setText("Plat Nomor : " + selectedWorkOrder.getVehicle().getString("police_no"));
+                        }catch (JSONException jsonEx){
+                            Log.e("batavree", "error" + jsonEx.getMessage());
+                        }
+                        spinnerProgress.setVisibility(View.INVISIBLE);
+                        btnStatus.setText(" UnLoading ");
+                        btnStatus.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialogFinish();
+                            }
+                        });
+                    }
+//                                } catch (JSONException jss){
+//                                    Log.e("batavree", jss.getMessage());
+//                                }
+//                            }
+//                        });
+//                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
+//                        FinishJobFragment finishJobFragment = new FinishJobFragment();
+//                        FragmentManager fragmentManager = getFragmentManager();
+//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.replace(R.id.fl_container, finishJobFragment);
+//                        fragmentTransaction.commit();
+
+//                    }
+                });
+        alertDialog.setNegativeButton("TIDAK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+
+        return;
+    }
+
+    public void dialogFinish() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("Selesai Perjalanan");
+        alertDialog.setMessage("Apakah anda yakin mengakhiri perjalanan?");
+        alertDialog.setPositiveButton("YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        AsyncHttpTask toUnloadTask = new AsyncHttpTask("woid=" + woId +
+                                "&driverid=" + driverId +
+                                "&vehicleid=" + vehicleId +
+                                "&lang=" + latitude +
+                                "&long=" + longitude, getContext());
+                        toUnloadTask.execute(appDelfree.HOST + appDelfree.FINISH_PATH, "POST");
+                        toUnloadTask.setHttpResponseListener(new OnHttpResponseListener() {
+                            @Override
+                            public void OnHttpResponse(String result) {
+                                Log.i("batavree", "ini result " + result);
+                                try {
+                                    JSONObject resUnload = new JSONObject(result);
+                                    if (resUnload.getBoolean("r")){
+                                        Toast.makeText(getActivity(), resUnload.getString("m"), Toast.LENGTH_LONG).show();
+                                        appDelfree.getSelectedWo().setStatus(resUnload.getJSONObject("d").getString("status"));
+                                    }
+                                } catch (JSONException jss){
+                                    Log.e("batavree", jss.getMessage());
+                                }
+                            }
+                        });
+                        getActivity().stopService(new Intent(getActivity(), AppDataService.class));
+                        FinishJobFragment finishJobFragment = new FinishJobFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fl_container, finishJobFragment);
+                        fragmentTransaction.commit();
+
                     }
                 });
         alertDialog.setNegativeButton("TIDAK",
