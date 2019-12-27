@@ -2,9 +2,11 @@ package com.delfree.delfree_android.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +24,13 @@ import com.delfree.delfree_android.Fragment.ProgressRouteFragment;
 import com.delfree.delfree_android.Fragment.StartToPickUpFragment;
 import com.delfree.delfree_android.Fragment.UnloadingFragment;
 import com.delfree.delfree_android.Model.WorkOrders;
+import com.delfree.delfree_android.Network.AsyncHttpTask;
+import com.delfree.delfree_android.Network.OnHttpResponseListener;
 import com.delfree.delfree_android.R;
 import com.delfree.delfree_android.Service.AppDataService;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,14 +89,40 @@ public class HistoryAdapter extends ArrayAdapter {
             public void onClick(View view) {
                 WorkOrders wo = myJobsHistory.get(position);
                 appDelfree.setSelectedWo(wo);
-                BaseFragment baseFragment = new BaseFragment();
-                Activity activity = (Activity) context;
-                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-                ShowFragment(R.id.fl_container, baseFragment,fragmentManager);
+//                BaseFragment baseFragment = new BaseFragment();
+//                Activity activity = (Activity) context;
+//                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+//                ShowFragment(R.id.fl_container, baseFragment,fragmentManager);
+                progressLoading();
             }
         });
 
         return view;
+    }
+
+    public void progressLoading() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Progress");
+        alertDialog.setMessage("Pilih YA Untuk Melihat Progress Status?");
+        alertDialog.setPositiveButton("YA",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        BaseFragment baseFragment = new BaseFragment();
+                        Activity activity = (Activity) context;
+                        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                        ShowFragment(R.id.fl_container, baseFragment, fragmentManager);
+                    }
+                });
+        alertDialog.setNegativeButton("TIDAK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+
+        return;
     }
 
 }

@@ -170,7 +170,7 @@ public class BaseFragment extends Fragment {
                 btnStatus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialogLoading();
+                        dialogFinish();
                     }
                 });
                 break;
@@ -476,7 +476,7 @@ public class BaseFragment extends Fragment {
                                             Log.e("batavree", "error" + jsonEx.getMessage());
                                         }
                                         spinnerProgress.setVisibility(View.INVISIBLE);
-                                        btnStatus.setText(" UnLoading ");
+                                        btnStatus.setText(" Selesai ");
                                         btnStatus.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
