@@ -89,10 +89,6 @@ public class HistoryAdapter extends ArrayAdapter {
             public void onClick(View view) {
                 WorkOrders wo = myJobsHistory.get(position);
                 appDelfree.setSelectedWo(wo);
-//                BaseFragment baseFragment = new BaseFragment();
-//                Activity activity = (Activity) context;
-//                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-//                ShowFragment(R.id.fl_container, baseFragment,fragmentManager);
                 progressLoading();
             }
         });
